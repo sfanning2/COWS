@@ -943,5 +943,89 @@ public class ReLogoTurtle extends BaseTurtle{
 		return userLink(oneEnd.getWho(), otherEnd.getWho());
 	}
 
+	/**
+	 * Returns the value of the global variable numHerders.
+	 *
+	 * @return the value of the global variable numHerders
+	 */
+	@ReLogoBuilderGeneratedFor("global: numHerders")
+	public Object getNumHerders(){
+		return repast.simphony.relogo.ReLogoModel.getInstance().getModelParam("numHerders");
+	}
+
+	/**
+	 * Sets the value of the global variable numHerders.
+	 *
+	 * @param value
+	 *            a value
+	 */
+	@ReLogoBuilderGeneratedFor("global: numHerders")
+	public void setNumHerders(Object value){
+		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("numHerders",value);
+	}
+
+	/**
+	 * Returns the value of the global variable numCows.
+	 *
+	 * @return the value of the global variable numCows
+	 */
+	@ReLogoBuilderGeneratedFor("global: numCows")
+	public Object getNumCows(){
+		return repast.simphony.relogo.ReLogoModel.getInstance().getModelParam("numCows");
+	}
+
+	/**
+	 * Sets the value of the global variable numCows.
+	 *
+	 * @param value
+	 *            a value
+	 */
+	@ReLogoBuilderGeneratedFor("global: numCows")
+	public void setNumCows(Object value){
+		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("numCows",value);
+	}
+
+	/**
+	 * Returns the value of the global variable obstacleDensity.
+	 *
+	 * @return the value of the global variable obstacleDensity
+	 */
+	@ReLogoBuilderGeneratedFor("global: obstacleDensity")
+	public Object getObstacleDensity(){
+		return repast.simphony.relogo.ReLogoModel.getInstance().getModelParam("obstacleDensity");
+	}
+
+	/**
+	 * Sets the value of the global variable obstacleDensity.
+	 *
+	 * @param value
+	 *            a value
+	 */
+	@ReLogoBuilderGeneratedFor("global: obstacleDensity")
+	public void setObstacleDensity(Object value){
+		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("obstacleDensity",value);
+	}
+
+	/**
+	 * Returns the value of the global variable fieldArea.
+	 *
+	 * @return the value of the global variable fieldArea
+	 */
+	@ReLogoBuilderGeneratedFor("global: fieldArea")
+	public Object getFieldArea(){
+		return repast.simphony.relogo.ReLogoModel.getInstance().getModelParam("fieldArea");
+	}
+
+	/**
+	 * Sets the value of the global variable fieldArea.
+	 *
+	 * @param value
+	 *            a value
+	 */
+	@ReLogoBuilderGeneratedFor("global: fieldArea")
+	public void setFieldArea(Object value){
+		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("fieldArea",value);
+	}
+
 
 }
