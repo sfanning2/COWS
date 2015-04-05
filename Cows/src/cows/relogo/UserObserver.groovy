@@ -20,11 +20,18 @@ class UserObserver extends ReLogoObserver{
 			setDefaultShape(Cow, "circle")
 			
 			createCows(numCows){
-				setxy(randomXcor(), randomYcor())
+				//won't get on top of other turtles
+				while(count(other(turtlesHere()))>0){
+					setxy(randomPxcor(), randomPycor())
+				}
+				
 			}
 			setDefaultShape(Herder, "person")
 			createHerders(numHerders){
-				setxy(randomXcor(), randomYcor())
+				//won't get on top of other turtles
+				while(count(other(turtlesHere()))>0){
+					setxy(randomPxcor(), randomPycor())
+				}
 			}
 		}
 		
@@ -32,14 +39,11 @@ class UserObserver extends ReLogoObserver{
 		@Go
 		def go(){
 			ask(herders()){
-				left(random(90))
-				right(random(90))
-				forward(random(10))
+				herd()
 			}
 			ask(cows()){
-				left(random(90))
-				right(random(90))
-				forward(random(10))
+				forward(10)
+				step()
 			}
 		}
 

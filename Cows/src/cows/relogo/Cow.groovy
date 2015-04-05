@@ -19,5 +19,14 @@ class Cow extends ReLogoTurtle {
 	public double independenceLevel;
 	public double anxietyLevel;
 	public double anxietyThreshold;
-	public Position position;
+	
+	def step(){
+		//make sure doesn't hit another cow
+		while(count(other(turtlesHere()))>0){
+			setxy(randomPxcor(), randomPycor())
+		}
+	}
+	def graze(){
+		
+	}
 }
