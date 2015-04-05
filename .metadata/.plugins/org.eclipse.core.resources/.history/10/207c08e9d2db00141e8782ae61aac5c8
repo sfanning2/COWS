@@ -29,7 +29,6 @@ class UserObserver extends ReLogoObserver{
 				//randomly place cows so they don't hit other objects
 				while(count(other(turtlesHere()))>0){
 					setxy(randomPxcor(), randomPycor())
-					size = 6
 				}
 			}
 			setDefaultShape(Herder, "person")
@@ -38,7 +37,6 @@ class UserObserver extends ReLogoObserver{
 				//randomly place cows so they don't hit other objects
 				while(count(other(turtlesHere()))>0){
 					setxy(randomPxcor(), randomPycor())
-					size = 3
 				}
 			}
 			
@@ -67,28 +65,23 @@ class UserObserver extends ReLogoObserver{
 	 		for(int i=minX; i<= maxX; i++){
 			 createFences(1){
 				 setxy(i, minY)
-				 size = 3
 			 }
 			 createFences(1){
 				 setxy(i, maxY)
-				 size = 3
 			 }
 		 } 
 			 //iterate over all y values
 			 for(int j=minY; j< maxY-10; j++){
 				 createFences(1){
 					 setxy(minX, j)
-					 size = 3
 				 }
 				 createFences(1){
 					 setxy(maxX, j)
-					 size = 3
 				 }
 			 }
 			 for(int k=maxY-10; k <= maxY; k++){
 				 createFences(1){
 					 setxy(minX, k)
-					 size = 3
 			 }
 			 }
 	 }
