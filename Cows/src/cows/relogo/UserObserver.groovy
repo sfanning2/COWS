@@ -33,7 +33,15 @@ class UserObserver extends ReLogoObserver{
 					setxy(randomPxcor(), randomPycor())
 				}
 			}
-		}
+			
+			setDefaultShape(Tree, "tree")
+			createTrees((int)(obstacleDensity*fieldArea/100)){
+				while(count(other(turtlesHere()))>0){
+					setxy(randomPxcor(), randomPycor())
+				}
+			}
+
+	}
 		
 	
 		@Go

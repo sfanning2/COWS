@@ -11,22 +11,23 @@ import repast.simphony.relogo.schedule.Setup;
 import cows.ReLogoTurtle;
 
 class Cow extends ReLogoTurtle {
-	public double speed;
-	public double orientation;
-	public double flightZoneRadius;
-	public double width;
-	public double length;
-	public double independenceLevel;
-	public double anxietyLevel;
-	public double anxietyThreshold;
+	def double speed;
+	def double orientation;
+	def double flightZoneRadius;
+	def double width;
+	def double length;
+	def double independenceLevel;
+	def double anxietyLevel;
+	def double anxietyThreshold;
 	
 	def step(){
 		//make sure doesn't hit another cow
-		while(count(other(turtlesHere()))>0){
+		while(count(other(turtlesHere()))>0) {
 			setxy(randomPxcor(), randomPycor())
 		}
 	}
-	def graze(){
+	
+	def graze() {
 		
 	}
 }
