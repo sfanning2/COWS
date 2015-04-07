@@ -35,6 +35,7 @@ class UserObserver extends ReLogoObserver{
 				while(count(inRadius(turtles(), 6))>1){
 					setxy(randomPxcor(), randomPycor())
 				}
+
 				double s = randomGenerator.nextGaussian() * 0.5
 				if(s<0){
 					s = 0
@@ -50,7 +51,9 @@ class UserObserver extends ReLogoObserver{
 				}
 				setAnxietyThreshold(t)
 				setIndependenceLevel(randomGenerator.nextInt(8))
-				
+
+				setFlightZoneRadius(randomGenerator.nextInt(3)+1); // Generates integer between 1 and 3
+
 			}
 			setDefaultShape(Herder, "person")
 			createHerders(numHerders){
