@@ -44,9 +44,7 @@ class Cow extends ReLogoTurtle {
 		//Else
 			// Move as already computed
 			move(distance)
-			setHeading((double) direction)
 		//Check if cow ended up in the endpoint
-
 		
 	}
 	def setSpeed(double speed){
