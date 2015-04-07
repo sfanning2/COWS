@@ -389,6 +389,193 @@ public class ReLogoObserver extends BaseObserver{
 	}
 
 	/**
+	 * Makes a number of randomly oriented fences and then executes a set of commands on the
+	 * created fences.
+	 * 
+	 * @param number
+	 *            a number
+	 * @param closure
+	 *            a set of commands
+	 * @return created fences
+	 */
+	@ReLogoBuilderGeneratedFor("cows.relogo.Fence")
+	public AgentSet<cows.relogo.Fence> createFences(int number, Closure closure) {
+		AgentSet<cows.relogo.Fence> result = new AgentSet<>();
+		AgentSet<Turtle> createResult = this.crt(number,closure,"Fence");
+		for (Turtle t : createResult){
+			if (t instanceof cows.relogo.Fence){
+				result.add((cows.relogo.Fence)t);
+			}
+		} 
+		return result; 
+	}
+
+	/**
+	 * Makes a number of randomly oriented fences and then executes a set of commands on the
+	 * created fences.
+	 * 
+	 * @param number
+	 *            a number
+	 * @param closure
+	 *            a set of commands
+	 * @return created fences
+	 */
+	@ReLogoBuilderGeneratedFor("cows.relogo.Fence")
+	public AgentSet<cows.relogo.Fence> createFences(int number) {
+		return createFences(number,null);
+	}
+
+	/**
+	 * Makes a number of uniformly fanned fences and then executes a set of commands on the
+	 * created fences.
+	 * 
+	 * @param number
+	 *            a number
+	 * @param closure
+	 *            a set of commands
+	 * @return created fences
+	 */
+	@ReLogoBuilderGeneratedFor("cows.relogo.Fence")
+	public AgentSet<cows.relogo.Fence> createOrderedFences(int number, Closure closure) {
+		AgentSet<cows.relogo.Fence> result = new AgentSet<>();
+		AgentSet<Turtle> createResult = this.cro(number,closure,"Fence");
+		for (Turtle t : createResult){
+			if (t instanceof cows.relogo.Fence){
+				result.add((cows.relogo.Fence)t);
+			}
+		} 
+		return result; 
+	}
+
+	/**
+	 * Makes a number of uniformly fanned fences and then executes a set of commands on the
+	 * created fences.
+	 * 
+	 * @param number
+	 *            a number
+	 * @param closure
+	 *            a set of commands
+	 * @return created fences
+	 */
+	@ReLogoBuilderGeneratedFor("cows.relogo.Fence")
+	public AgentSet<cows.relogo.Fence> createOrderedFences(int number) {
+		return createOrderedFences(number,null);
+	}
+
+	/**
+	 * Queries if object is a fence.
+	 * 
+	 * @param o
+	 *            an object
+	 * @return true or false based on whether the object is a fence
+	 */
+	@ReLogoBuilderGeneratedFor("cows.relogo.Fence")
+	public boolean isFenceQ(Object o){
+		return (o instanceof cows.relogo.Fence);
+	}
+
+	/**
+	 * Returns an agentset containing all fences.
+	 * 
+	 * @return agentset of all fences
+	 */
+	@ReLogoBuilderGeneratedFor("cows.relogo.Fence")
+	public AgentSet<cows.relogo.Fence> fences(){
+		AgentSet<cows.relogo.Fence> a = new AgentSet<cows.relogo.Fence>();
+		for (Object e : this.getContext().getObjects(cows.relogo.Fence.class)) {
+			if (e instanceof cows.relogo.Fence){
+				a.add((cows.relogo.Fence)e);
+			}
+		}
+		return a;
+	}
+
+	/**
+	 * Returns the fence with the given who number.
+	 * 
+	 * @param number
+	 *            a number
+	 * @return turtle number
+	 */
+	@ReLogoBuilderGeneratedFor("cows.relogo.Fence")
+	public cows.relogo.Fence fence(Number number){
+		Turtle turtle = Utility.turtleU(number.intValue(), this);
+		if (turtle instanceof cows.relogo.Fence)
+			return (cows.relogo.Fence) turtle;
+		return null;
+	}
+
+	/**
+	 * Returns an agentset of fences on a given patch.
+	 * 
+	 * @param p
+	 *            a patch
+	 * @return agentset of fences on patch p
+	 */
+	@ReLogoBuilderGeneratedFor("cows.relogo.Fence")
+	public AgentSet<cows.relogo.Fence> fencesOn(Patch p){
+		AgentSet<cows.relogo.Fence> result = new AgentSet<cows.relogo.Fence>();						
+		for (Turtle t : Utility.getTurtlesOnGridPoint(p.getGridLocation(),this,"fence")){
+			if (t instanceof cows.relogo.Fence)
+			result.add((cows.relogo.Fence)t);
+		}
+		return result;
+	}
+
+	/**
+	 * Returns an agentset of fences on the same patch as a turtle.
+	 * 
+	 * @param t
+	 *            a turtle
+	 * @return agentset of fences on the same patch as turtle t
+	 */
+	@ReLogoBuilderGeneratedFor("cows.relogo.Fence")
+	public AgentSet<cows.relogo.Fence> fencesOn(Turtle t){
+		AgentSet<cows.relogo.Fence> result = new AgentSet<cows.relogo.Fence>();						
+		for (Turtle tt : Utility.getTurtlesOnGridPoint(Utility.ndPointToGridPoint(t.getTurtleLocation()),this,"fence")){
+			if (tt instanceof cows.relogo.Fence)
+			result.add((cows.relogo.Fence)tt);
+		}
+		return result;
+	}
+
+	/**
+	 * Returns an agentset of fences on the patches in a collection or on the patches
+	 * that a collection of turtles are.
+	 * 
+	 * @param a
+	 *            a collection
+	 * @return agentset of fences on the patches in collection a or on the patches
+	 *         that collection a turtles are
+	 */
+	@ReLogoBuilderGeneratedFor("cows.relogo.Fence")
+	public AgentSet<cows.relogo.Fence> fencesOn(Collection c){
+
+		if (c == null || c.isEmpty()){
+			return new AgentSet<cows.relogo.Fence>();
+		}
+
+		Set<cows.relogo.Fence> total = new HashSet<cows.relogo.Fence>();
+		if (c.iterator().next() instanceof Turtle){
+			for (Object o : c){
+				if (o instanceof Turtle){
+					Turtle t = (Turtle) o;
+					total.addAll(fencesOn(t));
+				}
+			}
+		}
+		else {
+			for (Object o : c){
+				if (o instanceof Patch){
+					Patch p = (Patch) o;
+					total.addAll(fencesOn(p));
+				}
+			}
+		}
+		return new AgentSet<cows.relogo.Fence>(total);
+	}
+
+	/**
 	 * Makes a number of randomly oriented cows and then executes a set of commands on the
 	 * created cows.
 	 * 
@@ -692,27 +879,6 @@ public class ReLogoObserver extends BaseObserver{
 	@ReLogoBuilderGeneratedFor("global: obstacleDensity")
 	public void setObstacleDensity(Object value){
 		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("obstacleDensity",value);
-	}
-
-	/**
-	 * Returns the value of the global variable fieldArea.
-	 *
-	 * @return the value of the global variable fieldArea
-	 */
-	@ReLogoBuilderGeneratedFor("global: fieldArea")
-	public Object getFieldArea(){
-		return repast.simphony.relogo.ReLogoModel.getInstance().getModelParam("fieldArea");
-	}
-
-	/**
-	 * Sets the value of the global variable fieldArea.
-	 *
-	 * @param value
-	 *            a value
-	 */
-	@ReLogoBuilderGeneratedFor("global: fieldArea")
-	public void setFieldArea(Object value){
-		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("fieldArea",value);
 	}
 
 

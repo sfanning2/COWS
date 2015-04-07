@@ -412,6 +412,203 @@ public class ReLogoTurtle extends BaseTurtle{
 	}
 
 	/**
+	 * Makes a number of new fences and then executes a set of commands on the
+	 * created fences.
+	 * 
+	 * @param number
+	 *            a number
+	 * @param closure
+	 *            a set of commands
+	 * @return created fences
+	 */
+	@ReLogoBuilderGeneratedFor("cows.relogo.Fence")
+	public AgentSet<cows.relogo.Fence> hatchFences(int number, Closure closure) {
+		AgentSet<cows.relogo.Fence> result = new AgentSet<>();
+		AgentSet<Turtle> createResult = this.hatch(number,closure,"Fence");
+		for (Turtle t : createResult){
+			if (t instanceof cows.relogo.Fence){
+				result.add((cows.relogo.Fence)t);
+			}
+		} 
+		return result;
+	}
+
+	/**
+	 * Makes a number of new fences and then executes a set of commands on the
+	 * created fences.
+	 * 
+	 * @param number
+	 *            a number
+	 * @param closure
+	 *            a set of commands
+	 * @return created fences
+	 */
+	@ReLogoBuilderGeneratedFor("cows.relogo.Fence")
+	public AgentSet<cows.relogo.Fence> hatchFences(int number) {
+		return hatchFences(number,null);
+	}
+
+	/**
+	 * Returns an agentset of fences from the patch of the caller.
+	 * 
+	 * @return agentset of fences from the caller's patch
+	 */
+	@ReLogoBuilderGeneratedFor("cows.relogo.Fence")
+	public AgentSet<cows.relogo.Fence> fencesHere(){
+	  Grid grid = getMyObserver().getGrid();
+	  GridPoint gridPoint = grid.getLocation(this);
+	  AgentSet<cows.relogo.Fence> result = new AgentSet<cows.relogo.Fence>();
+	  for (Turtle t : Utility.getTurtlesOnGridPoint(gridPoint,getMyObserver(),"fence")){
+			if (t instanceof cows.relogo.Fence)
+			result.add((cows.relogo.Fence)t);
+		}
+		return result;
+	}
+
+	/**
+	 * Returns the agentset of fences on the patch at the direction (ndx, ndy) from the
+	 * caller.
+	 * 
+	 * @param nX
+	 *            a number
+	 * @param nY
+	 *            a number
+	 * @returns agentset of fences at the direction (nX, nY) from the caller
+	 */
+	@ReLogoBuilderGeneratedFor("cows.relogo.Fence")
+	public AgentSet<cows.relogo.Fence> fencesAt(Number nX, Number nY){
+		double dx = nX.doubleValue();
+		double dy = nY.doubleValue();
+		double[] displacement = {dx,dy};
+
+		try{
+		GridPoint gridPoint = Utility.getGridPointAtDisplacement(getTurtleLocation(),displacement,getMyObserver());
+		AgentSet<cows.relogo.Fence> result = new AgentSet<cows.relogo.Fence>();						
+		for (Turtle t : Utility.getTurtlesOnGridPoint(gridPoint,getMyObserver(),"fence")){
+			if (t instanceof cows.relogo.Fence)
+			result.add((cows.relogo.Fence)t);
+		}
+		return result;
+		}
+		catch(SpatialException e){
+			return new AgentSet<cows.relogo.Fence>();
+		}
+	}
+
+	/**
+	 * Returns an agentset of fences on a given patch.
+	 * 
+	 * @param p
+	 *            a patch
+	 * @return agentset of fences on patch p
+	 */
+	@ReLogoBuilderGeneratedFor("cows.relogo.Fence")
+	public AgentSet<cows.relogo.Fence> fencesOn(Patch p){
+		AgentSet<cows.relogo.Fence> result = new AgentSet<cows.relogo.Fence>();						
+		for (Turtle t : Utility.getTurtlesOnGridPoint(p.getGridLocation(),getMyObserver(),"fence")){
+			if (t instanceof cows.relogo.Fence)
+			result.add((cows.relogo.Fence)t);
+		}
+		return result;
+	}
+
+	/**
+	 * Returns an agentset of fences on the same patch as a turtle.
+	 * 
+	 * @param t
+	 *            a turtle
+	 * @return agentset of fences on the same patch as turtle t
+	 */
+	@ReLogoBuilderGeneratedFor("cows.relogo.Fence")
+	public AgentSet<cows.relogo.Fence> fencesOn(Turtle t){
+		AgentSet<cows.relogo.Fence> result = new AgentSet<cows.relogo.Fence>();						
+		for (Turtle tt : Utility.getTurtlesOnGridPoint(Utility.ndPointToGridPoint(t.getTurtleLocation()),getMyObserver(),"fence")){
+			if (tt instanceof cows.relogo.Fence)
+			result.add((cows.relogo.Fence)tt);
+		}
+		return result;
+	}
+
+	/**
+	 * Returns an agentset of fences on the patches in a collection or on the patches
+	 * that a collection of turtles are.
+	 * 
+	 * @param a
+	 *            a collection
+	 * @return agentset of fences on the patches in collection a or on the patches
+	 *         that collection a turtles are
+	 */
+	@ReLogoBuilderGeneratedFor("cows.relogo.Fence")
+	public AgentSet<cows.relogo.Fence> fencesOn(Collection c){
+
+		if (c == null || c.isEmpty()){
+			return new AgentSet<cows.relogo.Fence>();
+		}
+
+		Set<cows.relogo.Fence> total = new HashSet<cows.relogo.Fence>();
+		if (c.iterator().next() instanceof Turtle){
+			for (Object o : c){
+				if (o instanceof Turtle){
+					Turtle t = (Turtle) o;
+					total.addAll(fencesOn(t));
+				}
+			}
+		}
+		else {
+			for (Object o : c){
+				if (o instanceof Patch){
+					Patch p = (Patch) o;
+					total.addAll(fencesOn(p));
+				}
+			}
+		}
+		return new AgentSet<cows.relogo.Fence>(total);
+	}
+
+	/**
+	 * Queries if object is a fence.
+	 * 
+	 * @param o
+	 *            an object
+	 * @return true or false based on whether the object is a fence
+	 */
+	@ReLogoBuilderGeneratedFor("cows.relogo.Fence")
+	public boolean isFenceQ(Object o){
+		return (o instanceof cows.relogo.Fence);
+	}
+
+	/**
+	 * Returns an agentset containing all fences.
+	 * 
+	 * @return agentset of all fences
+	 */
+	@ReLogoBuilderGeneratedFor("cows.relogo.Fence")
+	public AgentSet<cows.relogo.Fence> fences(){
+		AgentSet<cows.relogo.Fence> a = new AgentSet<cows.relogo.Fence>();
+		for (Object e : this.getMyObserver().getContext().getObjects(cows.relogo.Fence.class)) {
+			if (e instanceof cows.relogo.Fence){
+				a.add((cows.relogo.Fence)e);
+			}
+		}
+		return a;
+	}
+
+	/**
+	 * Returns the fence with the given who number.
+	 * 
+	 * @param number
+	 *            a number
+	 * @return turtle number
+	 */
+	@ReLogoBuilderGeneratedFor("cows.relogo.Fence")
+	public cows.relogo.Fence fence(Number number){
+		Turtle turtle = Utility.turtleU(number.intValue(), getMyObserver());
+		if (turtle instanceof cows.relogo.Fence)
+			return (cows.relogo.Fence) turtle;
+		return null;
+	}
+
+	/**
 	 * Makes a number of new cows and then executes a set of commands on the
 	 * created cows.
 	 * 
@@ -606,6 +803,48 @@ public class ReLogoTurtle extends BaseTurtle{
 		if (turtle instanceof cows.relogo.Cow)
 			return (cows.relogo.Cow) turtle;
 		return null;
+	}
+
+	/**
+	 * Returns the value from the getPatch_var01() method of the underlying patch.
+	 * 
+	 * @return getPatch_var01() of type java.lang.Object
+	 */
+	@ReLogoBuilderGeneratedFor("cows.relogo.UserPatch")
+	public java.lang.Object getPatch_var01(){
+		cows.relogo.UserPatch p = (cows.relogo.UserPatch)patchHere();
+		return p.getPatch_var01();
+	}
+
+	/**
+	 * Calls the setPatch_var01(java.lang.Object) method of the underlying patch.
+	 * 
+	 */
+	@ReLogoBuilderGeneratedFor("cows.relogo.UserPatch")
+	public void setPatch_var01(java.lang.Object value){
+		cows.relogo.UserPatch p = (cows.relogo.UserPatch)patchHere();
+		p.setPatch_var01(value);
+	}
+
+	/**
+	 * Returns the value from the getPatchvar02() method of the underlying patch.
+	 * 
+	 * @return getPatchvar02() of type java.lang.Object
+	 */
+	@ReLogoBuilderGeneratedFor("cows.relogo.UserPatch")
+	public java.lang.Object getPatchvar02(){
+		cows.relogo.UserPatch p = (cows.relogo.UserPatch)patchHere();
+		return p.getPatchvar02();
+	}
+
+	/**
+	 * Calls the setPatchvar02(java.lang.Object) method of the underlying patch.
+	 * 
+	 */
+	@ReLogoBuilderGeneratedFor("cows.relogo.UserPatch")
+	public void setPatchvar02(java.lang.Object value){
+		cows.relogo.UserPatch p = (cows.relogo.UserPatch)patchHere();
+		p.setPatchvar02(value);
 	}
 
 	/**
@@ -1004,27 +1243,6 @@ public class ReLogoTurtle extends BaseTurtle{
 	@ReLogoBuilderGeneratedFor("global: obstacleDensity")
 	public void setObstacleDensity(Object value){
 		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("obstacleDensity",value);
-	}
-
-	/**
-	 * Returns the value of the global variable fieldArea.
-	 *
-	 * @return the value of the global variable fieldArea
-	 */
-	@ReLogoBuilderGeneratedFor("global: fieldArea")
-	public Object getFieldArea(){
-		return repast.simphony.relogo.ReLogoModel.getInstance().getModelParam("fieldArea");
-	}
-
-	/**
-	 * Sets the value of the global variable fieldArea.
-	 *
-	 * @param value
-	 *            a value
-	 */
-	@ReLogoBuilderGeneratedFor("global: fieldArea")
-	public void setFieldArea(Object value){
-		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("fieldArea",value);
 	}
 
 

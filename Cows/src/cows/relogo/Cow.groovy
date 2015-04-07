@@ -12,7 +12,6 @@ import cows.ReLogoTurtle;
 
 class Cow extends ReLogoTurtle {
 	public double speed;
-	public double orientation;
 	public double flightZoneRadius;
 	public double width;
 	public double length;
@@ -22,11 +21,21 @@ class Cow extends ReLogoTurtle {
 	
 	def step(){
 		//make sure doesn't hit another cow
-		while(count(other(turtlesHere()))>0){
-			setxy(randomPxcor(), randomPycor())
-		}
+		forward(1)
 	}
 	def graze(){
 		
+	}
+	def setSpeed(double speed){
+		this.speed = speed
+	}
+	def setAnxietyLevel(double level){
+		this.anxietyLevel = level
+	}
+	def setAnxietyThreshold(double level){
+		this.anxietyThreshold = level
+	}
+	def setIndependenceLevel(double level){
+		this.independenceLevel = level
 	}
 }
