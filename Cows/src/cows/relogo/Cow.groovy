@@ -16,13 +16,13 @@ import cows.ReLogoTurtle;
 import java.util.logging.Handler
 
 class Cow extends ReLogoTurtle {
-	public double speed;
-	public double flightZoneRadius;
-	public double width;
-	public double length;
-	public double independenceLevel;
-	public double anxietyLevel;
-	public double anxietyThreshold;
+	def double speed;
+	def double flightZoneRadius;
+	def double width;
+	def double length;
+	def double independenceLevel;
+	def double anxietyLevel;
+	def double anxietyThreshold;
 	
 	/*def updateAnxietyLevel() {
 		//returns set of handlers in flight zone
