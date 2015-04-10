@@ -16,7 +16,7 @@ class Herder extends ReLogoTurtle {
 	public double width;
 	public double length;
 	public String currentTask;
-	
+	public double currentTaskAnxiety;
 	def herd(){
 		
 	} 

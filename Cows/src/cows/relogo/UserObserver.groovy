@@ -3,6 +3,7 @@ package cows.relogo
 
 import static repast.simphony.relogo.Utility.*;
 import static repast.simphony.relogo.UtilityG.*;
+import repast.simphony.relogo.Patch
 import repast.simphony.relogo.Stop;
 import repast.simphony.relogo.Utility;
 import repast.simphony.relogo.UtilityG;
@@ -25,6 +26,15 @@ class UserObserver extends ReLogoObserver{
 			setDefaultShape(Fence, "x")
 			createFenceAroundField()
 			
+			setDefaultShape(Tree, "tree")
+			double sqarea = worldHeight()*worldWidth()
+			int numTrees =  (int)obstacleDensity *sqarea / 36
+			createTrees(numTrees){
+				size = 6
+				while(count(inRadius(turtles(), 6))>1){
+					setxy(randomPxcor(), randomPycor())
+				}
+			}
 			setDefaultShape(Cow, "fish")
 			
 			createCows(numCows){
@@ -35,7 +45,7 @@ class UserObserver extends ReLogoObserver{
 				while(count(inRadius(turtles(), 6))>1){
 					setxy(randomPxcor(), randomPycor())
 				}
-
+			
 				double s = randomGenerator.nextGaussian() * 0.5
 				if(s<0){
 					s = 0
@@ -67,15 +77,10 @@ class UserObserver extends ReLogoObserver{
 			}
 			
 
-			setDefaultShape(Tree, "tree")
-			createTrees((int)(obstacleDensity*100)){
-				size = 6
-				while(count(other(turtlesHere()))>0){
-					setxy(randomPxcor(), randomPycor())
-				}
+			
 			}
 
-	}
+	
 		
 	
 		@Go
