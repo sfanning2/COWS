@@ -19,8 +19,8 @@ import java.awt.Point
 import java.util.List;
 
 class Herder extends ReLogoTurtle {
-	def double visionRadius = 10
-	def double speed = 1.0
+	def double visionRadius = 30
+	def double speed = 3.0
 	//	def double orientation
 	def double width
 	def double length
@@ -80,7 +80,7 @@ class Herder extends ReLogoTurtle {
 			pathFinder.getdStarLitePF().updateStart((int)myLoc.x, (int)myLoc.y)
 		}
 		NdPoint goal = targetedCow.getTurtleLocation()
-		targetedCow.patchHere().setPcolor(5)
+//		targetedCow.patchHere().setPcolor(5)
 		this.pathFinder.updateGoal((int)goal.x, (int)goal.y)
 		this.pathFinder.setCurrentCows(this.getCowsInVision())
 		this.pathFinder.replan();
@@ -90,7 +90,7 @@ class Herder extends ReLogoTurtle {
 			State nextState = path.get(1)
 			this.facexy(nextState.x, nextState.y)
 			this.move(speed)
-			this.patchHere().setPcolor(yellow())
+//			this.patchHere().setPcolor(yellow())
 		}
 		return true
 	}
@@ -190,7 +190,7 @@ class Herder extends ReLogoTurtle {
 		double x = sumX/(double)points.size()
 		double y = sumY/(double)points.size()
 		Patch center = (this.patch(x,y))
-		center.setPcolor(15)
+//		center.setPcolor(15)
 		return new NdPoint(x,y)
 	}
 
