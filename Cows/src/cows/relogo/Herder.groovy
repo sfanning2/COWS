@@ -19,7 +19,7 @@ import java.awt.Point
 import java.util.List;
 
 class Herder extends ReLogoTurtle {
-	def double visionRadius = 50
+	def double visionRadius = 10
 	def double speed = 1.0
 	//	def double orientation
 	def double width
@@ -138,6 +138,7 @@ class Herder extends ReLogoTurtle {
 	}
 
 	/**
+	 * TODO
 	 * @return up to three herders that are closest
 	 * to this herder
 	 */
@@ -146,7 +147,7 @@ class Herder extends ReLogoTurtle {
 	}
 
 	/**
-	 * 
+	 * TODO
 	 * @return Set of coordinates representing the center
 	 * of the herd as seen by the individual herders
 	 */
