@@ -8,8 +8,12 @@ import repast.simphony.relogo.Utility;
 import repast.simphony.relogo.UtilityG;
 import repast.simphony.relogo.schedule.Go;
 import repast.simphony.relogo.schedule.Setup;
+import repast.simphony.space.continuous.NdPoint
 import cows.ReLogoTurtle;
+import cows.dstarlite.State
+
 import java.awt.Point
+import java.util.List;
 
 class Herder extends ReLogoTurtle {
 	def double visionRange = 5
@@ -20,6 +24,7 @@ class Herder extends ReLogoTurtle {
 	def String currentTask
 	def Role role
 	def Cow targetedCow
+	def PathFinder pathFinder
 	
 	enum Role {
 		Grouper,
@@ -43,26 +48,54 @@ class Herder extends ReLogoTurtle {
 		}
 	} 
 	
-	def groupCows() {
+	/**
+	 * Gather straggling cows
+	 * @return
+	 */
+	def boolean groupCows() {
 		/* get the center of the herd */
 		def center = getCenter()
 		/* lock onto a straggler cow if necessary */
 		/* In the future, add herder communication to prevent duplicate lock-ons */
 		if (!targetedCow) {
-			getFurthestCow()
+			targetedCow = getFurthestCow()
+			if (null == targetedCow) {
+				// switch roles
+				return false
+			}
 		}
+		/* check if cow has joined group (and untarget cow if so)*/
+		/* if it is near other cows and near the center */
+		/* move toward appropriate placement around cow if necessary */
+		/* for now just move towards the cow */
+		NdPoint myLoc = this.getTurtleLocation();
+		if (!pathFinder) pathFinder = new PathFinder(myLoc, myLoc)
+		NdPoint goal = targetedCow.getTurtleLocation()
+		this.pathFinder.updateGoal(goal.x, goal.y)
+		this.pathFinder.setCurrentCows(this.getCowsInVision())
+		this.pathFinder.replan();
+		List<State> path = pathFinder.getPath();
+		/* do something with path */
 		
 	}
-	
-	
-	
+		
+	/**
+	 * Try to move the group
+	 * @return
+	 */
 	def moveCows() {
-		
+		/* get the center of the herd */
+		def center = getCenter()
+		/* try to position self behind the herd */
+		/* TODO */
 	}
 	
-	def getCenter() {
+	def Point getCenter() {
 		Point myCenter = getHerdCenter()
-		List<Point> otherCenters = communicateCenters()
+		List<Point> centers = communicateCenters()
+		centers.add(myCenter)
+		Point center = computeCenter(centers)
+		return center
 	}
 	
 	/**
