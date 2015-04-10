@@ -20,18 +20,14 @@ class PathFinder {
 
 
 	PathFinder(NdPoint start, NdPoint goal) {
-		this(new Point(start.x, start.y), new Point(goal.x, goal.y))
-	}
-
-	PathFinder(Point start, Point goal) {
 		this.dStarLitePF = new DStarLite()
-		dStarLitePF.init(start.x, start.y, goal.x, goal.y)
+		dStarLitePF.init((int)start.x, (int)start.y, (int)goal.x, (int)goal.y)
 		/* static cell updates */
 		// update edge cells
 		// update fence cells
 		// update tree cells
 
-		/* dynamic cell updates must be passed*/		
+		/* dynamic cell updates must be passed*/
 	}
 
 	/**
@@ -42,7 +38,7 @@ class PathFinder {
 		/* update cells for old cows */
 		if (this.prevCowLocations != null)
 			for (NdPoint location : this.prevCowLocations) {
-				this.updateCell(location.x, location.y, 1)
+				this.updateCell((int)location.x, (int)location.y, 1)
 			}
 		this.prevCowLocations = null
 		/* update cells for new cows */
@@ -54,7 +50,7 @@ class PathFinder {
 				double x = location.x
 				double y = location.y
 				this.prevCowLocations.add(new NdPoint(x, y))
-				this.updateCell(x, y, -1)
+				this.updateCell((int)x, (int)y, -1)
 			}
 		}
 	}
@@ -67,7 +63,7 @@ class PathFinder {
 		/* update cells for old herders */
 		if (this.prevHerderLocations != null)
 			for (NdPoint location : this.prevHerderLocations) {
-				this.updateCell(location.x, location.y, 1)
+				this.updateCell((int)location.x, (int)location.y, 1)
 			}
 		this.prevHerderLocations = null
 		/* update cells for new herders */
@@ -79,7 +75,7 @@ class PathFinder {
 				double x = location.x
 				double y = location.y
 				this.prevHerderLocations.add(new NdPoint(x, y))
-				this.updateCell(x, y, -1)
+				this.updateCell((int)x, (int)y, -1)
 			}
 		}
 	}

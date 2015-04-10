@@ -50,7 +50,6 @@ class UserObserver extends ReLogoObserver{
 				herd()
 			}
 			ask(cows()){
-				forward(10)
 				step()
 			}
 		}
