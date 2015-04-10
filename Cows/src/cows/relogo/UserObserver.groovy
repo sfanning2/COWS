@@ -46,7 +46,7 @@ class UserObserver extends ReLogoObserver{
 					setxy(randomPxcor(), randomPycor())
 				}
 			
-				double s = randomGenerator.nextGaussian() * 0.5
+				/*double s = randomGenerator.nextGaussian() * 0.5
 				if(s<0){
 					s = 0
 				}else if(s>3){
@@ -63,7 +63,11 @@ class UserObserver extends ReLogoObserver{
 				setIndependenceLevel(randomGenerator.nextInt(8))
 
 				setFlightZoneRadius(randomGenerator.nextInt(3)+1); // Generates integer between 1 and 3
+				*/
 
+				flightZoneRadius = Utility.random(5) + 2; // Generates integer between 2 and 6
+				anxietyLevel = 1
+				anxietyThreshold = Utility.random(30)+ 21
 			}
 			setDefaultShape(Herder, "person")
 			createHerders(numHerders){
@@ -76,7 +80,6 @@ class UserObserver extends ReLogoObserver{
 				}
 			}
 			
-
 			
 			}
 
