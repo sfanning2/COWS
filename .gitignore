@@ -3,6 +3,16 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
+# src gen
+Cows/src-gen/
+
+# logs
+*.log
+
+# settings
+*.settings
+*.launch
+
 # Package Files #
 *.jar
 *.war
