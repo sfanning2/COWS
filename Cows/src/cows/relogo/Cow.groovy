@@ -52,6 +52,7 @@ class Cow extends ReLogoTurtle {
 					}
 				}
 			}
+			
 			forward(1)
 		
 		//If herder is in range

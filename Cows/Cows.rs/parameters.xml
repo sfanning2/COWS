@@ -2,7 +2,9 @@
 <parameters>
 
 	<parameter name="randomSeed" displayName="Default Random Seed" type="int" defaultValue="__NULL__" />
-	<parameter name="field_width" displayName="Field_Width" type="int" defaultValue="100"/>
-	<parameter name="field_height" displayName="Field_Height" type="int" defaultValue="100"/>
-
+	<parameter name="field_area" displayName="Field_Area" type="int" defaultValue="10000" isReadOnly="false"></parameter>
+	<parameter name="numCows" displayName="Number_of_Cows" type="int" defaultValue="100" isReadOnly="false"></parameter>
+	<parameter name="numHerders" displayName="Number_Of_Herders" type="int" defaultValue="5" isReadOnly="false"></parameter>
+	<parameter name="obstacleDensity" displayName="Obstacle_Density" type="double" defaultValue="0" isReadOnly="false"></parameter>
+	
 </parameters>

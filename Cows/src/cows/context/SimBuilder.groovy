@@ -31,13 +31,13 @@ public class SimBuilder implements ContextBuilder {
 		Parameters p = RunEnvironment.getInstance().getParameters();
 		
 		//field_width and field_height 
-		int x = Math.floor(p.getValue("field_width")/2);
-		int y = Math.floor(p.getValue("field_height")/2);
+		int x = Math.floor(Math.sqrt(p.getValue("field_area"))/2);
+		
 		// NOTE: minPxcor and minPycor must be <= 0
 		int minPxcor = -x
 		int maxPxcor = x
-		int minPycor = -y
-		int maxPycor = y
+		int minPycor = -x
+		int maxPycor = x
 		//non-toroidal world
 		RLWorldDimensions rLWorldDimensions = new RLWorldDimensions(minPxcor, maxPxcor, minPycor, maxPycor, new repast.simphony.space.continuous.BouncyBorders());
 		

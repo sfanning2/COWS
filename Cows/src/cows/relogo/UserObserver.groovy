@@ -11,6 +11,7 @@ import repast.simphony.relogo.schedule.Go;
 import repast.simphony.relogo.schedule.Setup;
 import cows.ReLogoObserver;
 import java.util.Random;
+import repast.simphony.parameter.Parameters;
 
 class UserObserver extends ReLogoObserver{
 	
@@ -19,6 +20,11 @@ class UserObserver extends ReLogoObserver{
 		@Setup
 		def setup(){
 			clearAll()
+			
+//			Parameters params = RunEnvironment.getInstance().getParameters()
+//			obstacleDensity = params.getValue("obstacleDensity")
+//			numHerders = params.getValue("numHerders")
+//			numCows = params.getValue("numCows")
 			Random randomGenerator = new Random()
 			for (UserPatch p : patches()){
 				p.pcolor = 62
@@ -74,10 +80,7 @@ class UserObserver extends ReLogoObserver{
 				while(count(inRadius(turtles(), 3))>1){
 					setxy(randomPxcor(), randomPycor())
 				}
-			}
-			
-
-			
+				}
 			}
 
 	
@@ -86,7 +89,7 @@ class UserObserver extends ReLogoObserver{
 		@Go
 		def go(){
 			ask(herders()){
-				herd()
+				step()
 			}
 			ask(cows()){
 				step()
