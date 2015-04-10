@@ -24,7 +24,9 @@ class UserObserver extends ReLogoObserver{
 				while(count(other(turtlesHere()))>0){
 					setxy(randomPxcor(), randomPycor())
 				}
-				flightZoneRadius = Utility.random(3)+1; // Generates integer between 1 and 3
+				flightZoneRadius = Utility.random(5) + 2; // Generates integer between 2 and 6
+				anxietyLevel = 1
+				anxietyThreshold = Utility.random(30)+ 21
 			}
 			setDefaultShape(Herder, "person")
 			createHerders(numHerders){
