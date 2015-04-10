@@ -90,6 +90,7 @@ class Cow extends ReLogoTurtle {
 				direction = 337
 			}
 			distance = Utility.random(2) + 2 // Movement is 2 or 3
+			anxietyLevel -= 3 //Cows moving in a group become less stressed
 			// Alternate movement specification; implement if time exist
 			// If cows are moving together
 				// Cow movement along with the other cows
@@ -98,16 +99,20 @@ class Cow extends ReLogoTurtle {
 				// Increase anxiety
 		}
 		//Check anxiety level against threshold and override other movement if over
-		//If the desired movement runs into a fence, cow, or tree
-			//Have the cow move up to the object
-			//Have the cow move along the object
-		//Else
-			// Move as already computed
-			move(distance)
-			setHeading((double) direction)
+		if (anxietyLevel > anxietyThreshold ) {
+			distance = Utility.random(4)+2
+			direction = Utility.random(360)
+			anxietyLevel -= 2
+		}
+		
+		move(distance)
+		setHeading((double) direction)
+		
+		//Cow avoids other turtles 
+		
+		
+		
 		//Check if cow ended up in the endpoint
 
-		//Decrease cow anxiety
-		
 	}
 }
