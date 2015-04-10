@@ -3,15 +3,20 @@ package cows.relogo
 import static repast.simphony.relogo.Utility.*;
 import static repast.simphony.relogo.UtilityG.*;
 import repast.simphony.relogo.AgentSet
+import repast.simphony.relogo.Patch
 import repast.simphony.relogo.Plural;
 import repast.simphony.relogo.Stop;
 import repast.simphony.relogo.Utility;
 import repast.simphony.relogo.UtilityG;
 import repast.simphony.relogo.schedule.Go;
 import repast.simphony.relogo.schedule.Setup;
+import repast.simphony.space.continuous.ContinuousSpace;
 import cows.ReLogoTurtle;
 
+import java.util.logging.Handler
+
 class Cow extends ReLogoTurtle {
+	def double speed;
 	def double flightZoneRadius;
 	def double width;
 	def double length;
@@ -19,11 +24,39 @@ class Cow extends ReLogoTurtle {
 	def double anxietyLevel;
 	def double anxietyThreshold;
 	
+	/*def updateAnxietyLevel() {
+		//returns set of handlers in flight zone
+		AgentSet herders = inRadius(herders(), flightZoneRadius)
+		//herders in blind spot
+				
+		//increase anxiety level based on herder's actions
+		for(Herder h: herders){
+			anxietyLevel +=  h.currentTaskAnxiety
+		}
+		
+	} */
 	def step(){
-		
-		
-		def distance = 1
+
+		/*def distance = 0.1
+		def direction = 30
+		//every time cow steps check if they are in the pen  
+			int maxY = getMaxPycor()
+			int minX  = getMaxPxcor()
+			Patch p = patchHere()
+			//iterate over patches
+			for(int j = maxY-10; j <= maxY; j++){
+				if(p.pxcor == minX || p.pxcor == minX-1|| p.pxcor == minX-2){
+					if(p.pycor == j){
+						die()
+						return
+					}
+				}
+			}
+			forward(1)*/
+
+		def distance = 0
 		def direction = this.heading // Defaults are to not move and remain facing the same direction
+
 		
 
 		def herdersInRange = inRadius(herders(), flightZoneRadius)
@@ -96,6 +129,7 @@ class Cow extends ReLogoTurtle {
 				// Increase anxiety
 		}
 		//Check anxiety level against threshold and override other movement if over
+
 		if (anxietyLevel > anxietyThreshold ) {
 			distance = Utility.random(4)+2
 			direction = Utility.random(360)
@@ -111,5 +145,20 @@ class Cow extends ReLogoTurtle {
 		
 		//Check if cow ended up in the endpoint
 
+	}
+	def setSpeed(double speed){
+		this.speed = speed
+	}
+	def setAnxietyLevel(double level){
+		this.anxietyLevel = level
+	}
+	def setAnxietyThreshold(double level){
+		this.anxietyThreshold = level
+	}
+	def setIndependenceLevel(double level){
+		this.independenceLevel = level
+	}
+	def setFlightZoneRadius( double level){
+		this.flightZoneRadius = level
 	}
 }
