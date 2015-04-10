@@ -90,6 +90,7 @@ class Herder extends ReLogoTurtle {
 			State nextState = path.get(1)
 			this.facexy(nextState.x, nextState.y)
 			this.move(speed)
+			this.patchHere().setPcolor(yellow())
 		}
 		return true
 	}
@@ -128,10 +129,10 @@ class Herder extends ReLogoTurtle {
 	 * @return The cow furthest from the center of the group
 	 */
 	def Cow getFurthestCow(NdPoint point) {
-		Patch myLoc = this.patchAt(point.x, point.y)
+		Patch myLoc = this.patch(point.x, point.y)
 		List<Cow> cowsInVision = this.getCowsInVision()
 
-		Cow farCow = minOneOf ( cowsInVision ){ p -> distance (myLoc) }
+		Cow farCow = maxOneOf ( cowsInVision ){ p -> distance (myLoc) }
 		
 		return farCow
 	}
@@ -179,15 +180,17 @@ class Herder extends ReLogoTurtle {
 		if (points.size() <= 0) {
 			throw new IllegalArgumentException("Must supply at least one point")
 		}
-		double sumX = 0
-		double sumY = 0
+		double sumX = 0.0
+		double sumY = 0.0
 		for (NdPoint point : points) {
 			sumX += point.x
 			sumY += point.y
 		}
-		Patch center = (this.patchAt(sumX/points.size(),sumY/points.size()))
+		double x = sumX/(double)points.size()
+		double y = sumY/(double)points.size()
+		Patch center = (this.patch(x,y))
 		center.setPcolor(15)
-		return new NdPoint(sumX/points.size(),sumY/points.size())
+		return new NdPoint(x,y)
 	}
 
 }
