@@ -64,10 +64,15 @@ class UserObserver extends ReLogoObserver{
 
 				setFlightZoneRadius(randomGenerator.nextInt(3)+1); // Generates integer between 1 and 3
 				*/
-
+				heading = Utility.random(360)
 				flightZoneRadius = Utility.random(5) + 2; // Generates integer between 2 and 6
 				anxietyLevel = 1
-				anxietyThreshold = Utility.random(30)+ 21
+				double t = randomGenerator.nextGaussian()*8 + 21
+				if(t<21){
+					t=21
+				}
+				anxietyThreshold = t
+				
 			}
 			setDefaultShape(Herder, "person")
 			createHerders(numHerders){
