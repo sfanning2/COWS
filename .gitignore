@@ -10,6 +10,7 @@ Cows/src-gen/
 *.log
 
 # settings
+*.settings
 
 # Package Files #
 *.jar
