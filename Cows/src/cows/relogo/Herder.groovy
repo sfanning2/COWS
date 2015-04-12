@@ -2,6 +2,8 @@ package cows.relogo
 
 import static repast.simphony.relogo.Utility.*;
 import static repast.simphony.relogo.UtilityG.*;
+import org.jscience.mathematics.vector.DenseVector
+import org.jscience.physics.amount.Amount;
 import repast.simphony.relogo.AgentSet
 import repast.simphony.relogo.Patch
 import repast.simphony.relogo.Plural;
@@ -17,19 +19,20 @@ import cows.dstarlite.State
 
 import java.awt.Point
 import java.util.List;
+import javax.measure.VectorMeasure
+
+import static javax.measure.unit.Unit.ONE;
 
 class Herder extends ReLogoTurtle {
-
-	def int pressure
-	def double visionRadius = 30
+	def double visionRadius = 60
 	def double speed = 3.0
-	//	def double orientation
 	def double width
 	def double length
-	//	def String currentTask
-	def Role role = "Mover" as Role
+	def Role role = "Grouper" as Role
 	def Cow targetedCow
 	def PathFinder pathFinder
+
+	def boolean needsUpdate = true
 
 	enum Role {
 		Grouper,
@@ -45,8 +48,7 @@ class Herder extends ReLogoTurtle {
 			}
 		}
 
-		else
-		{
+		else {
 			if (false == moveCows()) {
 				/* spend the turn switching roles */
 				role = "Grouper" as Role
@@ -73,6 +75,9 @@ class Herder extends ReLogoTurtle {
 			}
 		}
 		/* check if cow has joined group (and untarget cow if so)*/
+		
+		
+		
 		/* if it is near other cows and near the center */
 		/* move toward appropriate placement around cow if necessary */
 		/* for now just move towards the cow */
@@ -82,8 +87,10 @@ class Herder extends ReLogoTurtle {
 		}else{
 			pathFinder.getdStarLitePF().updateStart((int)myLoc.x, (int)myLoc.y)
 		}
-		NdPoint goal = targetedCow.getTurtleLocation()
-//		targetedCow.patchHere().setPcolor(5)
+
+		NdPoint goal = Herder.getPositionToGroupCow(this.center, targetedCow.getTurtleLocation(), 5.0)
+		//targetedCow.getTurtleLocation()
+		//		targetedCow.patchHere().setPcolor(5)
 		this.pathFinder.updateGoal((int)goal.x, (int)goal.y)
 		this.pathFinder.setCurrentCows(this.getCowsInVision())
 		this.pathFinder.replan();
@@ -93,10 +100,30 @@ class Herder extends ReLogoTurtle {
 			State nextState = path.get(1)
 			this.facexy(nextState.x, nextState.y)
 			this.move(speed)
-//			this.patchHere().setPcolor(yellow())
+			//			this.patchHere().setPcolor(yellow())
 		}
 		return true
 	}
+
+	static def NdPoint getPositionToGroupCow(NdPoint dest, NdPoint cowLocation, double standingDist) {
+		// Position like points in a line: Herder - Cow - Destination
+		// Determine point 6ft from cow (-6ft along line)
+		DenseVector destVector = DenseVector.valueOf( Amount.valueOf(dest.x, ONE),  Amount.valueOf(dest.y, ONE) )
+		DenseVector cowVector = DenseVector.valueOf(  Amount.valueOf(cowLocation.x, ONE), Amount.valueOf(cowLocation.y, ONE))
+		DenseVector<Amount> diffVector = cowVector.minus(destVector)
+		
+		VectorMeasure magCalculator = VectorMeasure.valueOf(diffVector.get(0).doubleValue(ONE), diffVector.get(1).doubleValue(ONE), ONE)
+		double magnitude = magCalculator.doubleValue(ONE)
+		
+		
+		DenseVector diffUnit = diffVector.times(Amount.valueOf(1.0/magnitude, ONE))		
+		DenseVector standingDestVector = diffUnit.times(Amount.valueOf(standingDist, ONE))
+		DenseVector locVector = cowVector.plus(standingDestVector)
+		
+		
+		return new NdPoint(locVector.get(0).doubleValue(ONE), locVector.get(1).doubleValue(ONE))
+	}
+
 
 	/**
 	 * Try to move the group
@@ -218,7 +245,7 @@ class Herder extends ReLogoTurtle {
 		List<Cow> cowsInVision = this.getCowsInVision()
 
 		Cow farCow = maxOneOf ( cowsInVision ){ p -> distance (myLoc) }
-		
+
 		return farCow
 	}
 	def Cow getLeftmostCow(NdPoint point){
@@ -298,7 +325,7 @@ class Herder extends ReLogoTurtle {
 		double x = sumX/(double)points.size()
 		double y = sumY/(double)points.size()
 		Patch center = (this.patch(x,y))
-//		center.setPcolor(15)
+		//		center.setPcolor(15)
 		return new NdPoint(x,y)
 	}
 

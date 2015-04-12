@@ -37,8 +37,7 @@ class Cow extends ReLogoTurtle {
 	} */
 	def step(){
 
-		/*def distance = 0.1
-		def direction = 30
+
 		//every time cow steps check if they are in the pen  
 			int maxY = getMaxPycor()
 			int minX  = getMaxPxcor()
@@ -52,7 +51,7 @@ class Cow extends ReLogoTurtle {
 					}
 				}
 			}
-			forward(1)*/
+
 
 		def distance = 0
 		def direction = this.heading // Defaults are to not move and remain facing the same direction

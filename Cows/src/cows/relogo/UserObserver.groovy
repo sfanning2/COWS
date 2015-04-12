@@ -13,7 +13,10 @@ import cows.ReLogoObserver;
 import java.util.Random;
 
 class UserObserver extends ReLogoObserver{
-	
+	enum Role {
+		Grouper,
+		Mover
+	}
 	 /*Observer methods*/
 
 		@Setup
@@ -104,6 +107,7 @@ class UserObserver extends ReLogoObserver{
 	 def remainingCows() {
 		 count(cows())
 	 }
+
 	 def createFenceAroundField(){
 		 int maxX = getMaxPxcor()
 		 int maxY = getMaxPycor()
