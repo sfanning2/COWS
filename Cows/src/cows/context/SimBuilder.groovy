@@ -30,6 +30,9 @@ public class SimBuilder implements ContextBuilder {
 		 
 		Parameters p = RunEnvironment.getInstance().getParameters();
 		
+		
+		
+		
 		//field_width and field_height 
 		int x = Math.floor(Math.sqrt(p.getValue("field_area"))/2);
 		

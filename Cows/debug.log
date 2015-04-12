@@ -1,0 +1,265 @@
+FATAL [Thread-7] 2015-04-10 16:45:12,362 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (0.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.controller.ScheduledMethodControllerAction$ScheduleMethodAllAction.execute(ScheduledMethodControllerAction.java:333)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at cows.relogo.UserObserver$$FastClassByCGLIB$$4c312ecb.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 7 more
+Caused by: groovy.lang.MissingPropertyException: No such property: RunEnvironment for class: cows.relogo.UserObserver
+	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.unwrap(ScriptBytecodeAdapter.java:50)
+	at org.codehaus.groovy.runtime.callsite.GetEffectivePogoPropertySite.getProperty(GetEffectivePogoPropertySite.java:86)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callGroovyObjectGetProperty(AbstractCallSite.java:231)
+	at cows.relogo.UserObserver.setup(UserObserver.groovy:24)
+	... 10 more
+INFO  [AWT-EventQueue-0] 2015-04-10 16:46:18,754 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Lynnea\Documents\GitHub\COWS\Cows\output\config.props
+INFO  [AWT-EventQueue-0] 2015-04-10 16:46:18,920 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Lynnea\Documents\GitHub\COWS\Cows\batch\batch_params.xml to
+	C:\Users\Lynnea\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-10 16:46:35,389 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\Lynnea\AppData\Local\Temp\Lynnea_localhost8253613613737878567.zip to 
+C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428702390950 ...
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-10 16:46:35,428 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-10 16:46:35,431 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0.0746
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-10 16:46:35,431 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428702390950\Lynnea_localhost8253613613737878567.zip
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-10 16:46:36,521 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [Thread-3] 2015-04-10 16:47:06,987 repast.simphony.batch.ssh.LocalSession - FATAL [Thread-2] 16:47:06,901 repast.simphony.batch.BatchScheduleRunner - BatchSchedule.execute: error when running the schedule
+INFO  [Thread-3] 2015-04-10 16:47:06,987 repast.simphony.batch.ssh.LocalSession - Current tick (0.0)
+INFO  [Thread-3] 2015-04-10 16:47:06,987 repast.simphony.batch.ssh.LocalSession - java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+INFO  [Thread-3] 2015-04-10 16:47:06,987 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+INFO  [Thread-3] 2015-04-10 16:47:06,987 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.engine.controller.ScheduledMethodControllerAction$ScheduleMethodAllAction.execute(ScheduledMethodControllerAction.java:333)
+INFO  [Thread-3] 2015-04-10 16:47:06,988 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+INFO  [Thread-3] 2015-04-10 16:47:06,988 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+INFO  [Thread-3] 2015-04-10 16:47:06,988 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+INFO  [Thread-3] 2015-04-10 16:47:06,988 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+INFO  [Thread-3] 2015-04-10 16:47:06,988 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.batch.BatchScheduleRunner$ScheduleLoopRunnable.run(BatchScheduleRunner.java:37)
+INFO  [Thread-3] 2015-04-10 16:47:06,988 repast.simphony.batch.ssh.LocalSession - 	at java.lang.Thread.run(Unknown Source)
+INFO  [Thread-3] 2015-04-10 16:47:06,988 repast.simphony.batch.ssh.LocalSession - Caused by: java.lang.reflect.InvocationTargetException
+INFO  [Thread-3] 2015-04-10 16:47:06,989 repast.simphony.batch.ssh.LocalSession - 	at cows.relogo.UserObserver$$FastClassByCGLIB$$4c312ecb.invoke(<generated>)
+INFO  [Thread-3] 2015-04-10 16:47:06,989 repast.simphony.batch.ssh.LocalSession - 	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+INFO  [Thread-3] 2015-04-10 16:47:06,989 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+INFO  [Thread-3] 2015-04-10 16:47:06,989 repast.simphony.batch.ssh.LocalSession - 	... 7 more
+INFO  [Thread-3] 2015-04-10 16:47:06,989 repast.simphony.batch.ssh.LocalSession - Caused by: groovy.lang.MissingPropertyException: No such property: RunEnvironment for class: cows.relogo.UserObserver
+INFO  [Thread-3] 2015-04-10 16:47:06,989 repast.simphony.batch.ssh.LocalSession - 	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.unwrap(ScriptBytecodeAdapter.java:50)
+INFO  [Thread-3] 2015-04-10 16:47:06,989 repast.simphony.batch.ssh.LocalSession - 	at org.codehaus.groovy.runtime.callsite.GetEffectivePogoPropertySite.getProperty(GetEffectivePogoPropertySite.java:86)
+INFO  [Thread-3] 2015-04-10 16:47:06,990 repast.simphony.batch.ssh.LocalSession - 	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callGroovyObjectGetProperty(AbstractCallSite.java:231)
+INFO  [Thread-3] 2015-04-10 16:47:06,990 repast.simphony.batch.ssh.LocalSession - 	at cows.relogo.UserObserver.setup(UserObserver.groovy:24)
+INFO  [Thread-3] 2015-04-10 16:47:06,990 repast.simphony.batch.ssh.LocalSession - 	... 10 more
+INFO  [Thread-3] 2015-04-10 16:47:08,066 repast.simphony.batch.ssh.LocalSession - FATAL [Thread-2] 16:47:08,025 repast.simphony.batch.BatchScheduleRunner - BatchSchedule.execute: error when running the schedule
+INFO  [Thread-3] 2015-04-10 16:47:08,066 repast.simphony.batch.ssh.LocalSession - Current tick (0.0)
+INFO  [Thread-3] 2015-04-10 16:47:08,067 repast.simphony.batch.ssh.LocalSession - java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+INFO  [Thread-3] 2015-04-10 16:47:08,067 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+INFO  [Thread-3] 2015-04-10 16:47:08,067 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.engine.controller.ScheduledMethodControllerAction$ScheduleMethodAllAction.execute(ScheduledMethodControllerAction.java:333)
+INFO  [Thread-3] 2015-04-10 16:47:08,068 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+INFO  [Thread-3] 2015-04-10 16:47:08,068 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+INFO  [Thread-3] 2015-04-10 16:47:08,542 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+INFO  [Thread-3] 2015-04-10 16:47:08,542 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+INFO  [Thread-3] 2015-04-10 16:47:08,542 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.batch.BatchScheduleRunner$ScheduleLoopRunnable.run(BatchScheduleRunner.java:37)
+INFO  [Thread-3] 2015-04-10 16:47:08,542 repast.simphony.batch.ssh.LocalSession - 	at java.lang.Thread.run(Unknown Source)
+INFO  [Thread-3] 2015-04-10 16:47:08,543 repast.simphony.batch.ssh.LocalSession - Caused by: java.lang.reflect.InvocationTargetException
+INFO  [Thread-3] 2015-04-10 16:47:08,543 repast.simphony.batch.ssh.LocalSession - 	at cows.relogo.UserObserver$$FastClassByCGLIB$$4c312ecb.invoke(<generated>)
+INFO  [Thread-3] 2015-04-10 16:47:08,543 repast.simphony.batch.ssh.LocalSession - 	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+INFO  [Thread-3] 2015-04-10 16:47:08,543 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+INFO  [Thread-3] 2015-04-10 16:47:08,543 repast.simphony.batch.ssh.LocalSession - 	... 7 more
+INFO  [Thread-3] 2015-04-10 16:47:08,543 repast.simphony.batch.ssh.LocalSession - Caused by: groovy.lang.MissingPropertyException: No such property: RunEnvironment for class: cows.relogo.UserObserver
+INFO  [Thread-3] 2015-04-10 16:47:08,543 repast.simphony.batch.ssh.LocalSession - 	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.unwrap(ScriptBytecodeAdapter.java:50)
+INFO  [Thread-3] 2015-04-10 16:47:08,544 repast.simphony.batch.ssh.LocalSession - 	at org.codehaus.groovy.runtime.callsite.GetEffectivePogoPropertySite.getProperty(GetEffectivePogoPropertySite.java:86)
+INFO  [Thread-3] 2015-04-10 16:47:08,544 repast.simphony.batch.ssh.LocalSession - 	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callGroovyObjectGetProperty(AbstractCallSite.java:231)
+INFO  [Thread-3] 2015-04-10 16:47:08,544 repast.simphony.batch.ssh.LocalSession - 	at cows.relogo.UserObserver.setup(UserObserver.groovy:24)
+INFO  [Thread-3] 2015-04-10 16:47:08,544 repast.simphony.batch.ssh.LocalSession - 	... 10 more
+INFO  [pool-2-thread-1] 2015-04-10 16:47:36,535 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428702390950 for DONE:  yes
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-10 16:47:36,536 repast.simphony.batch.ssh.SessionsDriver - Run Time: 1.0184
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-10 16:47:36,555 repast.simphony.batch.ssh.LocalSession - Finding output on localhost in C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428702390950
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-10 16:47:36,566 repast.simphony.batch.ssh.SessionsDriver - Aggregating output into C:/Users/Lynnea/Documents/GitHub/COWS/Cows/output
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-10 16:47:36,567 repast.simphony.batch.ssh.SessionsDriver - Get Output Time: 0.0005
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-10 16:47:36,567 repast.simphony.batch.ssh.SessionsDriver - Finished. Elapsed Time: 1.0939
+FATAL [Thread-7] 2015-04-10 17:00:44,192 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (0.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.controller.ScheduledMethodControllerAction$ScheduleMethodAllAction.execute(ScheduledMethodControllerAction.java:333)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at cows.relogo.UserObserver$$FastClassByCGLIB$$4c312ecb.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 7 more
+Caused by: groovy.lang.MissingMethodException: No signature of method: static repast.simphony.engine.environment.RunEnvironment.isBatch() is applicable for argument types: () values: []
+Possible solutions: isBatch(), each(groovy.lang.Closure), isCase(java.lang.Object), inspect(), inject(groovy.lang.Closure), inject(java.lang.Object, groovy.lang.Closure)
+	at groovy.lang.MetaClassImpl.invokeStaticMissingMethod(MetaClassImpl.java:1373)
+	at groovy.lang.MetaClassImpl.invokeStaticMethod(MetaClassImpl.java:1359)
+	at org.codehaus.groovy.runtime.callsite.StaticMetaClassSite.call(StaticMetaClassSite.java:50)
+	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:45)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:112)
+	at cows.relogo.UserObserver.setup(UserObserver.groovy:25)
+	... 10 more
+INFO  [AWT-EventQueue-0] 2015-04-11 00:47:04,438 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Lynnea\Documents\GitHub\COWS\Cows\output\config.props
+INFO  [AWT-EventQueue-0] 2015-04-11 00:47:04,621 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Lynnea\Documents\GitHub\COWS\Cows\batch\batch_params.xml to
+	C:\Users\Lynnea\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-11 00:47:22,552 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\Lynnea\AppData\Local\Temp\Lynnea_localhost4319134074893268592.zip to 
+C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428731237627 ...
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-11 00:47:22,606 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-11 00:47:22,610 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0.0830
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-11 00:47:22,610 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428731237627\Lynnea_localhost4319134074893268592.zip
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-11 00:47:23,651 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [pool-2-thread-1] 2015-04-11 00:48:23,671 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428731237627 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 00:49:23,671 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428731237627 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 00:50:23,672 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428731237627 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 00:51:23,672 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428731237627 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 00:52:23,672 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428731237627 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 00:53:23,672 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428731237627 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 00:54:23,673 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428731237627 for DONE:  no
+INFO  [AWT-EventQueue-0] 2015-04-11 21:05:17,289 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Lynnea\Documents\GitHub\COWS\Cows\output\config.props
+INFO  [AWT-EventQueue-0] 2015-04-11 21:05:17,506 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Lynnea\Documents\GitHub\COWS\Cows\batch\batch_params.xml to
+	C:\Users\Lynnea\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-11 21:05:40,060 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\Lynnea\AppData\Local\Temp\Lynnea_localhost3404775322740707021.zip to 
+C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428804334308 ...
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-11 21:05:40,105 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-11 21:05:40,108 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0.0966
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-11 21:05:40,108 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428804334308\Lynnea_localhost3404775322740707021.zip
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-11 21:05:41,519 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [pool-2-thread-1] 2015-04-11 21:06:41,544 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428804334308 for DONE:  no
+INFO  [AWT-EventQueue-0] 2015-04-11 21:07:43,136 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Lynnea\Documents\GitHub\COWS\Cows\output\config.props
+INFO  [AWT-EventQueue-0] 2015-04-11 21:07:43,323 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Lynnea\Documents\GitHub\COWS\Cows\batch\batch_params.xml to
+	C:\Users\Lynnea\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-11 21:08:05,608 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\Lynnea\AppData\Local\Temp\Lynnea_localhost7434338936464205758.zip to 
+C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428804479832 ...
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-11 21:08:05,678 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-11 21:08:05,680 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0.0974
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-11 21:08:05,680 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428804479832\Lynnea_localhost7434338936464205758.zip
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-11 21:08:07,042 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [pool-2-thread-1] 2015-04-11 21:09:07,073 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428804479832 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 21:10:07,074 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428804479832 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 21:11:07,074 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428804479832 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 21:12:07,075 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428804479832 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 21:13:07,075 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428804479832 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 21:14:07,075 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428804479832 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 21:15:07,075 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428804479832 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 21:16:07,075 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428804479832 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 21:17:07,076 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428804479832 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 21:18:07,076 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428804479832 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 21:19:07,077 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428804479832 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 21:20:07,077 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428804479832 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 21:21:07,078 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428804479832 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 21:22:07,078 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428804479832 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 21:23:07,079 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428804479832 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 21:24:07,079 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428804479832 for DONE:  no
+INFO  [AWT-EventQueue-0] 2015-04-11 21:36:16,056 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Lynnea\Documents\GitHub\COWS\Cows\output\config.props
+INFO  [AWT-EventQueue-0] 2015-04-11 21:36:16,217 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Lynnea\Documents\GitHub\COWS\Cows\batch\batch_params.xml to
+	C:\Users\Lynnea\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-11 21:36:43,453 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\Lynnea\AppData\Local\Temp\Lynnea_localhost2907674366627987812.zip to 
+C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428806197792 ...
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-11 21:36:43,495 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-11 21:36:43,497 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0.0951
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-11 21:36:43,497 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428806197792\Lynnea_localhost2907674366627987812.zip
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-11 21:36:45,228 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [pool-2-thread-1] 2015-04-11 21:37:45,311 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428806197792 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 21:38:45,313 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428806197792 for DONE:  yes
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-11 21:38:45,314 repast.simphony.batch.ssh.SessionsDriver - Run Time: 2.0303
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-11 21:38:45,332 repast.simphony.batch.ssh.LocalSession - Finding output on localhost in C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428806197792
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-11 21:38:45,347 repast.simphony.batch.ssh.SessionsDriver - Aggregating output into C:/Users/Lynnea/Documents/GitHub/COWS/Cows/output
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-11 21:38:45,347 repast.simphony.batch.ssh.SessionsDriver - Get Output Time: 0.0005
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-11 21:38:45,347 repast.simphony.batch.ssh.SessionsDriver - Finished. Elapsed Time: 2.1261
+INFO  [AWT-EventQueue-0] 2015-04-11 21:47:45,078 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Lynnea\Documents\GitHub\COWS\Cows\output\output4112015\config.props
+INFO  [AWT-EventQueue-0] 2015-04-11 21:47:45,275 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Lynnea\Documents\GitHub\COWS\Cows\batch\batch_params.xml to
+	C:\Users\Lynnea\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [AWT-EventQueue-0] 2015-04-11 21:47:57,048 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Lynnea\Documents\GitHub\COWS\Cows\output\output4112015\config.props
+INFO  [AWT-EventQueue-0] 2015-04-11 21:47:57,053 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Lynnea\Documents\GitHub\COWS\Cows\batch\batch_params.xml to
+	C:\Users\Lynnea\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [AWT-EventQueue-0] 2015-04-11 21:49:06,054 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Lynnea\Documents\GitHub\COWS\Cows\output\config.props
+INFO  [AWT-EventQueue-0] 2015-04-11 21:49:06,230 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Lynnea\Documents\GitHub\COWS\Cows\batch\batch_params.xml to
+	C:\Users\Lynnea\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-11 21:49:29,487 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\Lynnea\AppData\Local\Temp\Lynnea_localhost5983404748526705580.zip to 
+C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428806963344 ...
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-11 21:49:29,556 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-11 21:49:29,557 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0.1035
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-11 21:49:29,557 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428806963344\Lynnea_localhost5983404748526705580.zip
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-11 21:49:30,693 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [pool-2-thread-1] 2015-04-11 21:50:30,768 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428806963344 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 21:51:30,769 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428806963344 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 21:52:30,769 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428806963344 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 21:53:30,770 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428806963344 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 21:54:30,770 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428806963344 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 21:55:30,770 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428806963344 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 21:56:30,771 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428806963344 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 21:57:30,771 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428806963344 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 21:58:30,771 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428806963344 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 21:59:30,771 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428806963344 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 22:00:30,772 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428806963344 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 22:01:30,772 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428806963344 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 22:02:30,772 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428806963344 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 22:03:30,772 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428806963344 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 22:04:30,772 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428806963344 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 22:05:30,773 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428806963344 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 22:06:30,773 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428806963344 for DONE:  no
+INFO  [AWT-EventQueue-0] 2015-04-11 22:07:05,054 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Lynnea\Documents\GitHub\COWS\Cows\output\config.props
+INFO  [AWT-EventQueue-0] 2015-04-11 22:07:05,206 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Lynnea\Documents\GitHub\COWS\Cows\batch\batch_params.xml to
+	C:\Users\Lynnea\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-11 22:07:29,749 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\Lynnea\AppData\Local\Temp\Lynnea_localhost6306006357793750521.zip to 
+C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428808043817 ...
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-11 22:07:29,795 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-11 22:07:29,796 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0.0996
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-11 22:07:29,796 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428808043817\Lynnea_localhost6306006357793750521.zip
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-11 22:07:30,876 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [pool-2-thread-1] 2015-04-11 22:08:30,961 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428808043817 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 22:09:30,962 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428808043817 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 22:10:30,962 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428808043817 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 22:11:30,962 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428808043817 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 22:12:30,962 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428808043817 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 22:13:30,963 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428808043817 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 22:14:30,963 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428808043817 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-11 22:15:30,963 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428808043817 for DONE:  no
+INFO  [AWT-EventQueue-0] 2015-04-12 10:06:55,414 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Lynnea\Documents\GitHub\COWS\Cows\output\config.props
+INFO  [AWT-EventQueue-0] 2015-04-12 10:06:55,533 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Lynnea\Documents\GitHub\COWS\Cows\batch\batch_params.xml to
+	C:\Users\Lynnea\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-12 10:07:05,752 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\Lynnea\AppData\Local\Temp\Lynnea_localhost645770290743787924.zip to 
+C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428851223068 ...
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-12 10:07:05,786 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-12 10:07:05,788 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0.0453
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-12 10:07:05,788 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428851223068\Lynnea_localhost645770290743787924.zip
+INFO  [SwingWorker-pool-1-thread-1] 2015-04-12 10:07:06,495 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [pool-2-thread-1] 2015-04-12 10:08:06,510 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428851223068 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-12 10:09:06,511 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428851223068 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-12 10:10:06,511 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428851223068 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-12 10:11:06,511 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428851223068 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-12 10:12:06,511 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428851223068 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-12 10:13:06,512 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428851223068 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-12 10:14:06,512 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428851223068 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-12 10:15:06,512 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428851223068 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-12 10:16:06,512 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428851223068 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-12 10:17:06,512 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428851223068 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-12 10:18:06,513 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428851223068 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-12 10:19:06,513 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428851223068 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-12 10:20:06,513 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428851223068 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-12 10:21:06,514 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428851223068 for DONE:  no
+INFO  [pool-2-thread-1] 2015-04-12 10:22:06,516 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428851223068 for DONE:  no
