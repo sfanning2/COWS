@@ -63,7 +63,19 @@ class Herder extends ReLogoTurtle {
 		/* check that there are cows in vision */
 		if (this.getCowsInVision().size() < 1) return false
 		/* get the center of the herd */
-		def center = getCenter()
+		NdPoint centerLocation = getCenter()
+		NdPoint cowLocation = null;
+		if(targetedCow) {
+			cowLocation = targetedCow.getTurtleLocation()
+
+			/* check if cow has joined group (and untarget cow if so)*/
+			double xDiff = (double)(cowLocation.x - centerLocation.x)
+			double yDiff = (double)(cowLocation.y - centerLocation.y)
+			if(Math.sqrt(Math.pow(xDiff,2) + Math.pow(yDiff,2)) < 10.0) {
+				targetedCow = null
+			}
+		}
+
 		/* lock onto a straggler cow if necessary */
 		/* In the future, add herder communication to prevent duplicate lock-ons */
 		if (!targetedCow) {
@@ -73,10 +85,7 @@ class Herder extends ReLogoTurtle {
 				return false
 			}
 		}
-		/* check if cow has joined group (and untarget cow if so)*/
-		
-		
-		
+		cowLocation = targetedCow.getTurtleLocation()
 		/* if it is near other cows and near the center */
 		/* move toward appropriate placement around cow if necessary */
 		/* for now just move towards the cow */
@@ -87,7 +96,7 @@ class Herder extends ReLogoTurtle {
 			pathFinder.getdStarLitePF().updateStart((int)myLoc.x, (int)myLoc.y)
 		}
 
-		NdPoint goal = Herder.getPositionToGroupCow(this.center, targetedCow.getTurtleLocation(), 5.0)
+		NdPoint goal = Herder.getPositionToGroupCow(centerLocation, cowLocation, 5.0)
 		//targetedCow.getTurtleLocation()
 		//		targetedCow.patchHere().setPcolor(5)
 		this.pathFinder.updateGoal((int)goal.x, (int)goal.y)
@@ -110,16 +119,16 @@ class Herder extends ReLogoTurtle {
 		DenseVector destVector = DenseVector.valueOf( Amount.valueOf(dest.x, ONE),  Amount.valueOf(dest.y, ONE) )
 		DenseVector cowVector = DenseVector.valueOf(  Amount.valueOf(cowLocation.x, ONE), Amount.valueOf(cowLocation.y, ONE))
 		DenseVector<Amount> diffVector = cowVector.minus(destVector)
-		
+
 		VectorMeasure magCalculator = VectorMeasure.valueOf(diffVector.get(0).doubleValue(ONE), diffVector.get(1).doubleValue(ONE), ONE)
 		double magnitude = magCalculator.doubleValue(ONE)
-		
-		
-		DenseVector diffUnit = diffVector.times(Amount.valueOf(1.0/magnitude, ONE))		
+
+
+		DenseVector diffUnit = diffVector.times(Amount.valueOf(1.0/magnitude, ONE))
 		DenseVector standingDestVector = diffUnit.times(Amount.valueOf(standingDist, ONE))
 		DenseVector locVector = cowVector.plus(standingDestVector)
-		
-		
+
+
 		return new NdPoint(locVector.get(0).doubleValue(ONE), locVector.get(1).doubleValue(ONE))
 	}
 
@@ -136,11 +145,12 @@ class Herder extends ReLogoTurtle {
 	}
 
 	def NdPoint getCenter() {
-		NdPoint myCenter = getHerdCenter()
-		List<NdPoint> centers = communicateCenters()
-		centers.add(myCenter)
-		NdPoint center = computeCenter(centers)
-		return center
+		//		NdPoint myCenter = getHerdCenter()
+		//		List<NdPoint> centers = communicateCenters()
+		//		centers.add(myCenter)
+		//		NdPoint center = computeCenter(centers)
+		//		return center
+		return new NdPoint(0,0)
 	}
 
 	/**
@@ -154,6 +164,8 @@ class Herder extends ReLogoTurtle {
 
 	/**
 	 * Grouper method
+	 * TODO: avoid multiple lock-ons and avoid locking onto
+	 * cows who are already "grouped"
 	 * @param cows
 	 * @return The cow furthest from the center of the group
 	 */
