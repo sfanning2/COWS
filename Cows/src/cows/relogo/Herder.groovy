@@ -28,10 +28,10 @@ class Herder extends ReLogoTurtle {
 	def double speed = 3.0
 	def double width
 	def double length
-	def Role role = "Grouper" as Role
+	def Role role = "Mover" as Role
 	def Cow targetedCow
 	def PathFinder pathFinder
-
+	
 	def boolean needsUpdate = true
 
 	enum Role {
@@ -45,6 +45,7 @@ class Herder extends ReLogoTurtle {
 			if (false == groupCows()) {
 				/* spend the turn switching roles */
 				role = "Mover" as Role
+				setColor(135)
 			}
 		}
 
@@ -52,6 +53,7 @@ class Herder extends ReLogoTurtle {
 			if (false == moveCows()) {
 				/* spend the turn switching roles */
 				role = "Grouper" as Role
+				setColor(95)
 			}
 		}
 	}
@@ -162,8 +164,8 @@ class Herder extends ReLogoTurtle {
 		}
 		/* want cows to move up and right towards goal location*/
 		/* cow in furthest position on x-axis not straggler in vision*/
-		Cow c = cowsInVisionNotTargetCow.get(0)//getLeftmostCow(this.getTurtleLocation())
-
+		Cow c = getLeftmostCow(this.getTurtleLocation())
+		
 		System.out.println("Cow: " + c.xcor + " " + c.ycor)
 
 		double cowYPosition = c.getYcor()
@@ -186,6 +188,7 @@ class Herder extends ReLogoTurtle {
 			x = (int)cowXPosition - minusDist
 			y = (int)cowYPosition - minusDist
 			}
+			
 			if(x < getMinPxcor()){
 				x = getMinPxcor()
 			}
@@ -198,20 +201,23 @@ class Herder extends ReLogoTurtle {
 			}else{
 				pathFinder.getdStarLitePF().updateStart((int)myLoc.x, (int)myLoc.y)
 			}
+			NdPoint point = new NdPoint(getMaxPxcor(), getMaxPycor()-5)
 			
-			c.patchHere().setPcolor(5)
-			this.pathFinder.updateGoal((int)x, (int)y)
-			System.out.println("Herder: " + x + " " + y)
-			this.pathFinder.setCurrentCows(this.getCowsInVision())
-			this.pathFinder.replan();
-			List<State> path = pathFinder.getdStarLitePF().getPath()
-			/* do something with path */
-			if (path.size() > 1) {
-				State nextState = path.get(1)
-				this.facexy(nextState.x, nextState.y)
-				this.move(speed)
-				this.patchHere().setPcolor(yellow())
-			}
+			NdPoint goal = Herder.getPositionToGroupCow(point, c.getTurtleLocation(), 5.0)
+		setxy(goal.x, goal.y)
+			//targetedCow.getTurtleLocation()
+		//		targetedCow.patchHere().setPcolor(5)
+//		this.pathFinder.updateGoal((int)goal.x, (int)goal.y)
+//		this.pathFinder.setCurrentCows(this.getCowsInVision())
+//		this.pathFinder.replan();
+//		List<State> path = pathFinder.getdStarLitePF().getPath()
+//		/* do something with path */
+//		if (path.size() > 1) {
+//			State nextState = path.get(1)
+//			this.facexy(nextState.x, nextState.y)
+//			this.move(speed)
+//			//			this.patchHere().setPcolor(yellow())
+//		}
 			return true
 		
 		/* try to position self behind the herd */
