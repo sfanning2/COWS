@@ -73,7 +73,7 @@ class Cow extends ReLogoTurtle {
 				distance = 3
 				this.face(herdersInRange.get(0))
 				if (this.getHeading() < 180) {
-					this.setHeading(this.getHeading() + Utility.randomNormal(180,10))
+					this.setHeading(this.getHeading() + Utility.randomNormal(180,20))
 				} else {
 					this.setHeading(this.getHeading() - Utility.randomNormal(180,10))
 				}
@@ -107,46 +107,51 @@ class Cow extends ReLogoTurtle {
 				largest = Math.max(largest, heading_315_360)
 				if (heading_0_45 == largest) { 
 					direction = 22
-				} else if (heading_45_90 == largest){ 
+				}
+				if (heading_45_90 == largest){ 
 					direction = 67
-				} else if (heading_90_135 == largest){ 
+				}
+				if (heading_90_135 == largest){ 
 					direction = 112
-				} else if (heading_135_180 == largest) { 
+				}
+				if (heading_135_180 == largest) { 
 					direction = 157
-				} else if (heading_180_225 == largest){ 
+				} 
+				if (heading_180_225 == largest){ 
 					direction = 202
-				} else if (heading_225_270 == largest){ 
+				}
+				if (heading_225_270 == largest){ 
 					direction = 249
-				} else if (heading_270_315 == largest){ 
+				}
+				if (heading_270_315 == largest){ 
 					direction = 292
-				} else if (heading_315_360 == largest){ 
+				}
+				if (heading_315_360 == largest){ 
 					direction = 337
 				}
 				direction = Utility.randomNormal(0, 15) + direction
 				if (direction >= 360) direction = direction - 360
-				distance = Utility.random(2) + 2 // Movement is 2 or 3
+				distance = 1
 				anxietyLevel = anxietyLevel - 3 //Cows moving in a group become less stressed
 			}
 			
 			//Check anxiety level against threshold and override other movement if over
 			if (anxietyLevel > anxietyThreshold ) {
-				distance = Utility.random(4)+2
+				distance = Utility.randomNormal(4, 2) + 2
 				direction = Utility.random(360)
-				anxietyLevel -= 2
+				anxietyLevel -= 10
 			}
 			
 			setHeading((double) direction)
 			move(distance)
 			
 			//Cow avoids other turtles 
-			/*def counter = 0
-			while (count(neighbors()) > 1 || counter > 100) {
-				setHeading(((int)(distance+90)) % 360)
+			if(count(turtlesHere()) > 1) {
+				setHeading((floor(direction+90)) % 360)
 				move(distance)
-				counter++
 			} 
 		
-		}*/
+		/*}*/
 
 	}
 	def setSpeed(double speed){
