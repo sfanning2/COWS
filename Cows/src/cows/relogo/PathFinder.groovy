@@ -24,9 +24,6 @@ class PathFinder {
 		dStarLitePF.init((int)start.x, (int)start.y, (int)goal.x, (int)goal.y)
 		/* static cell updates */
 		// update edge cells
-		// update fence cells
-		// update tree cells
-
 		/* dynamic cell updates must be passed*/
 	}
 
@@ -80,12 +77,13 @@ class PathFinder {
 		}
 	}
 
-	private void setTurtles(ReLogoTurtle turtle, double value) {
-		/* get location and dimensions */
-		NdPoint location = turtle.getTurtleLocation();
-		/* create cell barriers around the object */
-
-		/* for now this is a single patch */
+	private void setTurtles(ArrayList<ReLogoTurtle> turtles, double value) {
+		for (ReLogoTurtle turtle : turtles) {
+			NdPoint location = turtle.getTurtleLocation();
+			double x = location.x
+			double y = location.y
+			this.updateCell((int)x, (int)y, value)
+		}
 	}
 
 	private void updateCowBarriers(Cow cow) {

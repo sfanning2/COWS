@@ -92,6 +92,14 @@ class Herder extends ReLogoTurtle {
 		NdPoint myLoc = this.getTurtleLocation();
 		if (pathFinder == null) {
 			pathFinder = new PathFinder(myLoc, myLoc)
+			ArrayList<ReLogoTurtle> fences = fences()
+			if (fences != null) {
+				pathFinder.setTurtles(fences, -1)
+			}
+			ArrayList<ReLogoTurtle> trees = trees()
+			if (trees != null) {
+				pathFinder.setTurtles(trees, -1)
+			}
 		}else{
 			pathFinder.getdStarLitePF().updateStart((int)myLoc.x, (int)myLoc.y)
 		}
