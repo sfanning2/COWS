@@ -74,9 +74,9 @@ class Cow extends ReLogoTurtle {
 				distance = 3
 				this.face(herdersInRange.get(0))
 				if (this.getHeading() < 180) {
-					this.setHeading(this.getHeading() + Utility.random(90) + 45)
+					this.setHeading(this.getHeading() + Utility.randomNormal(180,10))
 				} else {
-					this.setHeading(this.getHeading() - Utility.random(90) - 45)
+					this.setHeading(this.getHeading() - Utility.randomNormal(180,10))
 				}
 				
 			} else if (cowsInRange.size() >= 3){
@@ -127,15 +127,9 @@ class Cow extends ReLogoTurtle {
 				if (direction >= 360) direction = direction - 360
 				distance = Utility.random(2) + 2 // Movement is 2 or 3
 				anxietyLevel = anxietyLevel - 3 //Cows moving in a group become less stressed
-				// Alternate movement specification; implement if time exist
-				// If cows are moving together
-					// Cow movement along with the other cows
-				// Else if movement is erratic
-					// No movement
-					// Increase anxiety
 			}
+			
 			//Check anxiety level against threshold and override other movement if over
-	
 			if (anxietyLevel > anxietyThreshold ) {
 				distance = Utility.random(4)+2
 				direction = Utility.random(360)
@@ -146,16 +140,12 @@ class Cow extends ReLogoTurtle {
 			move(distance)
 			
 			//Cow avoids other turtles 
-			/*if (count(turtlesHere()) > 1) {
-				anxietyLevel = startingAnxiety
-				def resetDirection = direction + 180
-				if (resetDirection >= 360) resetDirection = resetDirection - 360
-				setHeading(resetDirection)
+			/*def counter = 0
+			while (count(neighbors()) > 1 || counter > 100) {
+				setHeading(((int)(distance+90)) % 360)
 				move(distance)
-				setHeading(startingDirection)
-			} else {
-				movementMade = true
-			}
+				counter++
+			} 
 		
 		}*/
 
