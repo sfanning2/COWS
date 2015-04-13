@@ -38,6 +38,7 @@ class Cow extends ReLogoTurtle {
 	} */
 	def step(){
 
+
 		//If the cow is at the goal, remove them from the field 
 		int maxY = getMaxPycor()
 		int minX  = getMaxPxcor()
