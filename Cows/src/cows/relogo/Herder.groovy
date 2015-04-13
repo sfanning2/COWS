@@ -28,7 +28,7 @@ class Herder extends ReLogoTurtle {
 	def double speed = 3.0
 	def double width
 	def double length
-	def Role role = "Mover" as Role
+	def Role role = "Grouper" as Role
 	def Cow targetedCow
 	def PathFinder pathFinder
 	
@@ -40,22 +40,21 @@ class Herder extends ReLogoTurtle {
 	}
 
 	def herd() {
-		moveCows()
-//		if (role == Role.Grouper) {
-//			if (false == groupCows()) {
-//				/* spend the turn switching roles */
-//				role = "Mover" as Role
-//				setColor(135)
-//			}
-//		}
-//
-//		else {
-//			if (false == moveCows()) {
-//				/* spend the turn switching roles */
-//				role = "Grouper" as Role
-//				setColor(95)
-//			}
-//		}
+		if (role == Role.Grouper) {
+			if (false == groupCows()) {
+				/* spend the turn switching roles */
+				role = "Mover" as Role
+				setColor(135)
+			}
+		}
+
+		else {
+			if (false == moveCows()) {
+				/* spend the turn switching roles */
+				role = "Grouper" as Role
+				setColor(95)
+			}
+		}
 	}
 
 	/**
