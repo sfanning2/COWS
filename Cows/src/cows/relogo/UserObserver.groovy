@@ -3,6 +3,7 @@ package cows.relogo
 
 import static repast.simphony.relogo.Utility.*;
 import static repast.simphony.relogo.UtilityG.*;
+import repast.simphony.relogo.AgentSet
 import repast.simphony.relogo.Patch
 import repast.simphony.relogo.Stop;
 import repast.simphony.relogo.Utility;
@@ -10,6 +11,7 @@ import repast.simphony.relogo.UtilityG;
 import repast.simphony.relogo.schedule.Go;
 import repast.simphony.relogo.schedule.Setup;
 import cows.ReLogoObserver;
+import cows.relogo.Herder.Role
 import java.util.Random;
 import repast.simphony.parameter.Parameters;
 import repast.simphony.engine.environment.RunEnvironment;
@@ -37,20 +39,21 @@ class UserObserver extends ReLogoObserver{
 			for (UserPatch p : patches()){
 				p.pcolor = 62
 			}
-			setDefaultShape(Fence, "x")
-			createFenceAroundField()
-			
-			setDefaultShape(Tree, "tree")
-			double sqarea = worldHeight()*worldWidth()
-			int numTrees =  (int)obstacleDensity *sqarea / 36
-			createTrees(numTrees){
-				size = 6
-				while(count(inRadius(turtles(), 6))>1){
-					setxy(randomPxcor(), randomPycor())
-				}
+		setDefaultShape(Fence, "x")
+		createFenceAroundField()
+
+		setDefaultShape(Tree, "tree")
+		double sqarea = worldHeight()*worldWidth()
+		int numTrees =  (int)obstacleDensity *sqarea / 36
+		createTrees(numTrees){
+			size = 6
+			while(count(inRadius(turtles(), 6))>1){
+				setxy(randomPxcor(), randomPycor())
+
 			}
-			setDefaultShape(Cow, "circle")
-			
+		}
+		setDefaultShape(Cow, "fish")
+
 			createCows(numCows){
 				setxy(randomPxcor(), randomPycor())
 				
@@ -68,52 +71,69 @@ class UserObserver extends ReLogoObserver{
 					}
 				}
 
-				double s = randomGenerator.nextGaussian() * 0.5
-				if(s<0){
-					s = 0
-				}else if(s>3){
-					s = 3
-				}
-				setSpeed(s)
-				setHeading(randomGenerator.nextInt(360))
-				setAnxietyLevel(0)
-				double t = randomGenerator.nextGaussian()*2+ 10
-				if(t<5){
-					t = 5
-				}
-				setAnxietyThreshold(t)
-				setIndependenceLevel(randomGenerator.nextInt(8))
-
-				setFlightZoneRadius(randomGenerator.nextInt(3)+1); // Generates integer between 1 and 3
-
+//				double s = randomGenerator.nextGaussian() * 0.5
+//				if(s<0){
+//					s = 0
+//				}else if(s>3){
+//					s = 3
+//				}
+//				setSpeed(s)
+//				setHeading(randomGenerator.nextInt(360))
+//				setAnxietyLevel(0)
+//				double t = randomGenerator.nextGaussian()*2+ 10
+//				if(t<5){
+//					t = 5
+//				}
+//				setAnxietyThreshold(t)
+//				setIndependenceLevel(randomGenerator.nextInt(8))
+//
+//				setFlightZoneRadius(randomGenerator.nextInt(3)+1); // Generates integer between 1 and 3
+			flightZoneRadius = 6
+			setHeading(Utility.random(360))
+			anxietyLevel = 0
+			anxietyThreshold = Utility.randomNormal(100, 20)
+			sightRange = Utility.randomNormal(15, 5)
+			independenceLevel = Utility.random(0.05) //Percent of the time the cow will group, b/w 5 and 0 %
+	
 			}
+
 			setDefaultShape(Herder, "person")
 			createHerders(numHerders){
-				setxy(randomPxcor(), randomPycor())
-				//randomly orient cows
-				size = 3
-				//randomly place cows so they don't hit other objects
-				while(count(inRadius(turtles(), 3))>1){
+			setxy(randomPxcor(), randomPycor())
+			//randomly orient cows
+			size = 3
+			//randomly place cows so they don't hit other objects
+			while(count(inRadius(turtles(), 3))>1){
 					if(expireTime < System.nanoTime()){
 						RunEnvironment.getInstance().endRun();
 					}else{
 						setxy(randomPxcor(), randomPycor())
 					}
 				}
-				}
+			int roleNum = Utility.random(1)
+			if(roleNum ==0){
+				//set as mover
+				role = "Mover" as Role
+				//setRole(Role.Mover)	
+				setColor(135)
+			}else{
+				//set as grouper
+				role = "Grouper" as Role
+				//setRole(Role.Grouper)
+				setColor(95)
+			}
+		
+		}
+			
+			
 			RunEnvironment.getInstance().endAt(10);
 			}
 
-	
-		@Go
-		def go(){
-			ask(herders()){
-				step()
-			}
-			ask(cows()){
-				step()
-			}
-		}
+	@Go
+	def go(){
+		ask(herders()){ herd() }
+		ask(cows()){ step() }
+	}
 
 	 def remainingCows() {
 		 if(count(cows())==0){
@@ -157,5 +177,6 @@ class UserObserver extends ReLogoObserver{
 			 }
 	 }
 	 
+
 
 }
