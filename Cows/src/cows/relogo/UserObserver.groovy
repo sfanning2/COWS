@@ -66,6 +66,7 @@ class UserObserver extends ReLogoObserver{
 				*/
 
 				flightZoneRadius = Math.abs(Utility.randomNormal(8, 2)); // Generates integer between 2 and 6
+				setHeading(Utility.random(360))
 				anxietyLevel = 0
 				anxietyThreshold = Utility.randomNormal(100, 20)
 				sightRange = Utility.randomNormal(10, 5)
