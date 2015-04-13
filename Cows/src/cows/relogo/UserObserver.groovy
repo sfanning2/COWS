@@ -48,29 +48,13 @@ class UserObserver extends ReLogoObserver{
 			while(count(inRadius(turtles(), 6))>1){
 				setxy(randomPxcor(), randomPycor())
 			}
-
-			/*double s = randomGenerator.nextGaussian() * 0.5
-			 if(s<0){
-			 s = 0
-			 }else if(s>3){
-			 s = 3
-			 }
-			 setSpeed(s)
-			 setHeading(randomGenerator.nextInt(360))
-			 setAnxietyLevel(0)
-			 double t = randomGenerator.nextGaussian()*2+ 10
-			 if(t<5){
-			 t = 5
-			 }
-			 setAnxietyThreshold(t)
-			 setIndependenceLevel(randomGenerator.nextInt(8))
-			 setFlightZoneRadius(randomGenerator.nextInt(3)+1); // Generates integer between 1 and 3
-			 */
-			flightZoneRadius = Utility.random(5) + 2; // Generates integer between 2 and 6
-
+			
+			flightZoneRadius = 6
+			setHeading(Utility.random(360))
 			anxietyLevel = 0
-			anxietyThreshold = Utility.randomNormal(40, 10)
-			sightRange = Utility.randomNormal(10, 5)
+			anxietyThreshold = Utility.randomNormal(100, 20)
+			sightRange = Utility.randomNormal(15, 5)
+			independenceLevel = Utility.random(0.05) //Percent of the time the cow will group, b/w 5 and 0 %
 				
 		}
 		setDefaultShape(Herder, "person")
