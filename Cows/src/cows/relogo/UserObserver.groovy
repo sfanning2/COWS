@@ -3,6 +3,7 @@ package cows.relogo
 
 import static repast.simphony.relogo.Utility.*;
 import static repast.simphony.relogo.UtilityG.*;
+import repast.simphony.relogo.AgentSet
 import repast.simphony.relogo.Patch
 import repast.simphony.relogo.Stop;
 import repast.simphony.relogo.Utility;
@@ -16,6 +17,7 @@ import java.util.Random;
 class UserObserver extends ReLogoObserver{
 
 	/*Observer methods*/
+
 
 	@Setup
 	def setup(){
@@ -94,7 +96,6 @@ class UserObserver extends ReLogoObserver{
 	def remainingCows() {
 		count(cows())
 	}
-
 	def createFenceAroundField(){
 		int maxX = getMaxPxcor()
 		int maxY = getMaxPycor()

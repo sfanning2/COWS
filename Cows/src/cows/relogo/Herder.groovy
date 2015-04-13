@@ -424,4 +424,27 @@ class Herder extends ReLogoTurtle {
 	def setRole(Role r){
 		role = r
 	}
+
+def AgentSet getGroupers(){
+	AgentSet clone = herders().clone()
+	for(Herder h: clone){
+		if(h.role == "Grouper" as Role){
+			
+		}else{
+			clone.remove(h)
+		}
+	}
+	return clone
+}
+def AgentSet getMovers(){
+	AgentSet clone = herders().clone()
+	for(Herder h: clone){
+		if(h.role == "Mover" as Role){
+			
+		}else{
+			clone.remove(h)
+		}
+	}
+	return clone
+}
 }
