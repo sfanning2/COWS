@@ -13,7 +13,10 @@ import cows.ReLogoObserver;
 import java.util.Random;
 
 class UserObserver extends ReLogoObserver{
-	
+	enum Role {
+		Grouper,
+		Mover
+	}
 	 /*Observer methods*/
 
 		@Setup
@@ -64,12 +67,12 @@ class UserObserver extends ReLogoObserver{
 
 				setFlightZoneRadius(randomGenerator.nextInt(3)+1); // Generates integer between 1 and 3
 				*/
-
 				flightZoneRadius = Math.abs(Utility.randomNormal(8, 2)); // Generates integer between 2 and 6
 				setHeading(Utility.random(360))
 				anxietyLevel = 0
 				anxietyThreshold = Utility.randomNormal(100, 20)
 				sightRange = Utility.randomNormal(10, 5)
+				
 			}
 			setDefaultShape(Herder, "person")
 			createHerders(numHerders){
@@ -80,6 +83,7 @@ class UserObserver extends ReLogoObserver{
 				while(count(inRadius(turtles(), 3))>1){
 					setxy(randomPxcor(), randomPycor())
 				}
+				setColor(135)
 			}
 			
 			
@@ -101,6 +105,7 @@ class UserObserver extends ReLogoObserver{
 	 def remainingCows() {
 		 count(cows())
 	 }
+
 	 def createFenceAroundField(){
 		 int maxX = getMaxPxcor()
 		 int maxY = getMaxPycor()
