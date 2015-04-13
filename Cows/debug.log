@@ -263,3 +263,51 @@ INFO  [pool-2-thread-1] 2015-04-12 10:19:06,513 repast.simphony.batch.ssh.LocalD
 INFO  [pool-2-thread-1] 2015-04-12 10:20:06,513 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428851223068 for DONE:  no
 INFO  [pool-2-thread-1] 2015-04-12 10:21:06,514 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428851223068 for DONE:  no
 INFO  [pool-2-thread-1] 2015-04-12 10:22:06,516 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Lynnea\AppData\Local\Temp\simphony_model_1428851223068 for DONE:  no
+ERROR [main] 2015-04-13 12:14:35,836 saf.core.runtime.Boot - null
+java.lang.NullPointerException
+	at saf.core.runtime.Boot.init(Boot.java:79)
+	at saf.core.runtime.Boot.main(Boot.java:246)
+	at repast.simphony.runtime.RepastMain.main(RepastMain.java:43)
+ERROR [main] 2015-04-13 12:14:35,840 saf.core.runtime.Boot - null
+java.lang.NullPointerException
+	at saf.core.runtime.Boot.run(Boot.java:101)
+	at saf.core.runtime.Boot.main(Boot.java:247)
+	at repast.simphony.runtime.RepastMain.main(RepastMain.java:43)
+ERROR [main] 2015-04-13 12:14:51,808 saf.core.runtime.Boot - null
+java.lang.NullPointerException
+	at saf.core.runtime.Boot.init(Boot.java:79)
+	at saf.core.runtime.Boot.main(Boot.java:246)
+	at repast.simphony.runtime.RepastMain.main(RepastMain.java:43)
+ERROR [main] 2015-04-13 12:14:51,812 saf.core.runtime.Boot - null
+java.lang.NullPointerException
+	at saf.core.runtime.Boot.run(Boot.java:101)
+	at saf.core.runtime.Boot.main(Boot.java:247)
+	at repast.simphony.runtime.RepastMain.main(RepastMain.java:43)
+ERROR [main] 2015-04-13 12:20:04,242 saf.core.runtime.Boot - null
+java.lang.NullPointerException
+	at saf.core.runtime.Boot.init(Boot.java:79)
+	at saf.core.runtime.Boot.main(Boot.java:246)
+	at repast.simphony.runtime.RepastMain.main(RepastMain.java:43)
+ERROR [main] 2015-04-13 12:20:04,246 saf.core.runtime.Boot - null
+java.lang.NullPointerException
+	at saf.core.runtime.Boot.run(Boot.java:101)
+	at saf.core.runtime.Boot.main(Boot.java:247)
+	at repast.simphony.runtime.RepastMain.main(RepastMain.java:43)
+ERROR [main] 2015-04-13 12:20:21,747 saf.core.runtime.Boot - null
+java.lang.NullPointerException
+	at saf.core.runtime.Boot.init(Boot.java:79)
+	at saf.core.runtime.Boot.main(Boot.java:246)
+	at repast.simphony.runtime.RepastMain.main(RepastMain.java:43)
+ERROR [main] 2015-04-13 12:20:21,751 saf.core.runtime.Boot - null
+java.lang.NullPointerException
+	at saf.core.runtime.Boot.run(Boot.java:101)
+	at saf.core.runtime.Boot.main(Boot.java:247)
+	at repast.simphony.runtime.RepastMain.main(RepastMain.java:43)
+ERROR [main] 2015-04-13 12:21:07,513 saf.core.runtime.Boot - null
+java.lang.NullPointerException
+	at saf.core.runtime.Boot.init(Boot.java:79)
+	at saf.core.runtime.Boot.main(Boot.java:246)
+ERROR [main] 2015-04-13 12:21:07,521 saf.core.runtime.Boot - null
+java.lang.NullPointerException
+	at saf.core.runtime.Boot.run(Boot.java:101)
+	at saf.core.runtime.Boot.main(Boot.java:247)
