@@ -74,7 +74,7 @@ class Cow extends ReLogoTurtle {
 				this.setHeading(this.getHeading() - Utility.randomNormal(180,10))
 			}
 			
-		} else if (cowsInRange.size() >= 3){
+		} else if (cowsInRange.size() >= 2 && Utility.random(1) < independenceLevel){
 			// Calculate average heading
 			def heading_0_45 = 0
 			def heading_45_90 = 0
