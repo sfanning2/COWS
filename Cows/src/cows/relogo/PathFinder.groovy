@@ -8,10 +8,6 @@ import repast.simphony.space.continuous.NdPoint
 class PathFinder {
 	def DStarLite dStarLitePF
 
-	def List<Object> edges
-	def List<Object> fences
-	def List<Object> trees
-
 	def List<Cow> currentCows
 	def List<NdPoint> prevCowLocations
 
@@ -76,8 +72,31 @@ class PathFinder {
 			}
 		}
 	}
+	
+	public void setBorders(int minX, int maxX, int minY, int maxY){
+		// TODO
+		for(int i = minX; i < maxX; i++) {
+			this.updateCell((int)i, (int)minY, -1)
+			this.updateCell((int)i, (int)maxY, -1)
+		}
+		for(int i = minY; i < maxY; i++) {
+			this.updateCell((int)minX, (int)i, -1)
+			this.updateCell((int)maxX, (int)i, -1)
+		}
+	}
+	public void setBorders(Integer minX, Integer maxX, Integer minY, Integer maxY){
+		// TODO
+		for(int i = minX; i < maxX; i++) {
+			this.updateCell((int)i, (int)minY, -1)
+			this.updateCell((int)i, (int)maxY, -1)
+		}
+		for(int i = minY; i < maxY; i++) {
+			this.updateCell((int)minX, (int)i, -1)
+			this.updateCell((int)maxX, (int)i, -1)
+		}
+	}
 
-	private void setTurtles(ArrayList<ReLogoTurtle> turtles, double value) {
+	public void setTurtles(ArrayList<ReLogoTurtle> turtles, double value) {
 		for (ReLogoTurtle turtle : turtles) {
 			NdPoint location = turtle.getTurtleLocation();
 			double x = location.x
