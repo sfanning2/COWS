@@ -74,7 +74,7 @@ class Cow extends ReLogoTurtle {
 				this.setHeading(this.getHeading() - Utility.randomNormal(180,10))
 			}
 			
-		} else if (cowsInRange.size() >= 2 && Utility.random(1) < independenceLevel){
+		} else if (cowsInRange.size() >= 3 && Utility.random(1) < independenceLevel){
 			// Calculate average heading
 			def heading_0_45 = 0
 			def heading_45_90 = 0
@@ -143,8 +143,9 @@ class Cow extends ReLogoTurtle {
 		
 		//Cow avoids other turtles 
 		if(count(turtlesHere()) > 1) {
-			setHeading(floor(direction+Utility.random(135)) % 360)
+			setHeading(floor(direction+Utility.random(90)) % 360)
 			move(0.01)
+			setHeading(Math.abs(floor(direction-Utility.random(90)) % 360))
 		}
 	
 
