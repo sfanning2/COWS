@@ -66,7 +66,7 @@ class UserObserver extends ReLogoObserver{
 			while(count(inRadius(turtles(), 3))>1){
 				setxy(randomPxcor(), randomPycor())
 			}
-				setColor(135)
+			setColor(95)
 		}
 
 

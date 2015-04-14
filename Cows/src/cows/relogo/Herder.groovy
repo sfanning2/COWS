@@ -80,6 +80,9 @@ class Herder extends ReLogoTurtle {
 			if(Math.sqrt(Math.pow(xDiff,2) + Math.pow(yDiff,2)) < 10.0) {
 				targetedCow = null
 			}
+			if (!cows().contains(targetedCow)) {
+				targetedCow = null
+			}
 		}
 
 		/* lock onto a straggler cow if necessary */
@@ -98,6 +101,7 @@ class Herder extends ReLogoTurtle {
 				//switch roles
 				return false
 			}
+			
 		}
 		cowLocation = targetedCow.getTurtleLocation()
 		/* if it is near other cows and near the center */
@@ -134,9 +138,10 @@ class Herder extends ReLogoTurtle {
 		/* do something with path */
 		if (path.size() > 1) {
 			State nextState = path.get(1)
-//			this.moveTo(this.patch(nextState.x, nextState.y))
-			this.facexy(nextState.x, nextState.y)
-			this.move(speed)
+			this.moveTo(this.patch(nextState.x, nextState.y))
+//			this.facexy(nextState.x, nextState.y)
+//			Patch futurePatch = this.patchAhead(speed)
+//			this.move(speed)
 			
 			/* TODO: move forward more cautiously */
 			
