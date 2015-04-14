@@ -82,6 +82,9 @@ class Herder extends ReLogoTurtle {
 			if(Math.sqrt(Math.pow(xDiff,2) + Math.pow(yDiff,2)) < 10.0) {
 				targetedCow = null
 			}
+			if (!cows().contains(targetedCow)) {
+				targetedCow = null
+			}
 		}
 
 		/* lock onto a straggler cow if necessary */
@@ -100,6 +103,7 @@ class Herder extends ReLogoTurtle {
 				//switch roles
 				return false
 			}
+			
 		}
 		cowLocation = targetedCow.getTurtleLocation()
 		/* if it is near other cows and near the center */
@@ -134,27 +138,18 @@ class Herder extends ReLogoTurtle {
 		this.pathFinder.replan();
 		List<State> path = pathFinder.getdStarLitePF().getPath()
 		/* do something with path */
-		if (path.size() > 1) {
-			State nextState = path.get(1)
-//			this.moveTo(this.patch(nextState.x, nextState.y))
-			this.facexy(nextState.x, nextState.y)
-			this.move(speed)
-			
-			/* TODO: move forward more cautiously */
-			
-			
-//			this.patchHere().setPcolor(yellow())
-//			int i = 2;
-//			while(path.size() > i && i <= speed) {
-//				nextState = path.get(i)
-//				
-//				this.moveTo(this.patch(nextState.x, nextState.y))
-//				this.patchHere().setPcolor(yellow())
-//				i++
-//			}
-
-//						this.patchHere().setPcolor(yellow())
+		int i = 1;
+		while(path.size() > i && i <= speed) {
+			State nextState = path.get(i)
+			Patch movePatch = this.patch(nextState.x, nextState.y)
+			if(this.turtlesOn(movePatch).size() == 0) {
+				this.moveTo(movePatch)
+			} else {
+				break
+			}
+			i++
 		}
+
 		return true
 	}
 	
@@ -167,17 +162,17 @@ class Herder extends ReLogoTurtle {
 		int newX = point.x
 		int newY = point.y
 		
-		while (Math.floor(newX) <= minX) {
-			newX++;
+		if (Math.floor(newX) <= minX) {
+			newX = minX + 1
 		}
-		while (Math.ceil(newX) >= maxX) {
-			newX--;
+		if (Math.ceil(newX) >= maxX) {
+			newX = maxX - 1
 		}
-		while (Math.floor(newY) <= minY) {
-			newY++;
+		if (Math.floor(newY) <= minY) {
+			newY = minY + 1
 		}
-		while (Math.ceil(newY) >= maxY) {
-			newY--;
+		if (Math.ceil(newY) >= maxY) {
+			newY = maxY - 1
 		}
 		
 		return new NdPoint(newX, newY)

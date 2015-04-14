@@ -67,7 +67,7 @@ class UserObserver extends ReLogoObserver{
 				setxy(randomPxcor(), randomPycor())
 			}
 			int roleNum = Utility.random(1)
-			if(roleNum ==0){
+			if(roleNum == 0){
 				//set as mover
 				role = "Mover" as Role
 				//setRole(Role.Mover)	
@@ -78,7 +78,7 @@ class UserObserver extends ReLogoObserver{
 				//setRole(Role.Grouper)
 				setColor(95)
 			}
-		
+
 		}
 
 
