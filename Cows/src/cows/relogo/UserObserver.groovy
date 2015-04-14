@@ -33,7 +33,7 @@ class UserObserver extends ReLogoObserver{
 		double sqarea = worldHeight()*worldWidth()
 		int numTrees =  (int)obstacleDensity *sqarea / 36
 		createTrees(numTrees){
-			size = 6
+			size = 3
 			while(count(inRadius(turtles(), 6))>1){
 				setxy(randomPxcor(), randomPycor())
 			}
@@ -130,6 +130,27 @@ class UserObserver extends ReLogoObserver{
 			}
 		}
 	}
-
+	def AgentSet getGroupers(){
+		AgentSet clone = herders().clone()
+		for(Herder h: clone){
+			if(h.role == "Grouper" as Role){
+				
+			}else{
+				clone.remove(h)
+			}
+		}
+		return clone
+	}
+	def AgentSet getMovers(){
+		AgentSet clone = herders().clone()
+		for(Herder h: clone){
+			if(h.role == "Mover" as Role){
+				
+			}else{
+				clone.remove(h)
+			}
+		}
+		return clone
+	}
 
 }

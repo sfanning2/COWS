@@ -248,13 +248,15 @@ class Herder extends ReLogoTurtle {
 		if(targetedCow==null || numInteractionsTargetedCow  > 50){
 			//couldn't find a good cow
 			//set random position
+			
+			Patch randomPatch = patchAtHeadingAndDistance(Utility.random(360), 5)
+			while((count(turtlesOn(randomPatch))> 0 )&&  (count(randomPatch.inRadius(this.getHerdersInVision(), 20)) > 0)){
+				//try find better patch
+				randomPatch = patchAtHeadingAndDistance(Utility.random(360), 5)
 				
-			Patch randomPatch = patchAtHeadingAndDistance(Utility.random(360), 10)
-			this.moveTo(randomPatch)
-			while(count(this.inRadius(this.getHerdersInVision(), 20))> 1){
-				randomPatch = patchAtHeadingAndDistance(Utility.random(360), 10)
-				this.moveTo(randomPatch)
 			}
+			this.moveTo(randomPatch)
+
 		}else{
 				if(targetedCow==previousTargetedCow){
 					numInteractionsTargetedCow++
@@ -286,8 +288,29 @@ class Herder extends ReLogoTurtle {
 					//get patch closest 
 					Integer intx = new Integer(x)
 					Integer inty = new Integer(y)
-					Patch p = patch(intx, inty)
-	this.moveTo(p)
+					Patch initialP = patch(intx, inty)
+					Patch p = initialP
+					if(count(turtlesOn(initialP))>0){
+						//look at patches surrounding cow to see if open
+						for( Patch sp : targetedCow.patchHere().neighbors()){
+							if(count(turtlesOn(p)) ==0){
+								p = sp
+								break
+							}
+						}
+					}
+					if(p == initialP){
+						//if can't find a better patch close to cow move to new spot
+						Patch randomPatch = patchAtHeadingAndDistance(Utility.random(360), 5)
+						while((count(turtlesOn(randomPatch))> 0 )&&  (count(randomPatch.inRadius(this.getHerdersInVision(), 20)) > 0)){
+							//try find better patch
+							randomPatch = patchAtHeadingAndDistance(Utility.random(360), 5)
+							
+						}
+						this.moveTo(randomPatch)
+					}else{
+						this.moveTo(p)
+					}
 	}
 		return true
 		/* try to position self behind the herd */
@@ -424,27 +447,4 @@ class Herder extends ReLogoTurtle {
 	def setRole(Role r){
 		role = r
 	}
-
-def AgentSet getGroupers(){
-	AgentSet clone = herders().clone()
-	for(Herder h: clone){
-		if(h.role == "Grouper" as Role){
-			
-		}else{
-			clone.remove(h)
-		}
-	}
-	return clone
-}
-def AgentSet getMovers(){
-	AgentSet clone = herders().clone()
-	for(Herder h: clone){
-		if(h.role == "Mover" as Role){
-			
-		}else{
-			clone.remove(h)
-		}
-	}
-	return clone
-}
 }
