@@ -27,17 +27,7 @@ class Cow extends ReLogoTurtle {
 	def double anxietyThreshold;
 	def double sightRange;
 	
-	/*def updateAnxietyLevel() {
-		//returns set of handlers in flight zone
-		AgentSet herders = inRadius(herders(), flightZoneRadius)
-		//herders in blind spot
-				
-		//increase anxiety level based on herder's actions
-		for(Herder h: herders){
-			anxietyLevel +=  h.currentTaskAnxiety
-		}
-		
-	} */
+
 	def step(){
 
 
@@ -146,9 +136,7 @@ class Cow extends ReLogoTurtle {
 		//Cow avoids other turtles 
 		if(count(turtlesHere()) > 1) {
 			setHeading(floor(direction+Utility.random(135)) % 360)
-//			setHeading(floor(direction+Utility.random(90)) % 360)
 			move(0.01)
-//			setHeading(Math.abs(floor(direction-Utility.random(90)) % 360))
 		}
 	
 

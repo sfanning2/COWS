@@ -246,15 +246,6 @@ class Herder extends ReLogoTurtle {
 		List<Cow> groupOfCows = new ArrayList<Cow>()
 		for(Cow c : this.getCowsInVision()){
 			groupOfCows.add(c)
-
-//						NdPoint cowLocation = c.getTurtleLocation()
-//						//remove from group those cows not within the "group"
-//						double xDiff = (double)(cowLocation.x - center.x)
-//						double yDiff = (double)(cowLocation.y - center.y)
-//						if(Math.sqrt(Math.pow(xDiff,2) + Math.pow(yDiff,2)) < groupSize) {
-//							//no within group so remove
-//							groupOfCows.add(c)
-//						}
 		}
 
 		targetedCow = getPressurePointOfGroup(groupOfCows)
@@ -275,7 +266,7 @@ class Herder extends ReLogoTurtle {
 			NdPoint goal = new NdPoint(new Integer(randomPatch.getPxcor()), new Integer(randomPatch.getPycor()))
 			NdPoint current = new NdPoint(new Integer(this.getPxcor()), new Integer(this.getPycor()))
 			walkToPoint(goal, current)
-			//this.moveTo(randomPatch)//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			
 		}else{
 			if(targetedCow==previousTargetedCow){
 
@@ -323,7 +314,7 @@ class Herder extends ReLogoTurtle {
 				p = initialP
 			}
 			if(p != null){
-				//this.moveTo(p)///!!!!!!!!!!!
+				
 				NdPoint goal = new NdPoint(new Integer(p.getPxcor()), new Integer(p.getPycor()))
 				NdPoint current = new NdPoint(new Integer(this.getPxcor()), new Integer(this.getPycor()))
 				walkToPoint(goal, current)
@@ -348,7 +339,7 @@ class Herder extends ReLogoTurtle {
 					//try find better patch
 					p = patchAtHeadingAndDistance(Utility.random(360), 5)
 				}
-				//this.moveTo(p)//!!!!!!!!!!!!
+				
 				NdPoint goal = new NdPoint(new Integer(p.getPxcor()), new Integer(p.getPycor()))
 				NdPoint current = new NdPoint(new Integer(this.getPxcor()), new Integer(this.getPycor()))
 				walkToPoint(goal, current)
@@ -445,16 +436,13 @@ class Herder extends ReLogoTurtle {
 
 		for(Cow c : cowsInVision){
 			//first cow which doesn't have closer herder and herder at least 20 ft away
-			// get herders within 20 ft of cow
+
 			AgentSet herdersNearCow  = c.inRadius(this.getHerdersInVision(), communicationRadius)
 			if(count(herdersNearCow) <=  1){
 				bestCow = c
 				return bestCow
 			}
 		}
-		//herders within 20 ft of all the cows so move elsewhere
-
-		//find cow with different position
 
 		return null
 	}
@@ -511,7 +499,12 @@ class Herder extends ReLogoTurtle {
 		h.remove(this)
 		return h
 	}
-	def boolean walkToPoint(NdPoint goalPosition, NdPoint currentPosition){
+	/**
+	 * Have herder walk from current position to goal via path 
+	 * @param goalPosition
+	 * @param currentPosition
+	 */
+	def walkToPoint(NdPoint goalPosition, NdPoint currentPosition){
 		//make sure goal position is within bounds of field
 		goalPosition = this.makeBoundedPoint(goalPosition)
 
@@ -548,7 +541,6 @@ class Herder extends ReLogoTurtle {
 			}
 			i++
 		}
-
 	}
 	/**
 	 * TODO
