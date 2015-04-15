@@ -67,11 +67,21 @@ class Cow extends ReLogoTurtle {
 			}
 			// Move amount is high and away from herder
 			distance = 3
+//			Herder herderHere = herdersInRange.get(0)
+//			//face opposite direction of herder
+//			double degrees = Math.atan2((herderHere.getXcor() - this.getXcor()), (herderHere.getYcor() - this.getYcor())) * 180 / Math.PI
+//			degrees = (degrees + 180) % 360 
+//			if(degrees < 180){
+//				degrees + Utility.randomNormal(180,20)
+//			}else{
+//				degrees - Utility.randomNormal(180,10)
+//			}
+//			direction = degrees 
 			this.face(herdersInRange.get(0))
 			if (this.getHeading() < 180) {
-				this.setHeading(this.getHeading() + Utility.randomNormal(180,20))
+				direction = this.getHeading() + Utility.randomNormal(180,20)
 			} else {
-				this.setHeading(this.getHeading() - Utility.randomNormal(180,10))
+				direction = this.getHeading() - Utility.randomNormal(180,10)
 			}
 			
 		} else if (cowsInRange.size() >= 2 && Utility.random(1) < independenceLevel){
@@ -133,6 +143,7 @@ class Cow extends ReLogoTurtle {
 		
 		//Check anxiety level against threshold and override other movement if over
 		if (anxietyLevel > anxietyThreshold ) {
+			System.out.println("above anxiety threshold")
 			distance = Utility.randomNormal(4, 2) + 2
 			direction = Utility.random(360)
 			anxietyLevel -= 10

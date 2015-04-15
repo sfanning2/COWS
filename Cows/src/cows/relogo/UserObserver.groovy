@@ -66,8 +66,8 @@ class UserObserver extends ReLogoObserver{
 			while(count(inRadius(turtles(), 3))>1){
 				setxy(randomPxcor(), randomPycor())
 			}
-			int roleNum = Utility.random(1)
-			if(roleNum == 0){
+			int roleNum = Utility.random(2)
+			if(roleNum == 1){
 				//set as mover
 				role = "Mover" as Role
 				//setRole(Role.Mover)	

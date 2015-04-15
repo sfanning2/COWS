@@ -28,11 +28,11 @@ import java.util.Random
 import static javax.measure.unit.Unit.ONE;
 
 class Herder extends ReLogoTurtle {
-	def double visionRadius = 60
+	def double visionRadius = 40
 	def double speed = 3.0
 	def double width
 	def double length
-	def double communicationRadius = 60
+	def double communicationRadius = 40
 	def Role role 
 	def Cow targetedCow 
 	def Cow previousTargetedCow 
@@ -46,6 +46,8 @@ class Herder extends ReLogoTurtle {
 	}
 
 	def herd() {
+		//moveCows()
+	
 		if (role == Role.Grouper) {
 			if (false == groupCows()) {
 				/* spend the turn switching roles */
@@ -239,69 +241,91 @@ class Herder extends ReLogoTurtle {
 		}
 		/* want cows to move up and right towards goal location*/
 		/* cow in furthest position on x-axis not straggler in vision*/
-		List<Cow> groupOfCows = this.getCowsInVision()
-		for(Cow c : groupOfCows){
-			NdPoint cowLocation = c.getTurtleLocation()
-			//remove from group those cows not within the "group"
-			double xDiff = (double)(cowLocation.x - center.x)
-			double yDiff = (double)(cowLocation.y - center.y)
-			if(Math.sqrt(Math.pow(xDiff,2) + Math.pow(yDiff,2)) >= 10.0) {
-				//no within group so remove
-				groupOfCows.remove(c)
-			}
+		List<Cow> groupOfCows = new ArrayList<Cow>()
+		for(Cow c : this.getCowsInVision()){
+			groupOfCows.add(c)	
+		
+//			NdPoint cowLocation = c.getTurtleLocation()
+//			//remove from group those cows not within the "group"
+//			double xDiff = (double)(cowLocation.x - center.x)
+//			double yDiff = (double)(cowLocation.y - center.y)
+//			if(Math.sqrt(Math.pow(xDiff,2) + Math.pow(yDiff,2)) < 10.0) {
+//				//no within group so remove
+//				groupOfCows.add(c)
+//			}
 		}
 		
-		targetedCow = getPressurePointOfGroup()//getCowToMove(this.getTurtleLocation())
-		
+		targetedCow = getPressurePointOfGroup(groupOfCows)
+		if(numInteractionsTargetedCow > 30){
+			//new cow
+			groupOfCows.remove(targetedCow)
+			targetedCow = getPressurePointOfGroup(groupOfCows)
+		}
+		if(targetedCow == null){
+			//find new cow
+			System.out.println('null cow')
+			Patch randomPatch = patchAtHeadingAndDistance(Utility.random(360), 10)
+						while((count(turtlesOn(randomPatch))> 0 )&&  (count(randomPatch.inRadius(this.getHerdersInVision(), 20)) > 0)){
+							//try find better patch
+							randomPatch = patchAtHeadingAndDistance(Utility.random(360), 10)
+			
+						}
+						targetedCow = null
+						numInteractionsTargetedCow = 0
+						this.moveTo(randomPatch)
+		}else{	
 		//if within 10 ft of center is part of group
 		
-		
-		
-		if(targetedCow==null || numInteractionsTargetedCow  > 50){
-			//couldn't find a good cow
-			//set random position
-			
-			Patch randomPatch = patchAtHeadingAndDistance(Utility.random(360), 5)
-			while((count(turtlesOn(randomPatch))> 0 )&&  (count(randomPatch.inRadius(this.getHerdersInVision(), 20)) > 0)){
-				//try find better patch
-				randomPatch = patchAtHeadingAndDistance(Utility.random(360), 5)
-				
-			}
-			this.moveTo(randomPatch)
 
-		}else{
+//		if(targetedCow==null || numInteractionsTargetedCow  > 50){
+//			//couldn't find a good cow
+//			//find a different one not targetedCow
+//			
+//			Patch randomPatch = patchAtHeadingAndDistance(Utility.random(360), 10)
+//			while((count(turtlesOn(randomPatch))> 0 )&&  (count(randomPatch.inRadius(this.getHerdersInVision(), 20)) > 0)){
+//				//try find better patch
+//				randomPatch = patchAtHeadingAndDistance(Utility.random(360), 10)
+//				
+//			}
+//			targetedCow = null
+//			numInteractionsTargetedCow = 0
+//			this.moveTo(randomPatch)
+//
+//		}else{
 				if(targetedCow==previousTargetedCow){
+					
 					numInteractionsTargetedCow++
 				}else{
+				
 					numInteractionsTargetedCow = 1
 				}
 				previousTargetedCow = targetedCow
 				
-//				double cowYPosition = targetedCow.getYcor()
-//				double cowXPosition = targetedCow.getXcor()
-//				int x = 0
-//				int y = 0
-//				
-//					//move cow up and right until it moves past next furthest x-cor cow
-//					//move cow right
-//					int distFromCow = 3
-//					double minusDist = Math.sqrt(Math.pow(distFromCow, 2)/2)
-//					//best place to move
-//					x = (int)cowXPosition - minusDist
-//					y = (int)cowYPosition - minusDist
-//					
-//		
-//					if(x < getMinPxcor()){
-//						x = getMinPxcor()
-//					}
-//					if(y < getMinPycor()){
-//						y = getMinPycor()
-//					}
-//					//get patch closest 
-//					Integer intx = new Integer(x)
-//					Integer inty = new Integer(y)
-//					Patch initialP = patch(intx, inty)
-//					Patch p = initialP
+				double cowYPosition = targetedCow.getYcor()
+				double cowXPosition = targetedCow.getXcor()
+				int x = 0
+				int y = 0
+				
+					//move cow up and right until it moves past next furthest x-cor cow
+					//move cow right
+					int distFromCow = 8
+					double minusDist = Math.sqrt(Math.pow(distFromCow, 2)/2)
+					//best place to move
+					x = (int)cowXPosition - minusDist
+					y = (int)cowYPosition - minusDist
+					
+		
+					if(x < getMinPxcor()){
+						x = getMinPxcor()
+					}
+					if(y < getMinPycor()){
+						y = getMinPycor()
+					}
+					//get patch closest 
+					Integer intx = new Integer(x)
+					Integer inty = new Integer(y)
+					Patch initialP = patch(intx, inty)
+					Patch p = initialP
 //					if(count(turtlesOn(initialP))>0){
 //						//look at patches surrounding cow to see if open
 //						for( Patch sp : targetedCow.patchHere().neighbors()){
@@ -323,52 +347,63 @@ class Herder extends ReLogoTurtle {
 //					}else{
 //						this.moveTo(p)
 //					}
-				
-				cowLocation = targetedCow.getTurtleLocation()
-				/* if it is near other cows and near the center */
-				/* move toward appropriate placement around cow if necessary */
-				/* for now just move towards the cow */
-				NdPoint myLoc = this.getTurtleLocation();
-				
-				/* get goal*/
-				
-				NdPoint goal = Herder.getPositionToGroupCow(centerLocation, cowLocation, 5.0)
-				goal = this.makeBoundedPoint(goal)
-				
-				if (pathFinder == null) {
-					pathFinder = new PathFinder(myLoc, goal)
-					ArrayList<ReLogoTurtle> fences = fences()
-					int blocked = -1
-					if (fences != null) {
-						pathFinder.setTurtles(fences, blocked)
-					}
-					ArrayList<ReLogoTurtle> trees = trees()
-					if (trees != null) {
-						pathFinder.setTurtles(trees, blocked)
-					}
-					pathFinder.setBorders(getMinPxcor(), getMaxPxcor(), getMinPycor(), getMaxPycor())
-				}else{
-					pathFinder.getdStarLitePF().updateStart((int)myLoc.x, (int)myLoc.y)
-					this.pathFinder.updateGoal((int)goal.x, (int)goal.y)
+					//move outside flight zone
+					this.moveTo(initialP)
+					//goal patch
+					Integer xx = new Integer(getMaxPxcor())
+					Integer yy = new Integer(getMaxPycor()-2)
 					
-				}
+					double heading = this.towardsxy((Number)xx, (Number)yy)
+					//move inside flight zone heading toward goal
+					//this.setHeading(heading)
+					this.facexy(xx, yy)
+					this.move(4)
 				
-				this.pathFinder.setCurrentCows(this.getCowsInVision())
-				this.pathFinder.replan();
-				List<State> path = pathFinder.getdStarLitePF().getPath()
-				/* do something with path */
-				int i = 1;
-				while(path.size() > i && i <= speed) {
-					State nextState = path.get(i)
-					Patch movePatch = this.patch(nextState.x, nextState.y)
-					if(this.turtlesOn(movePatch).size() == 0) {
-						this.moveTo(movePatch)
-					} else {
-						break
-					}
-					i++
-				}
-				
+//				NdPoint cowLocation = targetedCow.getTurtleLocation()
+//				/* if it is near other cows and near the center */
+//				/* move toward appropriate placement around cow if necessary */
+//				/* for now just move towards the cow */
+//				NdPoint myLoc = this.getTurtleLocation();
+//				
+//				/* get goal*/
+//				
+//				NdPoint goal = Herder.getPositionToGroupCow(center, cowLocation, 5.0)
+//				goal = this.makeBoundedPoint(goal)
+//				
+//				if (pathFinder == null) {
+//					pathFinder = new PathFinder(myLoc, goal)
+//					ArrayList<ReLogoTurtle> fences = fences()
+//					int blocked = -1
+//					if (fences != null) {
+//						pathFinder.setTurtles(fences, blocked)
+//					}
+//					ArrayList<ReLogoTurtle> trees = trees()
+//					if (trees != null) {
+//						pathFinder.setTurtles(trees, blocked)
+//					}
+//					pathFinder.setBorders(getMinPxcor(), getMaxPxcor(), getMinPycor(), getMaxPycor())
+//				}else{
+//					pathFinder.getdStarLitePF().updateStart((int)myLoc.x, (int)myLoc.y)
+//					this.pathFinder.updateGoal((int)goal.x, (int)goal.y)
+//					
+//				}
+//				
+//				this.pathFinder.setCurrentCows(this.getCowsInVision())
+//				this.pathFinder.replan();
+//				List<State> path = pathFinder.getdStarLitePF().getPath()
+//				/* do something with path */
+//				int i = 1;
+//				while(path.size() > i && i <= speed) {
+//					State nextState = path.get(i)
+//					Patch movePatch = this.patch(nextState.x, nextState.y)
+//					if(this.turtlesOn(movePatch).size() == 0) {
+//						this.moveTo(movePatch)
+//					} else {
+//						break
+//					}
+//					i++
+//				}
+//				
 	}
 		return true
 	}
@@ -442,14 +477,32 @@ class Herder extends ReLogoTurtle {
 	 */
 	def Cow getPressurePointOfGroup(List<Cow> group){
 		Cow pressureCow = null
+		List<Cow> targetedCowsNeighbors = new ArrayList<Cow>()
+		for(Herder h : this.getHerdersInVision()){
+			if(h.targetedCow != null){
+				targetedCowsNeighbors.add(h.targetedCow)
+			}
+		}
+		
 		//best position is cow with smallest combination of x and y coordinates
 		double heuristic = 9999
 		for(Cow c : group){
 			if(c.getXcor() + c.getYcor() < heuristic){
-				heuristic = c.getXcor() + c.getYcor()
-				pressureCow = c
+				boolean hasHerder = false
+				for(Cow tc : targetedCowsNeighbors){
+					if(tc ==c){
+						hasHerder = true
+					}
+				}
+				if(!hasHerder){
+						heuristic = c.getXcor() + c.getYcor()
+						pressureCow = c
+				}
 			}
-		}
+				
+			}
+		
+		return pressureCow
 	}
 	/**
 	 * Get herders in this herder's field of vision
