@@ -68,7 +68,7 @@ class PathFinder {
 					for (Patch patch : neighboringPatches) {
 						NdPoint neighborLocation = new NdPoint(patch.getPxcor(), patch.getPycor())
 						this.prevCowLocations.add(neighborLocation)
-						this.updateCell((int)neighborLocation.x, (int)neighborLocation.y, 2)	// Cost of 2 discourages walking here
+						this.updateCell((int)neighborLocation.x, (int)neighborLocation.y, 5)	// Cost of 5 discourages walking here
 					}
 					
 					/* update cow */
