@@ -1,3 +1,1 @@
-<?xml version="1.0"?>
-<sweep runs="1">
-</sweep>
+<?xml version="1.0" ?><sweep runs="1"><parameter name="field_width" type="constant" constant_type="int" value="100"></parameter><parameter name="field_height" type="constant" constant_type="int" value="100"></parameter></sweep>

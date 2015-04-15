@@ -2,7 +2,6 @@
 <parameters>
 
 	<parameter name="randomSeed" displayName="Default Random Seed" type="int" defaultValue="__NULL__" />
-	<parameter name="field_width" displayName="Field_Width" type="int" defaultValue="100"/>
-	<parameter name="field_height" displayName="Field_Height" type="int" defaultValue="100"/>
+	<parameter name="field_area" displayName="Field_Area" type="int" defaultValue="10000"/>
 
 </parameters>

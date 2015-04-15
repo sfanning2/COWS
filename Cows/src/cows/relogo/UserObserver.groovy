@@ -3,6 +3,7 @@ package cows.relogo
 
 import static repast.simphony.relogo.Utility.*;
 import static repast.simphony.relogo.UtilityG.*;
+import repast.simphony.parameter.Parameters
 import repast.simphony.relogo.AgentSet
 import repast.simphony.relogo.Patch
 import repast.simphony.relogo.Stop;
@@ -22,6 +23,16 @@ class UserObserver extends ReLogoObserver{
 	@Setup
 	def setup(){
 		clearAll()
+		//timeout as necessary for creating environment
+		long expireTime = System.nanoTime() + TimeUnit.NANOSECONDS.convert(20, TimeUnit.SECONDS)
+		//if this run is part of a batch environment get parameter values from params_batch file
+		if(RunEnvironment.getInstance().isBatch()){
+			Parameters params = RunEnvironment.getInstance().getParameters()
+			obstacleDensity = params.getValue("obstacleDensity")
+			numHerders = params.getValue("numHerders")
+			numCows = params.getValue("numCows")
+		}
+
 		Random randomGenerator = new Random()
 		for (UserPatch p : patches()){
 			p.pcolor = 62
@@ -38,7 +49,7 @@ class UserObserver extends ReLogoObserver{
 				setxy(randomPxcor(), randomPycor())
 			}
 		}
-		setDefaultShape(Cow, "fish")
+		setDefaultShape(Cow, "circle")
 
 		createCows(numCows){
 			setxy(randomPxcor(), randomPycor())
@@ -46,8 +57,13 @@ class UserObserver extends ReLogoObserver{
 			//randomly place cows so they don't hit other objects
 
 			while(count(inRadius(turtles(), 6))>1){
-				setxy(randomPxcor(), randomPycor())
-			}
+					if(expireTime < System.nanoTime()){
+						RunEnvironment.getInstance().endRun();
+					}else{
+						setxy(randomPxcor(), randomPycor())
+					}
+				}
+
 			
 			flightZoneRadius = 6
 			setHeading(Utility.random(360))
@@ -63,18 +79,21 @@ class UserObserver extends ReLogoObserver{
 			size = 3
 			//randomly place cows so they don't hit other objects
 			while(count(inRadius(turtles(), 3))>1){
-				setxy(randomPxcor(), randomPycor())
-			}
+					if(expireTime < System.nanoTime()){
+						RunEnvironment.getInstance().endRun();
+					}else{
+						setxy(randomPxcor(), randomPycor())
+					}
+				}
+
 			double roleNum = Utility.random(1)
 			if(roleNum < 0.5){
 				//set as mover
-				role = "Mover" as Role
-				//setRole(Role.Mover)	
+				role = Role.Mover
 				setColor(135)
 			}else{
 				//set as grouper
-				role = "Grouper" as Role
-				//setRole(Role.Grouper)
+				role = Role.Grouper
 				setColor(95)
 			}
 
@@ -93,7 +112,11 @@ class UserObserver extends ReLogoObserver{
 	}
 
 	def remainingCows() {
-		count(cows())
+		if(count(cows())==0){
+			 RunEnvironment.getInstance().endRun()
+		 }else{
+		 	count(cows())
+		 }
 	}
 	def createFenceAroundField(){
 		int maxX = getMaxPxcor()
