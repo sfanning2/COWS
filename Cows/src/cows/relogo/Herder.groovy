@@ -34,12 +34,17 @@ class Herder extends ReLogoTurtle {
 	def Role role = "Grouper" as Role
 	def Cow targetedCow
 	def PathFinder pathFinder
+	def grouperTicks = 0
+	private static final int GROUPER_TIMEOUT = 100
+	private static final double HERD_RADIUS = 10.0
+	
 	
 	def boolean needsUpdate = true
 
 	enum Role {
 		Grouper,
 		Mover
+		// Add Wanderer role for cow discovery? OR add wandering to grouper/mover roles?
 	}
 
 	def herd() {
@@ -65,6 +70,8 @@ class Herder extends ReLogoTurtle {
 	 * @return
 	 */
 	def boolean groupCows() {
+		/* update ticks */
+		grouperTicks++
 		/* check that there are cows in vision */
 		List<Cow> cowsInVision = this.getCowsInVision()
 		if (cowsInVision.size() < 1) return false
@@ -72,23 +79,29 @@ class Herder extends ReLogoTurtle {
 		NdPoint centerLocation = getCenter(cowsInVision)
 		NdPoint cowLocation = null;
 		if(targetedCow) {
+			/* check for timeout */
 			cowLocation = targetedCow.getTurtleLocation()
 
 			/* check if cow has joined group (and untarget cow if so)*/
 			double xDiff = (double)(cowLocation.x - centerLocation.x)
 			double yDiff = (double)(cowLocation.y - centerLocation.y)
-			if(Math.sqrt(Math.pow(xDiff,2) + Math.pow(yDiff,2)) < 10.0) {
+			if(Math.sqrt(Math.pow(xDiff,2) + Math.pow(yDiff,2)) < HERD_RADIUS) {
 				targetedCow = null
 			}
 			if (!cows().contains(targetedCow)) {
 				targetedCow = null
+			}
+			if (grouperTicks > GROUPER_TIMEOUT) {
+				targetedCow = null
+				return false 	// switch roles
 			}
 		}
 
 		/* lock onto a straggler cow if necessary */
 		/* In the future, add herder communication to prevent duplicate lock-ons */
 		if (!targetedCow) {
-			targetedCow = getFurthestCow(centerLocation, cowsInVision)
+			targetedCow = getStragglingCow(centerLocation, centerLocation, cowsInVision )
+			grouperTicks = 0
 			if (null == targetedCow) {
 				// switch roles
 				return false
@@ -132,7 +145,7 @@ class Herder extends ReLogoTurtle {
 			
 		}	
 		
-		this.pathFinder.setCurrentCows(this.getCowsInVision())
+		this.pathFinder.setCurrentCows(this.getCowsInVision())	// best to call set current cows last
 		this.pathFinder.replan();
 		List<State> path = pathFinder.getdStarLitePF().getPath()
 		/* do something with path */
@@ -140,7 +153,7 @@ class Herder extends ReLogoTurtle {
 		while(path.size() > i && i <= speed) {
 			State nextState = path.get(i)
 			Patch movePatch = this.patch(nextState.x, nextState.y)
-			if(this.turtlesOn(movePatch).size() == 0) {
+			if(movePatch != null && this.turtlesOn(movePatch).size() == 0) {
 				this.moveTo(movePatch)
 			} else {
 				break
@@ -341,6 +354,15 @@ class Herder extends ReLogoTurtle {
 
 		return farCow
 	}
+	
+	def Cow getStragglingCow(NdPoint point, NdPoint groupCenter, List<Cow> cowsInVision) {
+		Patch centerPatch = this.patch(groupCenter.x, groupCenter.y)
+		List<Cow> cowsInGroup = centerPatch.inRadius(cowsInVision, HERD_RADIUS)
+		List<Cow> stragglingCows = new ArrayList(cowsInVision)
+		stragglingCows.removeAll(cowsInGroup)
+		return this.getFurthestCow(point, stragglingCows)
+	}
+	
 	def Cow getCowToMove(NdPoint point){
 		Patch myLoc = this.patch(point.x, point.y)
 		List<Cow> cowsInVision = this.getCowsInVision()

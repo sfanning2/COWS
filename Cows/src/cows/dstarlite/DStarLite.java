@@ -28,6 +28,7 @@ public class DStarLite implements java.io.Serializable{
 	private State s_start = new State();
 	private State s_goal  = new State();
 	private State s_last  = new State();
+
 	private int maxSteps;
 	private PriorityQueue<State>		openList = new PriorityQueue<State>();
 	//Change back to private****
@@ -571,6 +572,18 @@ public class DStarLite implements java.io.Serializable{
 	public List<State> getPath()
 	{
 		return path;
+	}
+
+	public State getS_start() {
+		return s_start;
+	}
+
+	public State getS_goal() {
+		return s_goal;
+	}
+
+	public State getS_last() {
+		return s_last;
 	}
 
 
