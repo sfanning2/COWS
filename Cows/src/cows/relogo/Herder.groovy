@@ -567,7 +567,7 @@ class Herder extends ReLogoTurtle {
 		while(path.size() > i && i <= speed) {
 			State nextState = path.get(i)
 			Patch movePatch = this.patch(nextState.x, nextState.y)
-			if(this.turtlesOn(movePatch).size() == 0) {
+			if(movePatch != null && this.turtlesOn(movePatch).size() == 0) {
 				this.moveTo(movePatch)
 			} else {
 				break
