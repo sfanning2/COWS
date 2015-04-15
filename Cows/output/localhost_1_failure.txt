@@ -1,0 +1,22 @@
+BatchSchedule.execute: error when running the schedule
+Current tick (0.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.controller.ScheduledMethodControllerAction$ScheduleMethodAllAction.execute(ScheduledMethodControllerAction.java:333)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.batch.BatchScheduleRunner$ScheduleLoopRunnable.run(BatchScheduleRunner.java:37)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at cows.relogo.UserObserver$$FastClassByCGLIB$$4c312ecb.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 7 more
+Caused by: groovy.lang.MissingPropertyException: No such property: TimeUnit for class: cows.relogo.UserObserver
+	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.unwrap(ScriptBytecodeAdapter.java:50)
+	at org.codehaus.groovy.runtime.callsite.GetEffectivePogoPropertySite.getProperty(GetEffectivePogoPropertySite.java:86)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callGroovyObjectGetProperty(AbstractCallSite.java:231)
+	at cows.relogo.UserObserver.setup(UserObserver.groovy:27)
+	... 10 more

@@ -42,6 +42,10 @@
       <string>Tracking Network</string>
       <string>cows.style.TrackingLinkStyle</string>
     </entry>
+    <entry>
+      <string>UserLink</string>
+      <string>cows.style.LinkStyle</string>
+    </entry>
   </netStyles>
   <editedNetStyles>
     <entry>
@@ -54,6 +58,10 @@
     </entry>
     <entry>
       <string>Tracking Network</string>
+      <null/>
+    </entry>
+    <entry>
+      <string>UserLink</string>
       <null/>
     </entry>
   </editedNetStyles>
@@ -105,6 +113,11 @@
       <attributes/>
       <type>network</type>
     </repast.simphony.scenario.data.ProjectionData>
+    <repast.simphony.scenario.data.ProjectionData>
+      <id>UserLink</id>
+      <attributes/>
+      <type>NETWORK</type>
+    </repast.simphony.scenario.data.ProjectionData>
   </projections>
   <visualizationProperties class="repast.simphony.visualization.UnitSizeLayoutProperties">
     <unitSize>15.0</unitSize>
@@ -153,6 +166,13 @@
       <string>Tracking Network</string>
       <repast.simphony.visualization.engine.DefaultProjectionDescriptor>
         <proj reference="../../../../projections/repast.simphony.scenario.data.ProjectionData[4]"/>
+        <props/>
+      </repast.simphony.visualization.engine.DefaultProjectionDescriptor>
+    </entry>
+    <entry>
+      <string>UserLink</string>
+      <repast.simphony.visualization.engine.DefaultProjectionDescriptor>
+        <proj reference="../../../../projections/repast.simphony.scenario.data.ProjectionData[5]"/>
         <props/>
       </repast.simphony.visualization.engine.DefaultProjectionDescriptor>
     </entry>

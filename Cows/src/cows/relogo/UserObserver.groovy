@@ -14,6 +14,11 @@ import repast.simphony.relogo.schedule.Setup;
 import cows.ReLogoObserver;
 import cows.relogo.Herder.Role
 import java.util.Random;
+import repast.simphony.parameter.Parameters;
+import repast.simphony.engine.environment.RunEnvironment;
+import groovy.transform.TimedInterrupt;
+import java.util.concurrent.TimeUnit;
+
 
 class UserObserver extends ReLogoObserver{
 
@@ -155,7 +160,7 @@ class UserObserver extends ReLogoObserver{
 	def AgentSet getGroupers(){
 		AgentSet clone = herders().clone()
 		for(Herder h: clone){
-			if(h.role == "Grouper" as Role){
+			if(h.role == Role.Grouper){
 				
 			}else{
 				clone.remove(h)
@@ -166,7 +171,7 @@ class UserObserver extends ReLogoObserver{
 	def AgentSet getMovers(){
 		AgentSet clone = herders().clone()
 		for(Herder h: clone){
-			if(h.role == "Mover" as Role){
+			if(h.role == Role.Mover){
 				
 			}else{
 				clone.remove(h)
