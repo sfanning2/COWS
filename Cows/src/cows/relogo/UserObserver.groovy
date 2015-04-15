@@ -58,7 +58,7 @@ class UserObserver extends ReLogoObserver{
 
 		createCows(numCows){
 			setxy(randomPxcor(), randomPycor())
-			size = 6
+			size = 3
 			//randomly place cows so they don't hit other objects
 
 			while(count(inRadius(turtles(), 6))>1){
@@ -91,8 +91,8 @@ class UserObserver extends ReLogoObserver{
 					}
 				}
 
-			double roleNum = Utility.random(1)
-			if(roleNum < 0.5){
+			double roleNum = Utility.randomNormal(1, 1)
+			if(roleNum > 0){
 				//set as mover
 				role = Role.Mover
 				setColor(135)

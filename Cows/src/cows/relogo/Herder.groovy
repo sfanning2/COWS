@@ -50,7 +50,7 @@ class Herder extends ReLogoTurtle {
 		Mover
 		// Add Wanderer role for cow discovery? OR add wandering to grouper/mover roles?
 	}
-
+	
 	def herd() {
 
 		herdersInCommRange = this.inRadius(herders(), communicationRadius)
@@ -225,38 +225,39 @@ class Herder extends ReLogoTurtle {
 	def moveCows() {
 		/* get center of group */
 		def center = getCenter(this.getCowsInVision())
-		/* cows in vision excluding straggler cow*/
-		List<Cow> cowsInVisionNotTargetCow = this.getCowsInVision()
 		/*check for straggler cows in vision and switch roles if necessary*/
-		Cow furthestCow = getFurthestCow(center, cowsInVisionNotTargetCow)//getBestStraggler(center, cowsInVisionNotTargetCow)//
-		if(furthestCow != null){
-			
-			//get herders in vision
-			List<Herder> herders = getHerdersInVision()
-			if(count(herders)>0){
-				//this herders distance to straggler cow
-				double distanceMeToCow = this.distance(furthestCow)
-				double minDistanceHToCow = distanceMeToCow
-
-				for(Herder h : herders){
-					double distanceHToCow = h.distance(furthestCow)
-					/* if another herder is not closer to cow  switch roles*/
-					if(distanceHToCow < distanceMeToCow){
-						//break since this herder will not switch roles
-						minDistanceHToCow = distanceHToCow
-						break
-					}
-				}
-
-				/* if this herder is closest to straggler cow */
-				if(minDistanceHToCow == distanceMeToCow){
-					//switch roles
-					return false
-				}
-			}
-			//remove target cow from array
-			cowsInVisionNotTargetCow.remove(furthestCow)
+		Cow straggler = getStragglingCow(center, center, this.getCowsInVision()) 
+		if(straggler != null){
+			//swtich to grouping role
+			return false
 		}
+//			
+//			//get herders in vision
+//			List<Herder> herders = getHerdersInVision()
+//			if(count(herders)>0){
+//				//this herders distance to straggler cow
+//				double distanceMeToCow = this.distance(furthestCow)
+//				double minDistanceHToCow = distanceMeToCow
+//
+//				for(Herder h : herders){
+//					double distanceHToCow = h.distance(furthestCow)
+//					/* if another herder is not closer to cow  switch roles*/
+//					if(distanceHToCow < distanceMeToCow){
+//						//break since this herder will not switch roles
+//						minDistanceHToCow = distanceHToCow
+//						break
+//					}
+//				}
+//
+//				/* if this herder is closest to straggler cow */
+//				if(minDistanceHToCow == distanceMeToCow){
+//					//switch roles
+//					return false
+//				}
+			//}
+			//remove target cow from array
+		//	cowsInVisionNotTargetCow.remove(furthestCow)
+		//}
 		/* want cows to move up and right towards goal location*/
 		/* cow in furthest position on x-axis not straggler in vision*/
 		List<Cow> groupOfCows = new ArrayList<Cow>()
@@ -367,7 +368,11 @@ class Herder extends ReLogoTurtle {
 		}
 		return true
 	}
-
+	/**
+	 * Find center point within a set of cows
+	 * @param cows for which we want a center
+	 * @return NdPoint representing center
+	 */
 	def NdPoint getCenter(List<Cow> cows) {
 		NdPoint myCenter = getHerdCenter(cows)
 		List<NdPoint> centers = communicateCenters()

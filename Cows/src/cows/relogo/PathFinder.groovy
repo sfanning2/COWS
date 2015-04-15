@@ -64,12 +64,12 @@ class PathFinder {
 				
 				if (avoid) {
 					/* update area around cow */
-					List<Patch> neighboringPatches = cow.patch(x,y).inRadius(cow.patches(), cowAvoidanceRadius)	
-					for (Patch patch : neighboringPatches) {
-						NdPoint neighborLocation = new NdPoint(patch.getPxcor(), patch.getPycor())
-						this.prevCowLocations.add(neighborLocation)
-						this.updateCell((int)neighborLocation.x, (int)neighborLocation.y, 5)	// Cost of 5 discourages walking here
-					}
+//					List<Patch> neighboringPatches = cow.patch(x,y).inRadius(cow.patches(), cowAvoidanceRadius)	
+//					for (Patch patch : neighboringPatches) {
+//						NdPoint neighborLocation = new NdPoint(patch.getPxcor(), patch.getPycor())
+//						this.prevCowLocations.add(neighborLocation)
+//						this.updateCell((int)neighborLocation.x, (int)neighborLocation.y, 5)	// Cost of 5 discourages walking here
+//					}
 					
 					/* update cow */
 					this.prevCowLocations.add(new NdPoint(x, y))
