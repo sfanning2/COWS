@@ -52,7 +52,7 @@ public class Cow extends ReLogoTurtle {
 		for(int j = maxY-10; j <= maxY; j++){
 			if(p.getPxcor() == minX || p.getPxcor() == minX-1|| p.getPxcor() == minX-2){
 				if(p.getPycor() == j){
-					((UserObserver)this.getMyObserver()).setCowNull(this);
+					this.remove();
 					break;
 				}
 			}
@@ -175,12 +175,18 @@ public class Cow extends ReLogoTurtle {
 	public void setSightRange(double level) {
 		this.sightRange = level;
 	}
-	private void remove(){
-		cows().remove(this);
-		this.getMyObserver().getContext().remove(this);
 	
-		//if(outOfNetworkSubscribers)
-		this.notifySubscribers();
+	private void remove(){
+		try{
+			cows().remove(this);
+			this.hideTurtle();
+			this.getMyObserver().getContext().remove(this);
+			this.notifySubscribers();
+		}catch(Exception e){
+			
+		}finally {
+			
+		}
 	}
 	private void setSpace(ContinuousSpace space){
 		this.space = space;
