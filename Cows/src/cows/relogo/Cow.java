@@ -177,16 +177,8 @@ public class Cow extends ReLogoTurtle {
 	}
 	
 	private void remove(){
-		try{
 			cows().remove(this);
 			this.hideTurtle();
-			this.getMyObserver().getContext().remove(this);
-			this.notifySubscribers();
-		}catch(Exception e){
-			
-		}finally {
-			
-		}
 	}
 	private void setSpace(ContinuousSpace space){
 		this.space = space;

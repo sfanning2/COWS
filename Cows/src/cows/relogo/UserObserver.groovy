@@ -90,11 +90,11 @@ class UserObserver extends ReLogoObserver{
 			double roleNum = Utility.random(1)
 			if(roleNum < 0.5){
 				//set as mover
-				role = "Mover" as Role
+				role = Role.Mover	
 				setColor(135)
 			}else{
 				//set as grouper
-				role = "Grouper" as Role
+				role = Role.Grouper
 				setColor(95)
 			}
 
@@ -109,7 +109,6 @@ class UserObserver extends ReLogoObserver{
 		ask(herders()){ step() }
 		ask(cows()){ step() }
 	}
-
 
 	 def remainingCows() {
 		 if(count(cows())==0){
