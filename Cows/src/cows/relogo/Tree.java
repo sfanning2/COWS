@@ -16,11 +16,18 @@ import cows.ReLogoTurtle;
 public class Tree extends ReLogoTurtle {
 	private ContinuousSpace<Object> space;
 	private Grid<Object> grid; 
+
 	public Tree(){
-		
+
 	}
 	public Tree(ContinuousSpace<Object> space, Grid<Object> grid){
 		this.space = space;
+		this.grid = grid;
+	}
+	private void setSpace(ContinuousSpace space){
+		this.space = space;
+	}
+	private void setGrid(Grid grid){
 		this.grid = grid;
 	}
 }

@@ -39,7 +39,7 @@ public class SimBuilder implements ContextBuilder {
 		int minPycor = -y;
 		int maxPycor = y;
 		//non-toroidal world
-		RLWorldDimensions rLWorldDimensions = new RLWorldDimensions(minPxcor, maxPxcor, minPycor, maxPycor);
+		RLWorldDimensions rLWorldDimensions = new RLWorldDimensions(minPxcor, maxPxcor, minPycor, maxPycor,  new repast.simphony.space.continuous.BouncyBorders());
 		
 		LinkFactory lf = new LinkFactory(UserLink.class);
 		TurtleFactory tf = new TurtleFactory(UserTurtle.class);

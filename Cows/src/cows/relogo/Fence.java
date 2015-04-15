@@ -22,4 +22,10 @@ public class Fence extends ReLogoTurtle {
 	public Fence(){
 		
 	}
+	private void setSpace(ContinuousSpace space){
+		this.space = space;
+	}
+	private void setGrid(Grid grid){
+		this.grid = grid;
+	}
 }

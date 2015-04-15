@@ -52,14 +52,13 @@ public class Herder extends ReLogoTurtle {         ;
 		Grouper,
 		Mover
 	}
+	public Herder(){
+
+	}
 	public Herder(ContinuousSpace<Object> space, Grid<Object> grid){
 		this.space = space;
 		this.grid = grid;
 	}
-	public Herder(){
-		
-	}
-	@ScheduledMethod ( start = 1 , interval = 1)
 	public void step() {
 
 				if (role == Role.Grouper) {
@@ -623,5 +622,11 @@ public class Herder extends ReLogoTurtle {         ;
 	}
 	public void setRole(Role r){
 		role = r;
+	}
+	private void setSpace(ContinuousSpace space){
+		this.space = space;
+	}
+	private void setGrid(Grid grid){
+		this.grid = grid;
 	}
 }

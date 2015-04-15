@@ -2,6 +2,7 @@ package cows.relogo;
 
 import static repast.simphony.relogo.Utility.*;
 import static repast.simphony.relogo.UtilityG.*;
+import repast.simphony.context.Context;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.relogo.AgentSet;
 import repast.simphony.relogo.Patch;
@@ -32,18 +33,17 @@ public class Cow extends ReLogoTurtle {
 	private ContinuousSpace<Object> space;
 	private Grid<Object> grid;
 
+	public Cow(){
+		
+	}
 	public Cow(ContinuousSpace<Object> space, Grid<Object> grid){
 		this.space = space;
 		this.grid = grid;
 	}
-	public Cow(){
-		
-	}
 	@SuppressWarnings("unchecked")
-	@ScheduledMethod ( start = 1 , interval = 1)
 	public void step(){
-
-
+		
+		
 		//If the cow is at the goal, remove them from the field 
 		int maxY = getMaxPycor();
 		int minX  = getMaxPxcor();
@@ -52,7 +52,7 @@ public class Cow extends ReLogoTurtle {
 		for(int j = maxY-10; j <= maxY; j++){
 			if(p.getPxcor() == minX || p.getPxcor() == minX-1|| p.getPxcor() == minX-2){
 				if(p.getPycor() == j){
-					die();
+					((UserObserver)this.getMyObserver()).setCowNull(this);
 					break;
 				}
 			}
@@ -174,5 +174,18 @@ public class Cow extends ReLogoTurtle {
 	}
 	public void setSightRange(double level) {
 		this.sightRange = level;
+	}
+	private void remove(){
+		cows().remove(this);
+		this.getMyObserver().getContext().remove(this);
+	
+		//if(outOfNetworkSubscribers)
+		this.notifySubscribers();
+	}
+	private void setSpace(ContinuousSpace space){
+		this.space = space;
+	}
+	private void setGrid(Grid grid){
+		this.grid = grid;
 	}
 }
