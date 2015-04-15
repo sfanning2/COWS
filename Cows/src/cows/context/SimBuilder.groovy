@@ -27,7 +27,7 @@ public class SimBuilder implements ContextBuilder {
             ugpf.initialize(new JPanel());
             ugpf.addGlobalsAndPanelComponents();
         }
-		 
+		//get parameters from parameters.xml file
 		Parameters p = RunEnvironment.getInstance().getParameters();
 		
 		//field_width and field_height 
@@ -38,7 +38,7 @@ public class SimBuilder implements ContextBuilder {
 		int maxPxcor = x
 		int minPycor = -y
 		int maxPycor = y
-		//non-toroidal world
+		//non-toroidal world so bouncy walls
 		RLWorldDimensions rLWorldDimensions = new RLWorldDimensions(minPxcor, maxPxcor, minPycor, maxPycor, new repast.simphony.space.continuous.BouncyBorders());
 		
 		LinkFactory lf = new LinkFactory(UserLink);
@@ -46,6 +46,7 @@ public class SimBuilder implements ContextBuilder {
 		PatchFactory pf = new PatchFactory(UserPatch);		
 		ReLogoWorldFactory wf = new ReLogoWorldFactory(context,"default_observer_context", rLWorldDimensions, tf, pf, lf);
 		
+		//create observer who "watches" simulation
 		ObserverFactory oF = new ObserverFactory("default_observer",UserObserver,wf);
 		Observer dO = oF.createObserver();
 		
