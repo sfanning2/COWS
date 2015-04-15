@@ -28,21 +28,32 @@ import static javax.measure.unit.Unit.ONE;
 
 class Herder extends ReLogoTurtle {
 	def double visionRadius = 60
+	def double commRadius = 60
 	def double speed = 3.0
 	def double width
 	def double length
 	def Role role = "Grouper" as Role
 	def Cow targetedCow
 	def PathFinder pathFinder
+	def grouperTicks = 0
+	private static final int GROUPER_TIMEOUT = 100
+	private static final double HERD_RADIUS = 20.0
+	
 	
 	def boolean needsUpdate = true
+	
+	def AgentSet herdersInCommRange = null
 
 	enum Role {
 		Grouper,
 		Mover
+		// Add Wanderer role for cow discovery? OR add wandering to grouper/mover roles?
 	}
 
 	def herd() {
+		
+		herdersInCommRange = this.inRadius(herders(), commRadius)
+		
 		if (role == Role.Grouper) {
 			if (false == groupCows()) {
 				/* spend the turn switching roles */
@@ -65,6 +76,8 @@ class Herder extends ReLogoTurtle {
 	 * @return
 	 */
 	def boolean groupCows() {
+		/* update ticks */
+		grouperTicks++
 		/* check that there are cows in vision */
 		List<Cow> cowsInVision = this.getCowsInVision()
 		if (cowsInVision.size() < 1) return false
@@ -72,23 +85,29 @@ class Herder extends ReLogoTurtle {
 		NdPoint centerLocation = getCenter(cowsInVision)
 		NdPoint cowLocation = null;
 		if(targetedCow) {
+			/* check for timeout */
 			cowLocation = targetedCow.getTurtleLocation()
 
 			/* check if cow has joined group (and untarget cow if so)*/
 			double xDiff = (double)(cowLocation.x - centerLocation.x)
 			double yDiff = (double)(cowLocation.y - centerLocation.y)
-			if(Math.sqrt(Math.pow(xDiff,2) + Math.pow(yDiff,2)) < 10.0) {
+			if(Math.sqrt(Math.pow(xDiff,2) + Math.pow(yDiff,2)) < HERD_RADIUS) {
 				targetedCow = null
 			}
 			if (!cows().contains(targetedCow)) {
 				targetedCow = null
+			}
+			if (grouperTicks > GROUPER_TIMEOUT) {
+				targetedCow = null
+				return false 	// switch roles
 			}
 		}
 
 		/* lock onto a straggler cow if necessary */
 		/* In the future, add herder communication to prevent duplicate lock-ons */
 		if (!targetedCow) {
-			targetedCow = getFurthestCow(centerLocation, cowsInVision)
+			targetedCow = getStragglingCow(centerLocation, centerLocation, cowsInVision )
+			grouperTicks = 0
 			if (null == targetedCow) {
 				// switch roles
 				return false
@@ -132,7 +151,7 @@ class Herder extends ReLogoTurtle {
 			
 		}	
 		
-		this.pathFinder.setCurrentCows(this.getCowsInVision())
+		this.pathFinder.setCurrentCows(this.getCowsInVision())	// best to call set current cows last
 		this.pathFinder.replan();
 		List<State> path = pathFinder.getdStarLitePF().getPath()
 		/* do something with path */
@@ -140,7 +159,7 @@ class Herder extends ReLogoTurtle {
 		while(path.size() > i && i <= speed) {
 			State nextState = path.get(i)
 			Patch movePatch = this.patch(nextState.x, nextState.y)
-			if(this.turtlesOn(movePatch).size() == 0) {
+			if(movePatch != null && this.turtlesOn(movePatch).size() == 0) {
 				this.moveTo(movePatch)
 			} else {
 				break
@@ -341,6 +360,45 @@ class Herder extends ReLogoTurtle {
 
 		return farCow
 	}
+	
+	/**
+	 * Get a list of cows targeted by other herders
+	 * Duplicates are possible
+	 * The list may be empty
+	 * @param cows non-null list of cows
+	 * @return list of targeted cows
+	 */
+	def List<Cow> getCowsTargetedByNearbyHerders() {
+		ArrayList<Cow> targets = new ArrayList<Cow>();
+		if (herdersInCommRange != null) {
+			for (Herder herder : herdersInCommRange) {
+				Cow target = herder.getTargetedCow()
+				if (target != null) {
+					targets.add(target)
+				}
+			}
+		}
+		return targets
+	}
+	
+	/**
+	 * Get cows not currently targeted by another herder and not close enough
+	 * to the center of the group
+	 * @param point
+	 * @param groupCenter
+	 * @param cowsInVision
+	 * @return
+	 */
+	def Cow getStragglingCow(NdPoint point, NdPoint groupCenter, List<Cow> cowsInVision) {
+		Patch centerPatch = this.patch(groupCenter.x, groupCenter.y)
+		List<Cow> cowsInGroup = centerPatch.inRadius(cowsInVision, HERD_RADIUS)
+		List<Cow> targetedCows = this.getCowsTargetedByNearbyHerders()
+		List<Cow> stragglingCows = new ArrayList(cowsInVision)
+		stragglingCows.removeAll(cowsInGroup)
+		stragglingCows.removeAll(targetedCows)
+		return this.getFurthestCow(point, stragglingCows)
+	}
+	
 	def Cow getCowToMove(NdPoint point){
 		Patch myLoc = this.patch(point.x, point.y)
 		List<Cow> cowsInVision = this.getCowsInVision()
@@ -372,14 +430,8 @@ class Herder extends ReLogoTurtle {
 	h.remove(this)
 	return h
 	}
-	/**
-	 * TODO
-	 * @return up to three herders that are closest
-	 * to this herder
-	 */
-	def getNearestHerders() {
-
-	}
+	
+	
 
 	/**
 	 * TODO
@@ -387,7 +439,16 @@ class Herder extends ReLogoTurtle {
 	 * of the herd as seen by the individual herders
 	 */
 	def List<NdPoint> communicateCenters() {
-		return new ArrayList<NdPoint>();
+		ArrayList centers = new  ArrayList<NdPoint>()
+		if (herdersInCommRange != null) {
+			for (Herder herder : herdersInCommRange) {
+				NdPoint center = herder.getHerdCenter()
+				if (center != null) {
+					centers.add(herder.getHerdCenter())
+				}
+			}
+		}
+		return centers
 	}
 
 	/**
