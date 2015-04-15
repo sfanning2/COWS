@@ -53,9 +53,8 @@ class UserObserver extends ReLogoObserver{
 			setHeading(Utility.random(360))
 			anxietyLevel = 0
 			anxietyThreshold = Utility.randomNormal(100, 20)
-			sightRange = Utility.randomNormal(10, 5)
-			independenceLevel = Utility.random(0.25) + 0.05 //Percent of the time the cow will group, b/w 5 and 0 %
-				
+			sightRange = Utility.randomNormal(15, 5)
+			independenceLevel = Utility.random(0.05) //Percent of the time the cow will group, b/w 5 and 0 %		
 		}
 		setDefaultShape(Herder, "person")
 		createHerders(numHerders){
@@ -66,8 +65,8 @@ class UserObserver extends ReLogoObserver{
 			while(count(inRadius(turtles(), 3))>1){
 				setxy(randomPxcor(), randomPycor())
 			}
-			int roleNum = Utility.random(2)
-			if(roleNum == 1){
+			double roleNum = Utility.random(1)
+			if(roleNum < 0.5){
 				//set as mover
 				role = "Mover" as Role
 				//setRole(Role.Mover)	

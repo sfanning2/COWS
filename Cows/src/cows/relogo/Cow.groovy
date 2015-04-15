@@ -11,7 +11,9 @@ import repast.simphony.relogo.UtilityG;
 import repast.simphony.relogo.schedule.Go;
 import repast.simphony.relogo.schedule.Setup;
 import repast.simphony.space.continuous.ContinuousSpace;
+import repast.simphony.space.continuous.NdPoint;
 import cows.ReLogoTurtle;
+import cows.dstarlite.State
 
 import java.util.logging.Handler
 
@@ -67,16 +69,7 @@ class Cow extends ReLogoTurtle {
 			}
 			// Move amount is high and away from herder
 			distance = 3
-//			Herder herderHere = herdersInRange.get(0)
-//			//face opposite direction of herder
-//			double degrees = Math.atan2((herderHere.getXcor() - this.getXcor()), (herderHere.getYcor() - this.getYcor())) * 180 / Math.PI
-//			degrees = (degrees + 180) % 360 
-//			if(degrees < 180){
-//				degrees + Utility.randomNormal(180,20)
-//			}else{
-//				degrees - Utility.randomNormal(180,10)
-//			}
-//			direction = degrees 
+
 			this.face(herdersInRange.get(0))
 			if (this.getHeading() < 180) {
 				direction = this.getHeading() + Utility.randomNormal(180,20)
@@ -84,7 +77,7 @@ class Cow extends ReLogoTurtle {
 				direction = this.getHeading() - Utility.randomNormal(180,10)
 			}
 			
-		} else if (cowsInRange.size() >= 3 && Utility.random(1) < independenceLevel){
+		} else if (cowsInRange.size() >= 2 && Utility.random(1) < independenceLevel){
 			// Calculate average heading
 			def heading_0_45 = 0
 			def heading_45_90 = 0
@@ -143,23 +136,25 @@ class Cow extends ReLogoTurtle {
 		
 		//Check anxiety level against threshold and override other movement if over
 		if (anxietyLevel > anxietyThreshold ) {
-			System.out.println("above anxiety threshold")
 			distance = Utility.randomNormal(4, 2) + 2
 			direction = Utility.random(360)
 			anxietyLevel -= 10
 		}
-		
+				
 		setHeading((double) direction)
 		move(distance)
-		
 		//Cow avoids other turtles 
 		if(count(turtlesHere()) > 1) {
-			setHeading(floor(direction+Utility.random(90)) % 360)
+			setHeading(floor(direction+Utility.random(135)) % 360)
+//			setHeading(floor(direction+Utility.random(90)) % 360)
 			move(0.01)
-			setHeading(Math.abs(floor(direction-Utility.random(90)) % 360))
+//			setHeading(Math.abs(floor(direction-Utility.random(90)) % 360))
 		}
 	
 
+	}
+	def int numObstaclesOn(Patch p){
+		return count(turtlesOn(p)) - count(herdersOn(p))
 	}
 	def setSpeed(double speed){
 		this.speed = speed
