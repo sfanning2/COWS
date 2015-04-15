@@ -74,13 +74,11 @@ class UserObserver extends ReLogoObserver{
 			double roleNum = Utility.random(1)
 			if(roleNum < 0.5){
 				//set as mover
-				role = "Mover" as Role
-				//setRole(Role.Mover)	
+				role = Role.Mover	
 				setColor(135)
 			}else{
 				//set as grouper
-				role = "Grouper" as Role
-				//setRole(Role.Grouper)
+				role = Role.Grouper
 				setColor(95)
 			}
 
