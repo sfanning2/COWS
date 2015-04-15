@@ -1,4 +1,3 @@
-
 package cows.relogo
 
 import static repast.simphony.relogo.Utility.*;
@@ -10,8 +9,10 @@ import repast.simphony.relogo.Utility;
 import repast.simphony.relogo.UtilityG;
 import repast.simphony.relogo.schedule.Go;
 import repast.simphony.relogo.schedule.Setup;
+import bsh.This;
 import cows.ReLogoObserver;
 import cows.relogo.Herder.Role
+
 import java.util.Random;
 import repast.simphony.parameter.Parameters;
 import repast.simphony.engine.environment.RunEnvironment;
@@ -46,48 +47,22 @@ class UserObserver extends ReLogoObserver{
 		double sqarea = worldHeight()*worldWidth()
 		int numTrees =  (int)obstacleDensity *sqarea / 36
 		createTrees(numTrees){
-			size = 6
+			size = 3
 			while(count(inRadius(turtles(), 6))>1){
 				setxy(randomPxcor(), randomPycor())
 
 			}
+			setSpace(this.space)
+			setGrid(this.grid)
 		}
-		setDefaultShape(Cow, "fish")
+		setDefaultShape(Cow, "circle")
 
 			createCows(numCows){
 				setxy(randomPxcor(), randomPycor())
-				
-				size = 6
-				//randomly place cows so they don't hit other objects
-				
-				while(count(inRadius(turtles(), 6))>1){
-					//time out if necessary
-					if(expireTime < System.nanoTime()){
-						RunEnvironment.getInstance().endRun();
-						
-						return
-					}else{
-						setxy(randomXcor(), randomYcor())
-					}
-				}
 
-//				double s = randomGenerator.nextGaussian() * 0.5
-//				if(s<0){
-//					s = 0
-//				}else if(s>3){
-//					s = 3
-//				}
-//				setSpeed(s)
-//				setHeading(randomGenerator.nextInt(360))
-//				setAnxietyLevel(0)
-//				double t = randomGenerator.nextGaussian()*2+ 10
-//				if(t<5){
-//					t = 5
-//				}
-//				setAnxietyThreshold(t)
-//				setIndependenceLevel(randomGenerator.nextInt(8))
-//
-//				setFlightZoneRadius(randomGenerator.nextInt(3)+1); // Generates integer between 1 and 3
+			
+			setSpace(this.space)
+			setGrid(this.grid)
 			flightZoneRadius = 6
 			setHeading(Utility.random(360))
 			anxietyLevel = 0
@@ -110,8 +85,10 @@ class UserObserver extends ReLogoObserver{
 						setxy(randomPxcor(), randomPycor())
 					}
 				}
-			int roleNum = Utility.random(1)
-			if(roleNum ==0){
+			setSpace(this.space)
+			setGrid(this.grid)
+			double roleNum = Utility.random(1)
+			if(roleNum < 0.5){
 				//set as mover
 				role = "Mover" as Role
 				setColor(135)
@@ -120,15 +97,19 @@ class UserObserver extends ReLogoObserver{
 				role = "Grouper" as Role
 				setColor(95)
 			}
-		
+
 		}
-			}
+
+
+		}
+
 
 	@Go
 	def go(){
-		ask(herders()){ herd() }
+		ask(herders()){ step() }
 		ask(cows()){ step() }
 	}
+
 
 	 def remainingCows() {
 		 if(count(cows())==0){
@@ -137,41 +118,72 @@ class UserObserver extends ReLogoObserver{
 		 	count(cows())
 		 }
 	 }
-	 def createFenceAroundField(){
-		 int maxX = getMaxPxcor()
-		 int maxY = getMaxPycor()
-		 int minX  = getMinPxcor()
-		 int minY = getMinPycor()
-		 //iterate over all x values
-	 		for(int i=minX; i<= maxX; i++){
-			 createFences(1){
-				 setxy(i, minY)
-				 setColor(60)
-			 }
-			 createFences(1){
-				 setxy(i, maxY)
-				 setColor(60)
-			 }
-		 } 
-			 //iterate over all y values
-			 for(int j=minY; j< maxY-10; j++){
-				 createFences(1){
-					 setxy(minX, j)
-					 setColor(60)
-				 }
-				 createFences(1){
-					 setxy(maxX, j)
-					 setColor(60)
-				 }
-			 }
-			 for(int k=maxY-10; k <= maxY; k++){
-				 createFences(1){
-					 setxy(minX, k)
-					 setColor(60)
-			 }
-			 }
-	 }
-	 
 
+	def createFenceAroundField(){
+		int maxX = getMaxPxcor()
+		int maxY = getMaxPycor()
+		int minX  = getMinPxcor()
+		int minY = getMinPycor()
+		//iterate over all x values
+		for(int i=minX; i<= maxX; i++){
+			createFences(1){
+				setxy(i, minY)
+				setColor(60)
+				setSpace(this.space)
+				setGrid(this.grid)
+			}
+			createFences(1){
+				setxy(i, maxY)
+				setColor(60)
+				setSpace(this.space)
+				setGrid(this.grid)
+			}
+		}
+		//iterate over all y values
+		for(int j=minY; j< maxY-10; j++){
+			createFences(1){
+				setxy(minX, j)
+				setColor(60)
+				setSpace(this.space)
+				setGrid(this.grid)
+			}
+			createFences(1){
+				setxy(maxX, j)
+				setColor(60)
+				setSpace(this.space)
+				setGrid(this.grid)
+			}
+		}
+		for(int k=maxY-10; k <= maxY; k++){
+			createFences(1){
+				setxy(minX, k)
+				setColor(60)
+				setSpace(this.space)
+				setGrid(this.grid)
+			}
+		}
+	}
+	def AgentSet getGroupers(){
+		AgentSet clone = herders().clone()
+		for(Herder h: clone){
+			if(h.role == "Grouper" as Role){
+				
+			}else{
+				clone.remove(h)
+			}
+		}
+		return clone
+	}
+	def AgentSet getMovers(){
+		AgentSet clone = herders().clone()
+		for(Herder h: clone){
+			if(h.role == "Mover" as Role){
+				
+			}else{
+				clone.remove(h)
+			}
+		}
+		return clone
+	}
 
 }

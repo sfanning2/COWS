@@ -22,7 +22,7 @@ public class SimBuilder implements ContextBuilder {
 	
 	public Context build(Context context) {
 	
-		if (RunEnvironment.instance.isBatch()){
+		if (RunEnvironment.getInstance().isBatch()){
             UserGlobalsAndPanelFactory ugpf = new UserGlobalsAndPanelFactory();
             ugpf.initialize(new JPanel());
             ugpf.addGlobalsAndPanelComponents();
@@ -34,6 +34,7 @@ public class SimBuilder implements ContextBuilder {
 		
 		
 		//field_width and field_height 
+
 		int x = Math.floor(Math.sqrt(p.getValue("field_area"))/2);
 		
 		// NOTE: minPxcor and minPycor must be <= 0
@@ -41,15 +42,16 @@ public class SimBuilder implements ContextBuilder {
 		int maxPxcor = x
 		int minPycor = -x
 		int maxPycor = x
+
 		//non-toroidal world
-		RLWorldDimensions rLWorldDimensions = new RLWorldDimensions(minPxcor, maxPxcor, minPycor, maxPycor, new repast.simphony.space.continuous.BouncyBorders());
+		RLWorldDimensions rLWorldDimensions = new RLWorldDimensions(minPxcor, maxPxcor, minPycor, maxPycor,  new repast.simphony.space.continuous.BouncyBorders());
 		
-		LinkFactory lf = new LinkFactory(UserLink);
-		TurtleFactory tf = new TurtleFactory(UserTurtle);
-		PatchFactory pf = new PatchFactory(UserPatch);		
+		LinkFactory lf = new LinkFactory(UserLink.class);
+		TurtleFactory tf = new TurtleFactory(UserTurtle.class);
+		PatchFactory pf = new PatchFactory(UserPatch.class);		
 		ReLogoWorldFactory wf = new ReLogoWorldFactory(context,"default_observer_context", rLWorldDimensions, tf, pf, lf);
 		
-		ObserverFactory oF = new ObserverFactory("default_observer",UserObserver,wf);
+		ObserverFactory oF = new ObserverFactory("default_observer",UserObserver.class,wf);
 		Observer dO = oF.createObserver();
 		
 		context.add(dO);
