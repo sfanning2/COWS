@@ -48,7 +48,7 @@ class Cow extends ReLogoTurtle {
 		 * If the cows aren't being impacted by any of the conditions below they make
 		 * the default movement of .05 ahead in the current direction.
 		 */
-		def distance = 0.05
+		def distance = 0.2
 		def direction = this.getHeading()
 		if (direction >= 360) direction = direction - 360
 		
@@ -70,11 +70,13 @@ class Cow extends ReLogoTurtle {
 			} else {
 				direction = this.getHeading() - Utility.randomNormal(180,10)
 			}
+			setHeading(direction)
 			
 		// if there are 2 or more cows in the sight range of the cow,
 		// or the cow's independence level (percentage of time that the cow should move with the group)
 		// is greater than the random number created
-		} else if (cowsInRange.size() >= 2 && Utility.random(100) < (independenceLevel*100)){
+		}
+		if (cowsInRange.size() >= 2 && Utility.random(100) < (independenceLevel*100)){
 			// Calculate average heading
 			def heading_0_45 = 0
 			def heading_45_90 = 0
@@ -127,7 +129,7 @@ class Cow extends ReLogoTurtle {
 			}
 			direction = Utility.randomNormal(0, 15) + direction
 			if (direction >= 360) direction = direction - 360
-			distance = 1
+			distance = 2
 			anxietyLevel = anxietyLevel - 3 //Cows moving in a group become less stressed
 		}
 		
@@ -140,10 +142,20 @@ class Cow extends ReLogoTurtle {
 				
 		setHeading((double) direction)
 		move(distance)
-		//Cow avoids other turtles 
-		if(count(inRadius(turtles(), 3)) > 1) {
-			setHeading(floor(direction+Utility.random(135)) % 360)
-			move(0.01)
+		// Cow avoids other turtles
+		// Moves cows max of two times
+		for (int i = 0; i < 2; i++) {
+			if(count(inRadius(turtles(), 3)) > 1) {
+				def temp = getHeading()
+				def moovement = direction+((Utility.random(2)-1) * Utility.random(135))
+				if (moovement < 0) {
+					moovement = moovement + 360
+				} else {
+					moovement = floor(moovement) % 360
+				}
+				move(1)
+				setHeading((temp + Utility.random(10)) % 360)
+			}
 		}
 	
 

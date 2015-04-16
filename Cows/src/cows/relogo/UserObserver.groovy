@@ -74,8 +74,8 @@ class UserObserver extends ReLogoObserver{
 			setHeading(Utility.random(360))
 			anxietyLevel = 0
 			anxietyThreshold = Utility.randomNormal(100, 20)
-			sightRange = Utility.randomNormal(15, 5)
-			independenceLevel = Utility.random(0.2) //Percent of the time the cow will group, b/w 5 and 0 %		
+			sightRange = Utility.randomNormal(10, 5)
+			independenceLevel = Utility.randomNormal(0.05, 0.01) //Percent of the time the cow will group		
 		}
 		setDefaultShape(Herder, "person")
 		createHerders(numHerders){
