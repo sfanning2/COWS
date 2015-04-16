@@ -18,7 +18,7 @@ import cows.dstarlite.State
 import java.util.logging.Handler
 /**
  * Object to represent a cow. Cows move with cows near them and behave in response to herder actions and the environment. 
- * @author Lynnea
+ * @author Green-kiats
  *
  */
 class Cow extends ReLogoTurtle {

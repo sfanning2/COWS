@@ -6,7 +6,12 @@ import java.awt.Point
 import repast.simphony.relogo.Patch
 import repast.simphony.space.continuous.NdPoint
 
-class PathFinder {
+/**
+ * Pathfinding logic to support the Herder.groovy class
+ * @author Green-kiats
+ *
+ */
+class HerderPathFinder {
 	
 	def cowAvoidanceRadius = 4
 	
@@ -23,10 +28,9 @@ class PathFinder {
 	 * @param start
 	 * @param goal
 	 */
-	PathFinder(NdPoint start, NdPoint goal) {
+	HerderPathFinder(NdPoint start, NdPoint goal) {
 		this.dStarLitePF = new DStarLite()
 		dStarLitePF.init((int)start.x, (int)start.y, (int)goal.x, (int)goal.y)
-
 	}
 
 	/**
