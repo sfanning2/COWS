@@ -68,6 +68,7 @@ class UserObserver extends ReLogoObserver{
 		createCows(numCows){
 			setxy(randomPxcor(), randomPycor())
 			size = 3
+
 			/*randomly place cows so they don't hit other objects*/
 			while(count(inRadius(turtles(), 6))>1){
 					if(expireTime < System.nanoTime()){//timeout if takes too long because field may not be able to handle all agents
@@ -83,7 +84,7 @@ class UserObserver extends ReLogoObserver{
 			anxietyLevel = 0
 			anxietyThreshold = Utility.randomNormal(100, 20)
 			sightRange = Utility.randomNormal(15, 5)
-			independenceLevel = Utility.random(0.05) //Percent of the time the cow will group, b/w 5 and 0 %		
+			independenceLevel = Utility.random(0.2) //Percent of the time the cow will group, b/w 5 and 0 %		
 		}
 		/* create herders*/
 		setDefaultShape(Herder, "person")
