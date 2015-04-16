@@ -23,6 +23,7 @@ import java.awt.Point
 import java.util.List;
 
 import javax.measure.VectorMeasure
+
 import java.util.Random
 
 import static javax.measure.unit.Unit.ONE;
@@ -34,22 +35,34 @@ import static javax.measure.unit.Unit.ONE;
  *
  */
 class Herder extends ReLogoTurtle {
+	/** This number represents the radius in which the herder can see cows */
 	def double visionRadius = 50
-	def double speed = 3.0
-	def double width
-	def double length
+	/** This number represents the distance at which this herder can talk to another herder */
 	def double communicationRadius = 40
+	/** The speed represents the maximum number of patches a herder can move each tick */
+	def double speed = 3.0
+	/** A herder's role determines what behavior the herder will exhibit */
 	def Role role
-	def Cow targetedCow
-	def Cow previousTargetedCow
+	/** A herder uses its pathfinder to figure out how to get places without running into things or bugging cows too much
+	 * The HerderPathFinder class relies on a D* lite implementation courtesy of Daniel Beard (see DStarLite.java source for copyright information)
+	 */
 	def HerderPathFinder pathFinder
-	def int numInteractionsTargetedCow
-	def double groupSize = 10
-	def grouperTicks = 0
-	private static final int GROUPER_TIMEOUT = 100
-	private static final double HERD_RADIUS = 20.0
+	/** This is the list of herders within communication range on a particular tick */
 	def AgentSet herdersInCommRange = null
-
+	/** This is the cow the herder is currently targeting. It may be null if no cow is targeted */
+	def Cow targetedCow
+	/** This is the previous cow targeted. It is important to track to avoid stressing a cow out too much */
+	def Cow previousTargetedCow	
+	/** The number of interactions with a targeted cow is tracked in order to avoid over-stressing a cow */
+	def int numInteractionsTargetedCow = 0
+	/** The herd radius is used to determine whether a cow has been grouped or not */
+	def double herdRadius = 20.0
+	/** The straggling distance is used in addition with the herd radius to identify a straggling cow */
+	def double straggleDist = 10.0
+	/** This is the timeout for when a cow has been targeted for too long. It is the maximum for numInteractionsTargetedCow */
+	private static final int GROUPER_TIMEOUT = 100
+	/** mininum value for herdRadius */
+	private static final double MIN_HERD_RADIUS = 10.0
 
 	enum Role {
 		Grouper,
@@ -79,17 +92,24 @@ class Herder extends ReLogoTurtle {
 
 	/**
 	 * Gather straggling cows
-	 * @return
+	 * @return boolean True if staying a grouper. False if switching to mover
 	 */
 	def boolean groupCows() {
 		/* update ticks */
-		grouperTicks++
+		numInteractionsTargetedCow++
 		/* check that there are cows in vision */
 		List<Cow> cowsInVision = this.getCowsInVision()
 		if (cowsInVision.size() < 1) return false
 		/* get the center of the herd */
 		NdPoint centerLocation = getCenter(cowsInVision)
 		NdPoint cowLocation = null;
+		/* guess an appropriate radius for the herd */
+		this.herdRadius = 3.0*Math.sqrt(cowsInVision.size())
+		if (this.herdRadius < MIN_HERD_RADIUS) {
+			this.herdRadius = MIN_HERD_RADIUS
+		}
+		
+		/* check to see if the current cow should be untargeted */
 		if(targetedCow) {
 			/* check for timeout */
 			cowLocation = targetedCow.getTurtleLocation()
@@ -98,38 +118,43 @@ class Herder extends ReLogoTurtle {
 			double xDiff = (double)(cowLocation.x - centerLocation.x)
 			double yDiff = (double)(cowLocation.y - centerLocation.y)
 
-			if(Math.sqrt(Math.pow(xDiff,2) + Math.pow(yDiff,2)) < HERD_RADIUS) {
-				targetedCow = null
+			boolean untarget = false
+			boolean switchRoles = false
+			
+			if(Math.sqrt(Math.pow(xDiff,2) + Math.pow(yDiff,2)) < herdRadius) {
+				untarget = true
+				
 			}
 			if (!cows().contains(targetedCow)) {
-				targetedCow = null
+				untarget = true
 			}
-			if (grouperTicks > GROUPER_TIMEOUT) {
+			if (numInteractionsTargetedCow > GROUPER_TIMEOUT) {
+				untarget = true
+				switchRoles = true
+			}			
+			if(untarget) {
+				previousTargetedCow = targetedCow
 				targetedCow = null
-				return false 	// switch roles
+			}			
+			if (switchRoles) {
+				return false
 			}
 		}
 
 		/* lock onto a straggler cow if necessary */
-		/* In the future, add herder communication to prevent duplicate lock-ons */
 		if (!targetedCow) {
 
-			targetedCow = getStragglingCow(centerLocation, centerLocation, cowsInVision )
-			grouperTicks = 0
+			List<Cow> selectableCows = new ArrayList(cowsInVision)
+			selectableCows.remove(this.previousTargetedCow)
+			
+			targetedCow = getStragglingCow(centerLocation, centerLocation, selectableCows)
+			numInteractionsTargetedCow = 0
 
 			if (null == targetedCow) {
-				// switch roles
+				// switch roles because there is no target
 				return false
 			}
-						cowLocation = targetedCow.getTurtleLocation()
-						double xDiff = (double)(cowLocation.x - centerLocation.x)
-						double yDiff = (double)(cowLocation.y - centerLocation.y)
-						if(Math.sqrt(Math.pow(xDiff,2) + Math.pow(yDiff,2)) < groupSize) {
-							targetedCow = null
-							//switch roles
-							return false
-						}
-
+			
 		}
 		cowLocation = targetedCow.getTurtleLocation()
 		/* if it is near other cows and near the center */
@@ -138,7 +163,6 @@ class Herder extends ReLogoTurtle {
 		NdPoint myLoc = this.getTurtleLocation();
 
 		/* get goal*/
-
 		NdPoint goal = Herder.getPositionToGroupCow(centerLocation, cowLocation, 5.0)
 		goal = this.makeBoundedPoint(goal)
 
@@ -270,7 +294,7 @@ class Herder extends ReLogoTurtle {
 		}
 
 		targetedCow = getPressurePointOfGroup(groupOfCows)
-		if(numInteractionsTargetedCow > groupSize && targetedCow==previousTargetedCow){
+		if(numInteractionsTargetedCow > herdRadius && targetedCow==previousTargetedCow){
 			//new cow
 			groupOfCows.remove(targetedCow)
 			targetedCow = getPressurePointOfGroup(groupOfCows)
@@ -382,7 +406,6 @@ class Herder extends ReLogoTurtle {
 		if (centers.size() > 0) {
 			center = computeCenter(centers)
 		} else {
-			System.println ("Using 0,0 as center")
 			center = new NdPoint(0,0)
 		}
 		return center
@@ -429,7 +452,7 @@ class Herder extends ReLogoTurtle {
 		//best position is cow with smallest combination of x and y coordinates
 		double heuristic = 0
 		for(Cow c : cowsInVision){
-			if(c.distance(myLoc) > heuristic && c.distance(myLoc) > groupSize){
+			if(c.distance(myLoc) > heuristic && c.distance(myLoc) > herdRadius){
 				boolean hasHerder = false
 				for(Cow tc : targetedCowsNeighbors){
 					if(tc == c){
@@ -469,14 +492,14 @@ class Herder extends ReLogoTurtle {
 	/**
 	 * Get cows not currently targeted by another herder and not close enough
 	 * to the center of the group
-	 * @param point
-	 * @param groupCenter
-	 * @param cowsInVision
-	 * @return
+	 * @param point			Point to be far from	
+	 * @param groupCenter	The point perceived as the center of the herd
+	 * @param cowsInVision	All the cows you can see
+	 * @return				A straggler cow if found or null
 	 */
 	def Cow getStragglingCow(NdPoint point, NdPoint groupCenter, List<Cow> cowsInVision) {
 		Patch centerPatch = this.patch(groupCenter.x, groupCenter.y)
-		List<Cow> cowsInGroup = centerPatch.inRadius(cowsInVision, HERD_RADIUS)
+		List<Cow> cowsInGroup = centerPatch.inRadius(cowsInVision, herdRadius + straggleDist)
 		List<Cow> targetedCows = this.getCowsTargetedByNearbyHerders()
 		List<Cow> stragglingCows = new ArrayList(cowsInVision)
 		stragglingCows.removeAll(cowsInGroup)
