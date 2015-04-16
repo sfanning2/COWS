@@ -27,6 +27,12 @@ import java.util.Random
 
 import static javax.measure.unit.Unit.ONE;
 
+/**
+ * The Herder class defines the behavior for a herding agent
+ * 
+ * @author Green-kiats
+ *
+ */
 class Herder extends ReLogoTurtle {
 	def double visionRadius = 50
 	def double speed = 3.0
@@ -48,7 +54,6 @@ class Herder extends ReLogoTurtle {
 	enum Role {
 		Grouper,
 		Mover
-		// Add Wanderer role for cow discovery? OR add wandering to grouper/mover roles?
 	}
 
 	def herd() {
