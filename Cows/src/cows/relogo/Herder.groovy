@@ -36,7 +36,7 @@ class Herder extends ReLogoTurtle {
 	def Role role
 	def Cow targetedCow
 	def Cow previousTargetedCow
-	def PathFinder pathFinder
+	def HerderPathFinder pathFinder
 	def int numInteractionsTargetedCow
 	def double groupSize = 10
 	def grouperTicks = 0
@@ -138,7 +138,7 @@ class Herder extends ReLogoTurtle {
 		goal = this.makeBoundedPoint(goal)
 
 		if (pathFinder == null) {
-			pathFinder = new PathFinder(myLoc, goal)
+			pathFinder = new HerderPathFinder(myLoc, goal)
 			ArrayList<ReLogoTurtle> fences = fences()
 			int blocked = -1
 			if (fences != null) {
@@ -542,7 +542,7 @@ class Herder extends ReLogoTurtle {
 		goalPosition = this.makeBoundedPoint(goalPosition)
 
 		if (pathFinder == null) {
-			pathFinder = new PathFinder(currentPosition, goalPosition)
+			pathFinder = new HerderPathFinder(currentPosition, goalPosition)
 			ArrayList<ReLogoTurtle> fences = fences()
 			int blocked = -1
 			if (fences != null) {

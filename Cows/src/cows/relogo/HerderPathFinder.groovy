@@ -6,7 +6,7 @@ import java.awt.Point
 import repast.simphony.relogo.Patch
 import repast.simphony.space.continuous.NdPoint
 
-class PathFinder {
+class HerderPathFinder {
 	
 	def cowAvoidanceRadius = 4
 	
@@ -19,12 +19,9 @@ class PathFinder {
 	def List<NdPoint> prevHerderLocations
 
 
-	PathFinder(NdPoint start, NdPoint goal) {
+	HerderPathFinder(NdPoint start, NdPoint goal) {
 		this.dStarLitePF = new DStarLite()
 		dStarLitePF.init((int)start.x, (int)start.y, (int)goal.x, (int)goal.y)
-		/* static cell updates */
-		// update edge cells
-		/* dynamic cell updates must be passed*/
 	}
 
 	/**
