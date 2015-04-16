@@ -17,9 +17,15 @@ import cows.relogo.UserObserver;
 import cows.relogo.UserPatch;
 import cows.relogo.UserTurtle;
 import cows.relogo.UserGlobalsAndPanelFactory;
-
+/**
+ * Object which creates and configures simulation environment. 
+ * @author Lynnea
+ *
+ */
 public class SimBuilder implements ContextBuilder {
-	
+	/**
+	 * Build context
+	 */
 	public Context build(Context context) {
 	
 		if (RunEnvironment.instance.isBatch()){
@@ -27,21 +33,18 @@ public class SimBuilder implements ContextBuilder {
             ugpf.initialize(new JPanel());
             ugpf.addGlobalsAndPanelComponents();
         }
-		//get parameters from parameters.xml file
+		/*get parameters from parameters.xml file*/
 		Parameters p = RunEnvironment.getInstance().getParameters();
-		
-//field_width and field_height 
 
 		int x = Math.floor(Math.sqrt(p.getValue("field_area"))/2);
 		
-		// NOTE: minPxcor and minPycor must be <= 0
-		int minPxcor = -x
+		int minPxcor = -x// NOTE: minPxcor and minPycor must be <= 0
 		int maxPxcor = x
 		int minPycor = -x
 		int maxPycor = x
 
 
-		//non-toroidal world so bouncy walls
+		/*non-toroidal world so bouncy walls*/
 		RLWorldDimensions rLWorldDimensions = new RLWorldDimensions(minPxcor, maxPxcor, minPycor, maxPycor, new repast.simphony.space.continuous.BouncyBorders());
 		
 		LinkFactory lf = new LinkFactory(UserLink);
@@ -49,7 +52,7 @@ public class SimBuilder implements ContextBuilder {
 		PatchFactory pf = new PatchFactory(UserPatch);		
 		ReLogoWorldFactory wf = new ReLogoWorldFactory(context,"default_observer_context", rLWorldDimensions, tf, pf, lf);
 		
-		//create observer who "watches" simulation
+		/*create observer who "watches" simulation*/
 		ObserverFactory oF = new ObserverFactory("default_observer",UserObserver,wf);
 		Observer dO = oF.createObserver();
 		

@@ -18,13 +18,15 @@ class PathFinder {
 	def List<Herder> currentHerders
 	def List<NdPoint> prevHerderLocations
 
-
+	/**
+	 * Object that aids in finding optimal path from start to goal
+	 * @param start
+	 * @param goal
+	 */
 	PathFinder(NdPoint start, NdPoint goal) {
 		this.dStarLitePF = new DStarLite()
 		dStarLitePF.init((int)start.x, (int)start.y, (int)goal.x, (int)goal.y)
-		/* static cell updates */
-		// update edge cells
-		/* dynamic cell updates must be passed*/
+
 	}
 
 	/**
@@ -64,12 +66,12 @@ class PathFinder {
 				
 				if (avoid) {
 					/* update area around cow */
-//					List<Patch> neighboringPatches = cow.patch(x,y).inRadius(cow.patches(), cowAvoidanceRadius)	
-//					for (Patch patch : neighboringPatches) {
-//						NdPoint neighborLocation = new NdPoint(patch.getPxcor(), patch.getPycor())
-//						this.prevCowLocations.add(neighborLocation)
-//						this.updateCell((int)neighborLocation.x, (int)neighborLocation.y, 5)	// Cost of 5 discourages walking here
-//					}
+					List<Patch> neighboringPatches = cow.patch(x,y).inRadius(cow.patches(), cowAvoidanceRadius)	
+					for (Patch patch : neighboringPatches) {
+						NdPoint neighborLocation = new NdPoint(patch.getPxcor(), patch.getPycor())
+						this.prevCowLocations.add(neighborLocation)
+						this.updateCell((int)neighborLocation.x, (int)neighborLocation.y, 5)	// Cost of 5 discourages walking here
+					}
 					
 					/* update cow */
 					this.prevCowLocations.add(new NdPoint(x, y))
@@ -104,7 +106,13 @@ class PathFinder {
 			}
 		}
 	}
-	
+	/**
+	 * Set borders for cells
+	 * @param minX
+	 * @param maxX
+	 * @param minY
+	 * @param maxY
+	 */
 	public void setBorders(int minX, int maxX, int minY, int maxY){
 		// TODO
 		for(int i = minX; i < maxX; i++) {
@@ -116,6 +124,13 @@ class PathFinder {
 			this.updateCell((int)maxX, (int)i, -1)
 		}
 	}
+	/** Set borders for cells
+	 * 
+	 * @param minX
+	 * @param maxX
+	 * @param minY
+	 * @param maxY
+	 */
 	public void setBorders(Integer minX, Integer maxX, Integer minY, Integer maxY){
 		// TODO
 		for(int i = minX; i < maxX; i++) {
@@ -127,7 +142,11 @@ class PathFinder {
 			this.updateCell((int)maxX, (int)i, -1)
 		}
 	}
-
+	/**
+	 * Set turtles and positions in cells
+	 * @param turtles
+	 * @param value
+	 */
 	public void setTurtles(ArrayList<ReLogoTurtle> turtles, double value) {
 		for (ReLogoTurtle turtle : turtles) {
 			NdPoint location = turtle.getTurtleLocation();
@@ -136,22 +155,26 @@ class PathFinder {
 			this.updateCell((int)x, (int)y, value)
 		}
 	}
-
-	private void updateCowBarriers(Cow cow) {
-		/* call updateCell for each relevant location */
-	}
-
-	private void updateHerderBarriers(Herder herder) {
-	}
-
+	/**
+	 * Update cell in position x, y
+	 * @param x
+	 * @param y
+	 * @param value
+	 */
 	private void updateCell(int x, int y, double value) {
 		this.dStarLitePF.updateCell(x, y, value)
 	}
-
+	/**
+	 * Update goal to x,y
+	 * @param x
+	 * @param y
+	 */
 	public void updateGoal(int x, int y) {
 		this.dStarLitePF.updateGoal(x, y)
 	}
-
+	/**
+	 * Re-plan route
+	 */
 	public void replan() {
 		this.dStarLitePF.replan()
 	}

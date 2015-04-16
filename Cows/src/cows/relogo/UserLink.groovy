@@ -11,7 +11,11 @@ import repast.simphony.relogo.UtilityG;
 import repast.simphony.relogo.schedule.Go;
 import repast.simphony.relogo.schedule.Setup;
 import cows.ReLogoLink;
-
+/**
+ * Object representing a link between agents. 
+ * @author Lynnea
+ *
+ */
 class UserLink extends ReLogoLink	{
 
 }

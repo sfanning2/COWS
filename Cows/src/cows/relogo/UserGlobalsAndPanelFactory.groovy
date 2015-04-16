@@ -1,8 +1,15 @@
 package cows.relogo
 
 import repast.simphony.relogo.factories.AbstractReLogoGlobalsAndPanelFactory
-
+/**
+ * Object that is a user panel with controls that configure simulation parameters.
+ * @author Lynnea
+ *
+ */
 public class UserGlobalsAndPanelFactory extends AbstractReLogoGlobalsAndPanelFactory{
+	/**
+	 * Add controls to panel with associated global parameters
+	 */
 	public void addGlobalsAndPanelComponents(){
 
 		addSliderWL("numHerders", "Number of Herders", 1, 1, 100, 1)
