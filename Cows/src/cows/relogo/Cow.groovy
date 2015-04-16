@@ -16,7 +16,11 @@ import cows.ReLogoTurtle;
 import cows.dstarlite.State
 
 import java.util.logging.Handler
-
+/**
+ * Object to represent a cow. Cows move with cows near them and behave in response to herder actions and the environment. 
+ * @author Green-kiats
+ *
+ */
 class Cow extends ReLogoTurtle {
 	def double speed;
 	def double flightZoneRadius;
@@ -27,15 +31,20 @@ class Cow extends ReLogoTurtle {
 	def double anxietyThreshold;
 	def double sightRange;
 	
-
+	/** 
+	 * Configures how a cow moves each step
+	 * @return void
+	 */
 	def step(){
 
 
-		//If the cow is at the goal, remove them from the field 
+		/*If the cow is at the goal, remove them from the field */
 		int maxY = getMaxPycor()
 		int minX  = getMaxPxcor()
 		Patch p = patchHere()
-		//iterate over patches
+
+		/*iterate over patches*/
+
 		for(int j = maxY-10; j <= maxY; j++){
 			if(p.pxcor == minX || p.pxcor == minX-1|| p.pxcor == minX-2){
 				if(p.pycor == j){
@@ -44,7 +53,10 @@ class Cow extends ReLogoTurtle {
 				}
 			}
 		}
-			
+		/*
+		 * If the cows aren't being impacted by any of the conditions below they make
+		 * the default movement of .05 ahead in the current direction.
+		 */
 		def distance = 0.05
 		def direction = this.getHeading()
 		if (direction >= 360) direction = direction - 360
@@ -53,12 +65,14 @@ class Cow extends ReLogoTurtle {
 		def herdersInRange = inRadius(herders(), flightZoneRadius)
 		def cowsInRange = inRadius(cows(), sightRange)
 		
+		/* If any herders are within the flight zone, the cow will have more anxiety and move away from the first herder it "sees"*/
+
 		if (herdersInRange.size() > 0) {
 			for (herder in herdersInRange) {
 				anxietyLevel = anxietyLevel+2
 			}
-			// Move amount is high and away from herder
-			distance = 3
+			
+			distance = 3// Move amount is high and away from herder
 
 			this.face(herdersInRange.get(0))
 			if (this.getHeading() < 180) {
@@ -67,7 +81,10 @@ class Cow extends ReLogoTurtle {
 				direction = this.getHeading() - Utility.randomNormal(180,10)
 			}
 			
-		} else if (cowsInRange.size() >= 2 && Utility.random(1) < independenceLevel){
+		/*if there are 2 or more cows in the sight range of the cow,
+		 or the cow's independence level (percentage of time that the cow should move with the group)
+		 is greater than the random number created*/
+		} else if (cowsInRange.size() >= 2 && Utility.random(100) < (independenceLevel*100)){
 			// Calculate average heading
 			def heading_0_45 = 0
 			def heading_45_90 = 0
@@ -94,6 +111,7 @@ class Cow extends ReLogoTurtle {
 			largest = Math.max(largest, heading_225_270)
 			largest = Math.max(largest, heading_270_315)
 			largest = Math.max(largest, heading_315_360)
+			/*set direction */
 			if (heading_0_45 == largest) { 
 				direction = 22
 			}
@@ -124,7 +142,7 @@ class Cow extends ReLogoTurtle {
 			anxietyLevel = anxietyLevel - 3 //Cows moving in a group become less stressed
 		}
 		
-		//Check anxiety level against threshold and override other movement if over
+		/*Check anxiety level against threshold and override other movement if over*/
 		if (anxietyLevel > anxietyThreshold ) {
 			distance = Utility.randomNormal(4, 2) + 2
 			direction = Utility.random(360)
@@ -133,8 +151,9 @@ class Cow extends ReLogoTurtle {
 				
 		setHeading((double) direction)
 		move(distance)
-		//Cow avoids other turtles 
-		if(count(turtlesHere()) > 1) {
+		
+		if(count(inRadius(turtles(), 3)) > 1) {//Cow avoids other turtles 
+
 			setHeading(floor(direction+Utility.random(135)) % 360)
 			move(0.01)
 		}
@@ -143,20 +162,5 @@ class Cow extends ReLogoTurtle {
 	}
 	def int numObstaclesOn(Patch p){
 		return count(turtlesOn(p)) - count(herdersOn(p))
-	}
-	def setSpeed(double speed){
-		this.speed = speed
-	}
-	def setAnxietyLevel(double level){
-		this.anxietyLevel = level
-	}
-	def setAnxietyThreshold(double level){
-		this.anxietyThreshold = level
-	}
-	def setIndependenceLevel(double level){
-		this.independenceLevel = level
-	}
-	def setFlightZoneRadius( double level){
-		this.flightZoneRadius = level
 	}
 }

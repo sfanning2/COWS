@@ -9,7 +9,11 @@ import repast.simphony.relogo.UtilityG;
 import repast.simphony.relogo.schedule.Go;
 import repast.simphony.relogo.schedule.Setup;
 import cows.ReLogoTurtle;
-
+/**
+ * Object representing an agent. 
+ * @author Lynnea
+ *
+ */
 class UserTurtle extends ReLogoTurtle{
 
 }

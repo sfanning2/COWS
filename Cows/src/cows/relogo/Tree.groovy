@@ -10,6 +10,10 @@ import repast.simphony.relogo.schedule.Go
 import repast.simphony.relogo.schedule.Setup
 import cows.ReLogoPatch
 import cows.ReLogoTurtle
-
+/**
+ * Object to represent a tree within the environment. 
+ * @author Lynnea
+ *
+ */
 class Tree extends ReLogoTurtle {
 }

@@ -6,6 +6,11 @@ import java.awt.Point
 import repast.simphony.relogo.Patch
 import repast.simphony.space.continuous.NdPoint
 
+/**
+ * Pathfinding logic to support the Herder.groovy class
+ * @author Green-kiats
+ *
+ */
 class HerderPathFinder {
 	
 	def cowAvoidanceRadius = 4
@@ -18,7 +23,11 @@ class HerderPathFinder {
 	def List<Herder> currentHerders
 	def List<NdPoint> prevHerderLocations
 
-
+	/**
+	 * Object that aids in finding optimal path from start to goal
+	 * @param start
+	 * @param goal
+	 */
 	HerderPathFinder(NdPoint start, NdPoint goal) {
 		this.dStarLitePF = new DStarLite()
 		dStarLitePF.init((int)start.x, (int)start.y, (int)goal.x, (int)goal.y)
@@ -101,7 +110,13 @@ class HerderPathFinder {
 			}
 		}
 	}
-	
+	/**
+	 * Set borders for cells
+	 * @param minX
+	 * @param maxX
+	 * @param minY
+	 * @param maxY
+	 */
 	public void setBorders(int minX, int maxX, int minY, int maxY){
 		// TODO
 		for(int i = minX; i < maxX; i++) {
@@ -113,6 +128,13 @@ class HerderPathFinder {
 			this.updateCell((int)maxX, (int)i, -1)
 		}
 	}
+	/** Set borders for cells
+	 * 
+	 * @param minX
+	 * @param maxX
+	 * @param minY
+	 * @param maxY
+	 */
 	public void setBorders(Integer minX, Integer maxX, Integer minY, Integer maxY){
 		// TODO
 		for(int i = minX; i < maxX; i++) {
@@ -124,7 +146,11 @@ class HerderPathFinder {
 			this.updateCell((int)maxX, (int)i, -1)
 		}
 	}
-
+	/**
+	 * Set turtles and positions in cells
+	 * @param turtles
+	 * @param value
+	 */
 	public void setTurtles(ArrayList<ReLogoTurtle> turtles, double value) {
 		for (ReLogoTurtle turtle : turtles) {
 			NdPoint location = turtle.getTurtleLocation();
@@ -133,22 +159,26 @@ class HerderPathFinder {
 			this.updateCell((int)x, (int)y, value)
 		}
 	}
-
-	private void updateCowBarriers(Cow cow) {
-		/* call updateCell for each relevant location */
-	}
-
-	private void updateHerderBarriers(Herder herder) {
-	}
-
+	/**
+	 * Update cell in position x, y
+	 * @param x
+	 * @param y
+	 * @param value
+	 */
 	private void updateCell(int x, int y, double value) {
 		this.dStarLitePF.updateCell(x, y, value)
 	}
-
+	/**
+	 * Update goal to x,y
+	 * @param x
+	 * @param y
+	 */
 	public void updateGoal(int x, int y) {
 		this.dStarLitePF.updateGoal(x, y)
 	}
-
+	/**
+	 * Re-plan route
+	 */
 	public void replan() {
 		this.dStarLitePF.replan()
 	}

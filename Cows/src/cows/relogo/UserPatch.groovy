@@ -9,8 +9,11 @@ import repast.simphony.relogo.ast.Diffusible;
 import repast.simphony.relogo.schedule.Go;
 import repast.simphony.relogo.schedule.Setup;
 import cows.ReLogoPatch;
-
+/**
+ * Object representing a field patch. 
+ * @author Lynnea
+ *
+ */
 class UserPatch extends ReLogoPatch{
-	def patch_var01 = 0
-	def patchvar02 = 1
+
 }

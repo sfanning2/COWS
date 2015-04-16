@@ -18,33 +18,41 @@ import repast.simphony.parameter.Parameters;
 import repast.simphony.engine.environment.RunEnvironment;
 import groovy.transform.TimedInterrupt;
 import java.util.concurrent.TimeUnit;
-
+/**
+ * Object representing observer of the simulation and configures environmental characteristics. 
+ * @author Lynnea
+ *
+ */
 
 class UserObserver extends ReLogoObserver{
 
-	/*Observer methods*/
-
-
+	/**
+	 * Setup of environment with agents and obstacles
+	 * @return void
+	 */
 	@Setup
 	def setup(){
 		clearAll()
-		//timeout as necessary for creating environment
+		/*timeout as necessary for creating environment*/
 		long expireTime = System.nanoTime() + TimeUnit.NANOSECONDS.convert(20, TimeUnit.SECONDS)
-		//if this run is part of a batch environment get parameter values from params_batch file
+		/*if this run is part of a batch environment get parameter values from params_batch file*/
 		if(RunEnvironment.getInstance().isBatch()){
 			Parameters params = RunEnvironment.getInstance().getParameters()
 			obstacleDensity = params.getValue("obstacleDensity")
 			numHerders = params.getValue("numHerders")
 			numCows = params.getValue("numCows")
 		}
-
+		
 		Random randomGenerator = new Random()
+		/* color field green*/
 		for (UserPatch p : patches()){
 			p.pcolor = 62
 		}
+		/* add fence*/
 		setDefaultShape(Fence, "x")
 		createFenceAroundField()
-
+		
+		/* add trees at random positions */
 		setDefaultShape(Tree, "tree")
 		double sqarea = worldHeight()*worldWidth()
 		int numTrees =  (int)obstacleDensity *sqarea / 36
@@ -54,15 +62,16 @@ class UserObserver extends ReLogoObserver{
 				setxy(randomPxcor(), randomPycor())
 			}
 		}
+		/* add cows randomly not within 6 ft of another */
 		setDefaultShape(Cow, "circle")
 
 		createCows(numCows){
 			setxy(randomPxcor(), randomPycor())
-			size = 6
-			//randomly place cows so they don't hit other objects
+			size = 3
 
+			/*randomly place cows so they don't hit other objects*/
 			while(count(inRadius(turtles(), 6))>1){
-					if(expireTime < System.nanoTime()){
+					if(expireTime < System.nanoTime()){//timeout if takes too long because field may not be able to handle all agents
 						RunEnvironment.getInstance().endRun();
 					}else{
 						setxy(randomPxcor(), randomPycor())
@@ -75,24 +84,24 @@ class UserObserver extends ReLogoObserver{
 			anxietyLevel = 0
 			anxietyThreshold = Utility.randomNormal(100, 20)
 			sightRange = Utility.randomNormal(15, 5)
-			independenceLevel = Utility.random(0.05) //Percent of the time the cow will group, b/w 5 and 0 %		
+			independenceLevel = Utility.random(0.2) //Percent of the time the cow will group, b/w 5 and 0 %		
 		}
+		/* create herders*/
 		setDefaultShape(Herder, "person")
 		createHerders(numHerders){
 			setxy(randomPxcor(), randomPycor())
-			//randomly orient cows
 			size = 3
-			//randomly place cows so they don't hit other objects
+			/*randomly place herder so they don't hit other objects*/
 			while(count(inRadius(turtles(), 3))>1){
-					if(expireTime < System.nanoTime()){
+					if(expireTime < System.nanoTime()){//timeout if necessary
 						RunEnvironment.getInstance().endRun();
 					}else{
 						setxy(randomPxcor(), randomPycor())
 					}
 				}
-
-			double roleNum = Utility.random(1)
-			if(roleNum < 0.5){
+			/* randomly select grouper vs. mover role*/
+			double roleNum = Utility.randomNormal(1, 1)
+			if(roleNum > 0){
 				//set as mover
 				role = Role.Mover
 				setColor(135)
@@ -109,13 +118,19 @@ class UserObserver extends ReLogoObserver{
 
 
 
-
+/**
+ * Initiate asking cows and herders to act
+ * @return
+ */
 	@Go
 	def go(){
 		ask(herders()){ herd() }
 		ask(cows()){ step() }
 	}
-
+/**
+ * Set remainingCows global
+ * @return void
+ */
 	def remainingCows() {
 		if(count(cows())==0){
 			 RunEnvironment.getInstance().endRun()
@@ -123,12 +138,16 @@ class UserObserver extends ReLogoObserver{
 		 	count(cows())
 		 }
 	}
+	/**
+	 * Create fences 
+	 * @return void
+	 */
 	def createFenceAroundField(){
 		int maxX = getMaxPxcor()
 		int maxY = getMaxPycor()
 		int minX  = getMinPxcor()
 		int minY = getMinPycor()
-		//iterate over all x values
+		/*iterate over all x values*/
 		for(int i=minX; i<= maxX; i++){
 			createFences(1){
 				setxy(i, minY)
@@ -139,7 +158,7 @@ class UserObserver extends ReLogoObserver{
 				setColor(60)
 			}
 		}
-		//iterate over all y values
+		/*iterate over all y values*/
 		for(int j=minY; j< maxY-10; j++){
 			createFences(1){
 				setxy(minX, j)
@@ -157,6 +176,10 @@ class UserObserver extends ReLogoObserver{
 			}
 		}
 	}
+	/** 
+	 * Get groupers
+	 * @return set of grouping herders
+	 */
 	def AgentSet getGroupers(){
 		AgentSet clone = herders().clone()
 		for(Herder h: clone){
@@ -168,6 +191,10 @@ class UserObserver extends ReLogoObserver{
 		}
 		return clone
 	}
+	/**
+	 * Get movers
+	 * @return set of moving herders
+	 */
 	def AgentSet getMovers(){
 		AgentSet clone = herders().clone()
 		for(Herder h: clone){

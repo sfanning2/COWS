@@ -4,6 +4,11 @@ import cows.relogo.Herder;
 import repast.simphony.space.continuous.NdPoint;
 import junit.framework.TestCase;
 
+/**
+ * Tests for Herder class
+ * @author Green-kiats
+ *
+ */
 public class HerderTest extends TestCase {
 	
 	public void testVectorCalculation() {
