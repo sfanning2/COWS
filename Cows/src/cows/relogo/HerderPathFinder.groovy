@@ -12,9 +12,9 @@ import repast.simphony.space.continuous.NdPoint
  *
  */
 class HerderPathFinder {
-	
+
 	def cowAvoidanceRadius = 4
-	
+
 	def DStarLite dStarLitePF
 
 	def List<Cow> currentCows
@@ -48,7 +48,7 @@ class HerderPathFinder {
 		/* base off current location and goal */
 		NdPoint goal = new NdPoint(this.dStarLitePF.getS_goal().x, this.dStarLitePF.getS_goal().y);
 		NdPoint current = new NdPoint(this.dStarLitePF.getS_last().x, this.dStarLitePF.getS_last().y);
-		
+
 		this.currentCows = currentCows
 		if (currentCows != null && currentCows.size() > 0) {
 			this.prevCowLocations = new ArrayList()
@@ -57,31 +57,34 @@ class HerderPathFinder {
 				double x = location.x
 				double y = location.y
 				boolean avoid = false
-				
+
 				/* check if the cow is potentially in the way:
 				 * if x is between current location and  goal with a padding of radius 
 				 * and y is between current location and goal with a padding of radius
 				 * then consider the cow to be a potential obstacle to avoid. */
 				double r = cowAvoidanceRadius
 				if(((x <= goal.x + r && x >= current.x - r) || (x >= goal.x - r && x <= current.x + r)) &&
-				   ((y <= goal.y + r && y >= current.y - r) || (y >= goal.y - r && y <= current.y + r))){
+				((y <= goal.y + r && y >= current.y - r) || (y >= goal.y - r && y <= current.y + r))){
 					avoid = true
 				}
-				
+
+				double cost  = 5
 				if (avoid) {
 					/* update area around cow */
-					List<Patch> neighboringPatches = cow.patch(x,y).inRadius(cow.patches(), cowAvoidanceRadius)	
+					List<Patch> neighboringPatches = cow.patch(x,y).inRadius(cow.patches(), cowAvoidanceRadius)
 					for (Patch patch : neighboringPatches) {
 						NdPoint neighborLocation = new NdPoint(patch.getPxcor(), patch.getPycor())
-						this.prevCowLocations.add(neighborLocation)
-						this.updateCell((int)neighborLocation.x, (int)neighborLocation.y, 5)	// Cost of 5 discourages walking here
+						if (this.dStarLitePF.getCell((int)neighborLocation.x, (int)neighborLocation.y) == 1) {
+							this.prevCowLocations.add(neighborLocation)
+							this.updateCell((int)neighborLocation.x, (int)neighborLocation.y, cost)	// Cost of 5 discourages walking here
+						}
 					}
-					
-					/* update cow */
-					this.prevCowLocations.add(new NdPoint(x, y))
-					this.updateCell((int)x, (int)y, -1)
+					if (this.dStarLitePF.getCell((int)x, (int)y) != -1) {
+						/* update cow */
+						this.prevCowLocations.add(new NdPoint(x, y))
+						this.updateCell((int)x, (int)y, -1)
+					}
 				}
-				
 			}
 		}
 	}
@@ -90,7 +93,7 @@ class HerderPathFinder {
 	 * Block herder vertices
 	 * @param currentHerders
 	 */
-	void setCurrentHerders(List<Herder> currentHerders) {
+	public void setCurrentHerders(List<Herder> currentHerders) {
 		/* update cells for old herders */
 		if (this.prevHerderLocations != null)
 			for (NdPoint location : this.prevHerderLocations) {

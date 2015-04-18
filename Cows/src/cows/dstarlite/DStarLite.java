@@ -489,6 +489,15 @@ public class DStarLite implements java.io.Serializable{
 		cellHash.get(u).cost = val;
 		updateVertex(u);
 	}
+	
+	public double getCell(int x, int y)
+	{
+		State u = new State();
+		u.x = x;
+		u.y = y;
+		makeNewCell(u);
+		return cellHash.get(u).cost;
+	}
 
 	/*
 	 * Inserts state u into openList and openHash
