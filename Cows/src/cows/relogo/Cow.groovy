@@ -22,10 +22,7 @@ import java.util.logging.Handler
  *
  */
 class Cow extends ReLogoTurtle {
-	def double speed;
 	def double flightZoneRadius;
-	def double width;
-	def double length;
 	def double independenceLevel;
 	def double anxietyLevel;
 	def double anxietyThreshold;
@@ -78,7 +75,7 @@ class Cow extends ReLogoTurtle {
 			if (this.getHeading() < 180) {
 				direction = this.getHeading() + Utility.randomNormal(180,20)
 			} else {
-				direction = this.getHeading() - Utility.randomNormal(180,10)
+				direction = this.getHeading() - Utility.randomNormal(180,20)
 			}
 			
 		/*if there are 2 or more cows in the sight range of the cow,
