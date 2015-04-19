@@ -36,12 +36,11 @@ class UserObserver extends ReLogoObserver{
 		/*timeout as necessary for creating environment*/
 		long expireTime = System.nanoTime() + TimeUnit.NANOSECONDS.convert(20, TimeUnit.SECONDS)
 		/*if this run is part of a batch environment get parameter values from params_batch file*/
-		if(RunEnvironment.getInstance().isBatch()){
+		
 			Parameters params = RunEnvironment.getInstance().getParameters()
-			obstacleDensity = params.getValue("obstacleDensity")
-			numHerders = params.getValue("numHerders")
-			numCows = params.getValue("numCows")
-		}
+			double obstacleDensity = params.getValue("obstacleDensity")
+			int numHerders = params.getValue("numHerders")
+			int numCows = params.getValue("numCows")
 		
 		Random randomGenerator = new Random()
 		/* color field green*/
@@ -72,6 +71,7 @@ class UserObserver extends ReLogoObserver{
 			/*randomly place cows so they don't hit other objects*/
 			while(count(inRadius(turtles(), 6))>1){
 					if(expireTime < System.nanoTime()){//timeout if takes too long because field may not be able to handle all agents
+						RunEnvironment.getInstance().schedule.executeEndActions()
 						RunEnvironment.getInstance().endRun();
 					}else{
 						setxy(randomPxcor(), randomPycor())
@@ -94,6 +94,7 @@ class UserObserver extends ReLogoObserver{
 			/*randomly place herder so they don't hit other objects*/
 			while(count(inRadius(turtles(), 3))>1){
 					if(expireTime < System.nanoTime()){//timeout if necessary
+						RunEnvironment.getInstance().schedule.executeEndActions()
 						RunEnvironment.getInstance().endRun();
 					}else{
 						setxy(randomPxcor(), randomPycor())
@@ -113,7 +114,7 @@ class UserObserver extends ReLogoObserver{
 
 		}
 
-
+	RunEnvironment.getInstance().endAt(5000)
 	}
 
 
@@ -138,6 +139,19 @@ class UserObserver extends ReLogoObserver{
 		 	count(cows())
 		 }
 	}
+	
+	def currentMovers() {
+		ArrayList movers = herders()
+		foreach({if (it.role == Role.Grouper){movers.remove(it)}},herders())
+		return count(movers)
+	}
+	
+	def currentGroupers() {
+		ArrayList groupers = herders()
+		foreach({if (it.role == Role.Mover){groupers.remove(it)}},herders())
+		return count(groupers)
+	}
+	
 	/**
 	 * Create fences 
 	 * @return void

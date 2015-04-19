@@ -59,7 +59,7 @@ class Herder extends ReLogoTurtle {
 	/** The straggling distance is used in addition with the herd radius to identify a straggling cow */
 	def double straggleDist = 10.0
 	/** This is the timeout for when a cow has been targeted for too long. It is the maximum for numInteractionsTargetedCow */
-	private static final int GROUPER_TIMEOUT = 100
+	private static final int GROUPER_TIMEOUT = 50
 	/** mininum value for herdRadius */
 	private static final double MIN_HERD_RADIUS = 10.0
 
@@ -187,6 +187,7 @@ class Herder extends ReLogoTurtle {
 		}	
 		
 		this.pathFinder.setCurrentCows(this.getCowsInVision())	// best to call set current cows last
+		this.pathFinder.setCurrentHerders(herders())
 		this.pathFinder.replan();
 		List<State> path = pathFinder.getdStarLitePF().getPath()
 		/*move between states on the path avoiding other agents and obstacles */
@@ -586,6 +587,7 @@ class Herder extends ReLogoTurtle {
 		}
 
 		this.pathFinder.setCurrentCows(this.getCowsInVision())
+		this.pathFinder.setCurrentHerders(herders())
 		this.pathFinder.replan();
 		List<State> path = pathFinder.getdStarLitePF().getPath()
 		/* move along states in path if possible */

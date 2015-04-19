@@ -12,9 +12,8 @@ public class UserGlobalsAndPanelFactory extends AbstractReLogoGlobalsAndPanelFac
 	 */
 	public void addGlobalsAndPanelComponents(){
 
-		addSliderWL("numHerders", "Number of Herders", 1, 1, 50, 1)
-		addSliderWL("numCows", "Number of Cows", 1, 5, 100, 1)
-		addSliderWL("obstacleDensity", "Density of Obstacles", 0, 0.01, 0.25, 0)
 		addMonitorWL("remainingCows", "Cows in Field", 1)	
+		addMonitorWL("currentMovers", "Movers", 1)	
+		addMonitorWL("currentGroupers", "Groupers", 1)	
 	}
 }
