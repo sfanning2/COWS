@@ -1,0 +1,49 @@
+<repast.simphony.data2.engine.DataSetDescriptor>
+  <name>CowData</name>
+  <type>AGGREGATE</type>
+  <inclTick>true</inclTick>
+  <inclBatchRun>true</inclBatchRun>
+  <inclRandomSeed>true</inclRandomSeed>
+  <scheduleParams>
+    <start>1.0</start>
+    <interval>1.0</interval>
+    <priority>-Infinity</priority>
+    <pType>LAST</pType>
+    <duration>-1.0</duration>
+    <frequency>REPEAT</frequency>
+    <hashCode>-251675575</hashCode>
+  </scheduleParams>
+  <atEnd>true</atEnd>
+  <methodDataSources class="linked-hash-map">
+    <entry>
+      <string>Groupers</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Groupers</id>
+        <className>cows.relogo.UserObserver</className>
+        <methodName>currentGroupers</methodName>
+        <aggType>MEAN</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Movers</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Movers</id>
+        <className>cows.relogo.UserObserver</className>
+        <methodName>currentMovers</methodName>
+        <aggType>MEAN</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Cows</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Cows</id>
+        <className>cows.relogo.UserObserver</className>
+        <methodName>remainingCows</methodName>
+        <aggType>MEAN</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+  </methodDataSources>
+  <countSources class="linked-hash-map"/>
+  <customNADataSources class="linked-hash-map"/>
+  <customAggDataSources class="linked-hash-map"/>
+</repast.simphony.data2.engine.DataSetDescriptor>

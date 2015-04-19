@@ -2,6 +2,7 @@ package cows.relogo
 
 import static repast.simphony.relogo.Utility.*;
 import static repast.simphony.relogo.UtilityG.*;
+import repast.simphony.context.Context
 import repast.simphony.relogo.AgentSet
 import repast.simphony.relogo.Patch
 import repast.simphony.relogo.Plural;
@@ -12,6 +13,8 @@ import repast.simphony.relogo.schedule.Go;
 import repast.simphony.relogo.schedule.Setup;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
+import repast.simphony.engine.environment.RunEnvironment;
+import repast.simphony.util.ContextUtils;
 import cows.ReLogoTurtle;
 import cows.dstarlite.State
 
@@ -162,5 +165,15 @@ class Cow extends ReLogoTurtle {
 	}
 	def int numObstaclesOn(Patch p){
 		return count(turtlesOn(p)) - count(herdersOn(p))
+	}
+	public void die(){
+		Context context = ContextUtils.getContext(this)
+		
+		if(cows().size() >1){
+			context.remove(this)
+		}else{
+			context.remove(this)
+			RunEnvironment.getInstance().endRun()
+		}			
 	}
 }
