@@ -133,11 +133,7 @@ class UserObserver extends ReLogoObserver{
  * @return void
  */
 	def remainingCows() {
-		if(count(cows())==0){
-			 RunEnvironment.getInstance().endRun()
-		 }else{
 		 	count(cows())
-		 }
 	}
 	
 	def currentMovers() {
